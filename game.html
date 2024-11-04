@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego de Política de Privacidad - Extendido</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .question-container {
+            display: none;
+            text-align: center;
+        }
+        .feedback {
+            font-size: 1.1em;
+            margin: 15px 0;
+            display: none;
+            text-align: center;
+        }
+        .correct {
+            color: green;
+        }
+        .incorrect {
+            color: red;
+        }
+        .result-message {
+            font-size: 1.5em;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Juego de Política de Privacidad</h1>
+
+    <!-- Pregunta 1 -->
+    <div id="question1" class="question-container card shadow p-4 mb-4">
+        <div class="question card-body">
+            <h5 class="card-title">¿Qué tipo de información recopilamos principalmente en nuestro sitio web?</h5>
+            <div class="options">
+                <button class="btn btn-primary mb-2" onclick="checkAnswer(1, true)">Información personal</button>
+                <button class="btn btn-primary mb-2" onclick="checkAnswer(1, false)">Información médica</button>
+                <button class="btn btn-primary mb-2" onclick="checkAnswer(1, false)">Información de tarjetas de crédito</button>
+            </div>
+        </div>
+        <div id="feedback1" class="feedback"></div>
+    </div>
+
+    <!-- Pregunta 2 -->
+    <div id="question2" class="question-container card shadow p-4 mb-4">
+        <div class="question card-body">
+            <h5 class="card-title">¿Compartimos tu información personal con terceros?</h5>
+            <div class="options">
+                <button class="btn btn-primary mb-2" onclick="checkAnswer(2, false)">Sí, siempre</button>
+                <button class="btn btn-primary mb-2" onclick="checkAnswer(2, true)">No, solo en situaciones específicas</button>
+                <button class="btn btn-primary mb-2" onclick="checkAnswer(2, false)">Solo si es para fines publicitarios</button>
+            </div>
+        </div>
+        <div id="feedback2" class="feedback"></div>
+    </div>
+
+    <!-- Pregunta 3 -->
+    <div id="question3" class="question-container card shadow p-4 mb-4">
+        <div class="question card-body">
+            <h5 class="card-title">¿Qué herramienta utilizamos para mejorar la experiencia del usuario?</h5>
+            <div class="options">
+                <button class="btn btn-primary mb-2" onclick="checkAnswer(3, false)">Historial de compras</button>
+                <button class="btn btn-primary mb-2" onclick="checkAnswer(3, true)">Cookies</button>
+                <button class="btn btn-primary mb-2" onclick="checkAnswer(3, false)">Registro telefónico</button>
+            </div>
+        </div>
+        <div id="feedback3" class="feedback"></div>
+    </div>
+
+    <!-- Pregunta 4 -->
+    <div id="question4" class="question-container card shadow p-4 mb-4">
+        <div class="question card-body">
+            <h5 class="card-title">¿Qué puedes hacer si crees que tu información es incorrecta?</h5>
+            <div class="options">
+                <button class="btn btn-primary mb-2" onclick="checkAnswer(4, true)">Solicitar la corrección</button>
+                <button class="btn btn-primary mb-2" onclick="checkAnswer(4, false)">Nada, no es posible cambiarla</button>
+                <button class="btn btn-primary mb-2" onclick="checkAnswer(4, false)">Esperar 6 meses para actualizarla</button>
+            </div>
+        </div>
+        <div id="feedback4" class="feedback"></div>
+    </div>
+
+    <!-- Pregunta 5 -->
+    <div id="question5" class="question-container card shadow p-4 mb-4">
+        <div class="question card-body">
+            <h5 class="card-title">¿Qué tipo de cookies usamos en nuestro sitio?</h5>
+            <div class="options">
+                <button class="btn btn-primary mb-2" onclick="checkAnswer(5, false)">Cookies solo de terceros</button>
+                <button class="btn btn-primary mb-2" onclick="checkAnswer(5, true)">Cookies funcionales, de rendimiento y estrictamente necesarias</button>
+                <button class="btn btn-primary mb-2" onclick="checkAnswer(5, false)">Solo cookies de marketing</button>
+            </div>
+        </div>
+        <div id="feedback5" class="feedback"></div>
+    </div>
+
+    <!-- Pregunta 6 -->
+    <div id="question6" class="question-container card shadow p-4 mb-4">
+        <div class="question card-body">
+            <h5 class="card-title">¿Durante cuánto tiempo conservamos tu información personal?</h5>
+            <div class="options">
+                <button class="btn btn-primary mb-2" onclick="checkAnswer(6, false)">La eliminamos inmediatamente</button>
+                <button class="btn btn-primary mb-2" onclick="checkAnswer(6, false)">Por siempre</button>
+                <button class="btn btn-primary mb-2" onclick="checkAnswer(6, true)">Solo el tiempo necesario para cumplir con los fines descritos</button>
+            </div>
+        </div>
+        <div id="feedback6" class="feedback"></div>
+    </div>
+
+    <!-- Puntaje -->
+    <div class="text-center mt-3">
+        <h3>Puntaje: <span id="score">0</span>/6</h3>
+    </div>
+
+    <!-- Resultados -->
+    <div id="result" class="result-container card shadow p-4 mt-4" style="display:none;">
+        <div class="result-message text-center" id="resultMessage"></div>
+        <div class="text-center">
+            <button class="btn btn-success" onclick="location.reload()">Jugar de nuevo</button>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    let currentQuestion = 1;
+    let correctAnswers = 0;
+
+    function checkAnswer(questionNumber, isCorrect) {
+        const feedback = document.getElementById('feedback' + questionNumber);
+        
+        // Mostrar retroalimentación de respuesta
+        if (isCorrect) {
+            feedback.innerHTML = '¡Correcto!';
+            feedback.classList.add('correct');
+            correctAnswers++;
+        } else {
+            feedback.innerHTML = 'Incorrecto.';
+            feedback.classList.add('incorrect');
+        }
+        
+        feedback.style.display = 'block';
+
+        // Actualizar el puntaje
+        document.getElementById('score').innerText = correctAnswers;
+
+        // Esperar un segundo antes de mostrar la siguiente pregunta
+        setTimeout(() => {
+            feedback.style.display = 'none';
+            document.getElementById('question' + questionNumber).style.display = 'none';
+            
+            if (questionNumber < 6) {
+                currentQuestion++;
+                document.getElementById('question' + currentQuestion).style.display = 'block';
+            } else {
+                showFinalResult();
+            }
+        }, 1000);
+    }
+
+    function showFinalResult() {
+        const resultMessage = document.getElementById('resultMessage');
+        let message;
+
+        if (correctAnswers === 6) {
+            message = '¡Excelente! Has respondido todas las preguntas correctamente.';
+        } else if (correctAnswers >= 4) {
+            message = '¡Buen trabajo! Has respondido correctamente ' + correctAnswers + ' de 6 preguntas.';
+        } else {
+            message = 'Has respondido correctamente ' + correctAnswers + ' de 6 preguntas. ¡Sigue aprendiendo!';
+        }
+
+        resultMessage.innerText = message;
+        document.getElementById('result').style.display = 'block';
+    }
+
+    // Mostrar la primera pregunta al cargar la página
+    document.getElementById('question1').style.display = 'block';
+</script>
+
+</body>
+</html>
