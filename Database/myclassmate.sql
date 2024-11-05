@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 05, 2024 at 04:31 PM
+-- Generation Time: Nov 05, 2024 at 08:03 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -40,7 +40,7 @@ CREATE TABLE `college` (
 --
 
 INSERT INTO `college` (`idCollege`, `name`, `emailExtension`, `createdAt`, `active`) VALUES
-(1, 'Universidad Tecnológica de Chihuahua', '@utch.edu.mx', '2024-11-05 15:31:32', 1);
+(1, 'Universidad Tecnológica de Chihuahua', '@utch.edu.mx', '2024-11-05 18:59:57', 1);
 
 -- --------------------------------------------------------
 
@@ -279,6 +279,209 @@ CREATE TABLE `subject` (
   `active` tinyint(1) NOT NULL DEFAULT 1 CHECK (`active` in (0,1))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `subject`
+--
+
+INSERT INTO `subject` (`idSubject`, `name`, `active`) VALUES
+(1, 'Probabilidad y estadística', 1),
+(2, 'Química básica', 1),
+(3, 'Electricidad y magnetismo', 1),
+(4, 'Desarrollo sustentable', 1),
+(5, 'Informática', 1),
+(6, 'Circuitos eléctricos', 1),
+(7, 'Inglés I', 1),
+(8, 'Expresión oral y escrita I', 1),
+(9, 'Formación sociocultural I', 1),
+(10, 'Álgebra lineal', 1),
+(11, 'Física', 1),
+(12, 'Termodinámica', 1),
+(13, 'Instalaciones eléctricas', 1),
+(14, 'Electrónica industrial', 1),
+(15, 'Mecánica industrial', 1),
+(16, 'Inglés II', 1),
+(17, 'Formación sociocultural II', 1),
+(18, 'Funciones matemáticas', 1),
+(19, 'Fisicoquímica', 1),
+(20, 'Instrumentación industrial', 1),
+(21, 'Mantenimiento electromecánico', 1),
+(22, 'Energías renovables', 1),
+(23, 'Formulación de proyectos', 1),
+(24, 'Calidad', 1),
+(25, 'Cálculo diferencial', 1),
+(26, 'Estructura y propiedades de los materiales', 1),
+(27, 'Fisicoquímica aplicada', 1),
+(28, 'Dibujo industrial', 1),
+(29, 'Electrónica de potencia', 1),
+(30, 'Estaciones meteorológicas', 1),
+(31, 'Procesos industriales', 1),
+(32, 'Inglés IV', 1),
+(33, 'Formación sociocultural III', 1),
+(34, 'Cálculo integral', 1),
+(35, 'Seguridad industrial', 1),
+(36, 'Celdas fotovoltaicas', 1),
+(37, 'Colectores solares', 1),
+(38, 'Administración de proyectos', 1),
+(39, 'Adquisición de datos', 1),
+(40, 'Inglés V', 1),
+(41, 'Expresión oral y escrita II', 1),
+(42, 'Organización industrial', 1),
+(43, 'Metrología I', 1),
+(44, 'Herramientas informáticas I', 1),
+(45, 'Administración de la producción I', 1),
+(46, 'Métodos y sistemas de trabajo I', 1),
+(47, 'Tópicos de manufactura', 1),
+(48, 'Costos de producción', 1),
+(49, 'Control estadístico del proceso', 1),
+(50, 'Procesos de manufactura I', 1),
+(51, 'Distribución de planta', 1),
+(52, 'Resistencia de los materiales', 1),
+(53, 'Química II', 1),
+(54, 'Gestión ambiental', 1),
+(55, 'Fundamentos de automatización', 1),
+(56, 'Proceso de maquinado de precisión no convencional', 1),
+(57, 'Tolerancias geométricas y dimensionales', 1),
+(58, 'Métodos y sistemas de trabajo II', 1),
+(59, 'Seguridad e higiene industrial', 1),
+(60, 'Procesos de fabricación de materiales cerámicos I', 1),
+(61, 'Manejo de materiales', 1),
+(62, 'Reología', 1),
+(63, 'Almacenes y control de inventarios', 1),
+(64, 'Análisis de las condiciones de trabajo', 1),
+(65, 'Transformación de productos plásticos I', 1),
+(66, 'Procesos de manufactura de moldes, cabezales y dad', 1),
+(67, 'Mantenimiento autónomo en proceso', 1),
+(68, 'Diseño de producto', 1),
+(69, 'Metrología II', 1),
+(70, 'Estructura y propiedad de los polímeros y los acer', 1),
+(71, 'Proceso de maquinado de precisión convencional', 1),
+(72, 'Dibujo asistido por la computadora', 1),
+(73, 'Administración de la calidad', 1),
+(74, 'Fundamentos de legislación industrial', 1),
+(75, 'Fundamentos de ingeniería económica', 1),
+(76, 'Procesos de manufactura II', 1),
+(77, 'Cadena de suministros', 1),
+(78, 'Manufactura aplicada', 1),
+(79, 'Procesos químicos', 1),
+(80, 'Proceso de maquinado de precisión CNC', 1),
+(81, 'Manufactura asistida por computadora', 1),
+(82, 'Prueba de los materiales', 1),
+(83, 'Moldes cerámicos', 1),
+(84, 'Procesos de fabricación de materiales cerámicos II', 1),
+(85, 'Propiedades y pruebas de materias primas', 1),
+(86, 'Herramientas informáticas II', 1),
+(87, 'Automatización', 1),
+(88, 'Transformación de productos plásticos II', 1),
+(89, 'Moldes', 1),
+(90, 'Reciclado de polímeros', 1),
+(91, 'Principios de automatización', 1),
+(92, 'Desarrollo humano y valores', 1),
+(93, 'Mercadotecnia', 1),
+(94, 'Matemáticas', 1),
+(95, 'Fundamentos de administración y entorno empresaria', 1),
+(96, 'Comunicación y habilidades digitales', 1),
+(97, 'Habilidades socioemocionales y manejo de conflicto', 1),
+(98, 'Estadística I', 1),
+(99, 'Planeación estratégica', 1),
+(100, 'Contabilidad para negocios', 1),
+(101, 'Comportamiento del consumidor', 1),
+(102, 'Economía', 1),
+(103, 'Desarrollo del pensamiento y toma de decisiones', 1),
+(104, 'Legislación comercial', 1),
+(105, 'Estadística II', 1),
+(106, 'Sistema de investigación de mercados I', 1),
+(107, 'Estrategias de producto y precio', 1),
+(108, 'Ética profesional', 1),
+(109, 'Mezcla promocional', 1),
+(110, 'Diseño digital y multimedia', 1),
+(111, 'Sistema de investigación de mercados II', 1),
+(112, 'Gestión de ventas', 1),
+(113, 'Administración del tiempo', 1),
+(114, 'Liderazgo de equipos de alto desempeño', 1),
+(115, 'Logística y distribución', 1),
+(116, 'Mercadotecnia de servicios', 1),
+(117, 'Mercadotecnia digital I', 1),
+(118, 'Mercadotecnia estratégica', 1),
+(119, 'Introducción al mantenimiento', 1),
+(120, 'Seguridad y medio ambiente', 1),
+(121, 'Administración del personal', 1),
+(122, 'Gestión del mantenimiento', 1),
+(123, 'Calidad en el mantenimiento', 1),
+(124, 'Costos y presupuestos', 1),
+(125, 'Sistemas eléctricos', 1),
+(126, 'Máquinas y mecanismos', 1),
+(127, 'Electrónica analógica', 1),
+(128, 'Máquinas eléctricas', 1),
+(129, 'Redes de servicios industriales', 1),
+(130, 'Electrónica digital', 1),
+(131, 'Principios de programación', 1),
+(132, 'Sistemas neumáticos e hidráulicos', 1),
+(133, 'Máquinas térmicas', 1),
+(134, 'Mantenimiento a procesos de manufactura', 1),
+(135, 'Automatización y robótica', 1),
+(136, 'Ingeniería de materiales', 1),
+(137, 'Fundamentos matemáticos', 1),
+(138, 'Metodología para la programación', 1),
+(139, 'Metrología', 1),
+(140, 'Cálculo de varias variables', 1),
+(141, 'Control de motores eléctricos', 1),
+(142, 'Ecuaciones diferenciales', 1),
+(143, 'Controladores lógicos programables', 1),
+(144, 'Implementación de sistemas automáticos', 1),
+(145, 'Desarrollo de habilidades de pensamiento lógico', 1),
+(146, 'Fundamentos de TI', 1),
+(147, 'Fundamentos de redes', 1),
+(148, 'Metodologías de desarrollo de software', 1),
+(149, 'Interconexión de redes', 1),
+(150, 'Programación orientada a objetos', 1),
+(151, 'Introducción al diseño digital', 1),
+(152, 'Base de datos', 1),
+(153, 'Sistemas operativos', 1),
+(154, 'Aplicaciones WEB', 1),
+(155, 'Bases de datos para aplicaciones', 1),
+(156, 'Mercadotecnia digital', 1),
+(157, 'Diseño digital', 1),
+(158, 'Conmutación en redes de datos', 1),
+(159, 'Infraestructura de redes de datos', 1),
+(160, 'Estándares y métricas para el desarrollo de softwa', 1),
+(161, 'Principios para IoT', 1),
+(162, 'Diseño de APPS', 1),
+(163, 'Estructura de datos aplicadas', 1),
+(164, 'Aplicaciones WEB orientadas a servicios', 1),
+(165, 'Evaluación y mejora para el desarrollo de software', 1),
+(166, 'Electrónica para IDC', 1),
+(167, 'Conexión de redes WAN', 1),
+(168, 'Administración de servidores I', 1),
+(169, 'Programación de redes', 1),
+(170, 'Aplicaciones de IoT', 1),
+(171, 'Desarrollo móvil multiplataforma', 1),
+(172, 'Aplicaciones WEB para I4.0', 1),
+(173, 'Bases de datos para cómputo en la nube', 1),
+(174, 'Producción audiovisual', 1),
+(175, 'Animación 3D', 1),
+(176, 'Desarrollo de aplicaciones de realidad virtual', 1),
+(177, 'Desarrollo de aplicaciones para negocios digitales', 1),
+(178, 'Introducción a BIG DATA', 1),
+(179, 'Administración de redes de datos', 1),
+(180, 'Administración de servidores II', 1),
+(181, 'Ciberseguridad', 1),
+(182, 'Fundamentos pedagógicos de la educación', 1),
+(183, 'Estadística aplicada a la educación', 1),
+(184, 'Metodología de la investigación', 1),
+(185, 'Diseño de material didáctico', 1),
+(186, 'Metodología de la didáctica', 1),
+(187, 'La educación en México', 1),
+(188, 'Planeación docente', 1),
+(189, 'Evaluación del proceso enseñanza y aprendizaje', 1),
+(190, 'Estrategias enseñanza de la lengua inglesa I', 1),
+(191, 'Diseño de situaciones de aprendizaje', 1),
+(192, 'Instrumentos de evaluación', 1),
+(193, 'Fonética', 1),
+(194, 'Estrategias de enseñanza de la lengua inglesa II', 1),
+(195, 'Estructura gramatical', 1),
+(196, 'Enseñanza de habilidades productivas', 1),
+(197, 'Enseñanzas de habilidades receptivas', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -333,13 +536,16 @@ CREATE TABLE `user` (
 -- Indexes for table `college`
 --
 ALTER TABLE `college`
-  ADD PRIMARY KEY (`idCollege`);
+  ADD PRIMARY KEY (`idCollege`),
+  ADD UNIQUE KEY `name` (`name`),
+  ADD UNIQUE KEY `emailExtension` (`emailExtension`);
 
 --
 -- Indexes for table `degree`
 --
 ALTER TABLE `degree`
-  ADD PRIMARY KEY (`idDegree`);
+  ADD PRIMARY KEY (`idDegree`),
+  ADD UNIQUE KEY `name` (`name`);
 
 --
 -- Indexes for table `degree_subdegree`
@@ -353,7 +559,8 @@ ALTER TABLE `degree_subdegree`
 -- Indexes for table `paymethod`
 --
 ALTER TABLE `paymethod`
-  ADD PRIMARY KEY (`idPayMethod`);
+  ADD PRIMARY KEY (`idPayMethod`),
+  ADD UNIQUE KEY `name` (`name`);
 
 --
 -- Indexes for table `petition`
@@ -406,13 +613,16 @@ ALTER TABLE `schedule`
 -- Indexes for table `sloottime`
 --
 ALTER TABLE `sloottime`
-  ADD PRIMARY KEY (`idSlootTime`);
+  ADD PRIMARY KEY (`idSlootTime`),
+  ADD UNIQUE KEY `startTime` (`startTime`),
+  ADD UNIQUE KEY `endTime` (`endTime`);
 
 --
 -- Indexes for table `status`
 --
 ALTER TABLE `status`
-  ADD PRIMARY KEY (`idStatus`);
+  ADD PRIMARY KEY (`idStatus`),
+  ADD UNIQUE KEY `name` (`name`);
 
 --
 -- Indexes for table `student`
@@ -431,13 +641,15 @@ ALTER TABLE `studentnotification`
 -- Indexes for table `subdegree`
 --
 ALTER TABLE `subdegree`
-  ADD PRIMARY KEY (`idSubdegree`);
+  ADD PRIMARY KEY (`idSubdegree`),
+  ADD UNIQUE KEY `name` (`name`);
 
 --
 -- Indexes for table `subject`
 --
 ALTER TABLE `subject`
-  ADD PRIMARY KEY (`idSubject`);
+  ADD PRIMARY KEY (`idSubject`),
+  ADD UNIQUE KEY `name` (`name`);
 
 --
 -- Indexes for table `tutor`
@@ -457,6 +669,7 @@ ALTER TABLE `tutornotification`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`idUser`),
+  ADD UNIQUE KEY `email` (`email`),
   ADD KEY `fk_user_idDegree_subdegree` (`idDegree_subdegree`),
   ADD KEY `fk_user_college_idCollege` (`college_idCollege`);
 
@@ -546,7 +759,7 @@ ALTER TABLE `subdegree`
 -- AUTO_INCREMENT for table `subject`
 --
 ALTER TABLE `subject`
-  MODIFY `idSubject` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idSubject` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=198;
 
 --
 -- AUTO_INCREMENT for table `tutornotification`
