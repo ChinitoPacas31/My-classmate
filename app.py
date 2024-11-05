@@ -51,7 +51,6 @@ def login():
         cur.execute('SELECT * FROM user WHERE email = %s', (email,))
         user = cur.fetchone()
 
-        cur.close()
         conn.close()
 
         if user and user['password'] == password:  # Compara directamente la contraseña almacenada
