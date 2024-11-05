@@ -62,7 +62,7 @@
           height: 100%;
           margin: 0; 
       }
-
+      
       .background-image {
           position: absolute;
           top: 0;
@@ -136,8 +136,17 @@
             {% else %}
             
             <!-- Botones de Log In y Register -->
-                <a href="{{ url_for('login') }}" class="btn btn-dark">Iniciar sesión</a>
-                <a href="{{ url_for('register') }}" class="btn btn-dark">Registrarse</a>
+            <a class="nav-item" href="{{ url_for('register') }}" >  
+              <button type="button" class="btn btn-dark">
+              Register
+            </button>
+          </a>
+             
+              <a class="nav-item" href="{{ url_for('login') }}" >  
+                <button type="button" class="btn btn-dark">
+                Log In
+              </button>
+            </a>
           {% endif %}
           </div>
         </nav>
