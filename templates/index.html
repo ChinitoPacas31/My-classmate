@@ -137,19 +137,18 @@
             <a href="{{ url_for('logout') }}">Cerrar sesión</a>
             {% else %}
             
-
+            <!-- Botones de Log In y Register -->
+              <button type="button" class="btn btn-dark">
+                <a href="{{ url_for('login') }}">Iniciar sesión</a>
+            </button>
+            </a>
+  
+              <button type="button" class="btn btn-dark">
+                <a href="{{ url_for('register') }}">Registrarse</a> 
+            </button>
+          </a>
+          {% endif %}
           </div>
-                      <!-- Botones de Log In y Register -->
-                      <button type="button" class="btn btn-dark">
-                        <a href="{{ url_for('login') }}">Iniciar sesión</a>
-                    </button>
-                    </a>
-          
-                      <button type="button" class="btn btn-dark">
-                        <a href="{{ url_for('register') }}">Registrarse</a> 
-                    </button>
-                  </a>
-                  {% endif %}
         </nav>
   
         <div class="text-center" style="margin-top: 90px; color: white;">
