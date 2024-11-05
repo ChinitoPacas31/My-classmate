@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyClassmate Login</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" 
+    integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" 
+    crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
+
+    <style>
+      /* Imagen de fondo borrosa */
+      body, html {
+          height: 100%;
+          margin: 0;
+      }
+
+      .background-image {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background-image: url('pizarron.jpeg'); /* Cambia esta ruta por la de tu imagen */
+          background-size: cover;
+          background-position: center;
+          filter: blur(10px); /* Aplica el desenfoque */
+          z-index: -1; /* Mantener la imagen detrás del contenido */
+      }
+      .content {
+          position: relative;
+          z-index: 1;
+          color: white;
+          text-align: center;
+      }
+      .card{
+        border-radius: 1.5rem;
+      }
+
+  </style>
+  </head>
+<body>
+  <div class="background-image"></div>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+          <a class="navbar-brand" href="index.html" >   
+            <h2>MyClassmate</h2>
+          </a>
+    
+            <button class="navbar-toggler" type="button" 
+            data-toggle="collapse" 
+            data-target="#navbarSupportedContent" 
+            aria-controls="navbarSupportedContent" 
+            aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+          
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav mr-auto">
+              </ul>
+    
+              <a class="nav-item" href="login.html" >  
+                <button type="button" class="btn btn-dark">
+                Log In
+              </button>
+            </a>
+    
+            <a class="nav-item mr-2" href="register.html" >  
+                <button type="button" class="btn btn-dark">
+                Register
+              </button>
+            </a>
+            </div>
+          </nav>
+
+        <div class="container">
+            <div class="row justify-content-center">
+              <div class="col-md-5">
+                <div class="card mt-5">
+                  <div class="card-header text-center">
+                    <div class="row justify-content-center mt-4">
+                        <h3>My<span class="badge badge-warning">Login</span></h3>
+                    </div>
+                  </div>
+                  <div class="card-body">
+
+                    <!-- Formulario de inicio de sesión -->
+                    <form>
+                      <div class="mb-3">
+                        <label for="email" class="form-label">Correo electrónico</label>
+                        <input type="email" class="form-control" id="email" placeholder="Ingresa tu correo">
+                      </div>
+                      <div class="mb-3">
+                        <label for="password" class="form-label">Contraseña</label>
+                        <input type="password" class="form-control" id="password" placeholder="Ingresa tu contraseña">
+                      </div>
+                      <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="remember">
+                        <label class="form-check-label" for="remember">Recordarme</label>
+                      </div>
+
+                      <!-- Botón para enviar el formulario -->
+                      <button type="submit" class="btn btn-dark w-100 bg-warning" style="color: rgb(0, 0, 0);">Login</button>
+                    </form>
+                  </div>
+
+                  <!-- Enlace para crear una cuenta si no se tiene -->
+                  <div class="card-footer text-center">
+                    <small>¿No tienes una cuenta? <a href="register.html">Registrate</a></small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+    </header>
+    <footer><p></p></footer>
+</body>
+</html>
