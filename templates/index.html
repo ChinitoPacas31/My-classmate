@@ -62,7 +62,7 @@
           height: 100%;
           margin: 0; 
       }
-
+      
       .background-image {
           position: absolute;
           top: 0;
@@ -120,11 +120,9 @@
                 </a>
                 <div class="dropdown-menu">
                   <a class="dropdown-item" href="perfil.html">Perfil</a>
-                  <a class="dropdown-item" href="#">Citas (No disponible por el momento)</a>
-                  <a class="dropdown-item" href="#">Horarios (No disponible por el momento)</a>
+                  <a class="dropdown-item" href="citas.html">Horarios</a>
                   <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#">Preguntas Frecuentes (No disponible por el momento)</a>
-                  <a class="dropdown-item" href="#">Ayuda (No disponible por el momento)</a>
+                  <a class="dropdown-item" href="preguntas.html">Ayuda</a>
                 </div>
               </li>
               <li class="nav-item">
@@ -138,8 +136,17 @@
             {% else %}
             
             <!-- Botones de Log In y Register -->
-                <a href="{{ url_for('login') }}" class="btn btn-dark">Log In</a>
-                <a href="{{ url_for('register') }}" class="btn btn-dark">Register</a>
+            <a class="nav-item" href="{{ url_for('register') }}" >  
+              <button type="button" class="btn btn-dark">
+              Register
+            </button>
+          </a>
+             
+              <a class="nav-item" href="{{ url_for('login') }}" >  
+                <button type="button" class="btn btn-dark">
+                Log In
+              </button>
+            </a>
           {% endif %}
           </div>
         </nav>
@@ -152,10 +159,10 @@
           <h2>Conectando estudiantes, potenciando aprendizajes.</h2>
         </div>
       
-          <div class="text-center" style="margin: 40px;">
-            <button type="button" class="btn btn-dark">Get Started</button>
-            <button type="button" class="btn btn-warning">Learn More</button>
-          </div>
+        <div class="text-center" style="margin: 40px;">
+          <a href="{{ url_for('login') }}" class="btn btn-dark">Get Started</a>
+          <a href="#" class="btn btn-warning">Learn More</a>
+        </div>
         
         <br>
   
