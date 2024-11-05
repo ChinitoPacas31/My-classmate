@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 05, 2024 at 04:03 PM
+-- Generation Time: Nov 05, 2024 at 04:31 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -40,7 +40,7 @@ CREATE TABLE `college` (
 --
 
 INSERT INTO `college` (`idCollege`, `name`, `emailExtension`, `createdAt`, `active`) VALUES
-(1, 'Universidad Tecnológica de Chihuahua', '@utch.edu.mx', '2024-11-05 15:03:05', 1);
+(1, 'Universidad Tecnológica de Chihuahua', '@utch.edu.mx', '2024-11-05 15:31:32', 1);
 
 -- --------------------------------------------------------
 
@@ -59,13 +59,13 @@ CREATE TABLE `degree` (
 --
 
 INSERT INTO `degree` (`idDegree`, `name`, `active`) VALUES
-(1, 'Tecnologias de la información', 1),
-(2, 'Energia y desarrollo sostenible', 1),
-(3, 'Ingenieria Industrial', 1),
+(1, 'Tecnologías de la información', 1),
+(2, 'Energía y Desarrollo Sostenible', 1),
+(3, 'Ingeniería Industrial', 1),
 (4, 'Negocios y mercadotecnia', 1),
 (5, 'Mantenimiento Industrial', 1),
 (6, 'Mecatrónica', 1),
-(7, 'Lengua inglesa', 1);
+(7, 'Lengua Inglesa', 1);
 
 -- --------------------------------------------------------
 
@@ -254,11 +254,11 @@ CREATE TABLE `subdegree` (
 --
 
 INSERT INTO `subdegree` (`idSubdegree`, `name`, `active`) VALUES
-(1, 'Energia y desarrollo sostenible', 1),
-(2, 'Ceramicos', 1),
-(3, 'Moldeo de plasticos', 1),
-(4, 'Procesos productivos', 1),
-(5, 'Maquinados de precisión', 1),
+(1, 'Energía y Desarrollo Sostenible', 1),
+(2, 'Cerámicos', 1),
+(3, 'Moldeo de Plásticos', 1),
+(4, 'Procesos Productivos', 1),
+(5, 'Maquinados de Precisión', 1),
 (6, 'Mercadotecnia', 1),
 (7, 'Mantenimiento Industrial', 1),
 (8, 'Mecatrónica', 1),
