@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 05, 2024 at 07:30 AM
+-- Generation Time: Nov 05, 2024 at 04:03 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -40,7 +40,7 @@ CREATE TABLE `college` (
 --
 
 INSERT INTO `college` (`idCollege`, `name`, `emailExtension`, `createdAt`, `active`) VALUES
-(1, 'Universidad Tecnológica de Chihuahua', '@utch.edu.mx', '2024-11-05 06:29:09', 1);
+(1, 'Universidad Tecnológica de Chihuahua', '@utch.edu.mx', '2024-11-05 15:03:05', 1);
 
 -- --------------------------------------------------------
 
@@ -107,6 +107,23 @@ CREATE TABLE `paymethod` (
   `idPayMethod` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
   `active` tinyint(1) NOT NULL DEFAULT 1 CHECK (`active` in (0,1))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `petition`
+--
+
+CREATE TABLE `petition` (
+  `idPetiton` int(11) NOT NULL,
+  `tutor_user_idUser` int(11) DEFAULT NULL,
+  `student_user_idUser` int(11) NOT NULL,
+  `subject_idSubject` int(11) NOT NULL,
+  `description` varchar(100) NOT NULL,
+  `petitionDate` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `supply` decimal(10,2) DEFAULT NULL,
+  `status_idStatus` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -339,6 +356,16 @@ ALTER TABLE `paymethod`
   ADD PRIMARY KEY (`idPayMethod`);
 
 --
+-- Indexes for table `petition`
+--
+ALTER TABLE `petition`
+  ADD PRIMARY KEY (`idPetiton`),
+  ADD KEY `fk_petition_tutor_user_idUser` (`tutor_user_idUser`),
+  ADD KEY `fk_petition_student_user_idUser` (`student_user_idUser`),
+  ADD KEY `fk_petition_subject_idSubject` (`subject_idSubject`),
+  ADD KEY `fk_petition_status_idStatus` (`status_idStatus`);
+
+--
 -- Indexes for table `review`
 --
 ALTER TABLE `review`
@@ -462,6 +489,12 @@ ALTER TABLE `paymethod`
   MODIFY `idPayMethod` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `petition`
+--
+ALTER TABLE `petition`
+  MODIFY `idPetiton` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `review`
 --
 ALTER TABLE `review`
@@ -537,6 +570,15 @@ ALTER TABLE `user`
 ALTER TABLE `degree_subdegree`
   ADD CONSTRAINT `fk_degree_subdegree_degree_idDegree` FOREIGN KEY (`degree_idDegree`) REFERENCES `degree` (`idDegree`),
   ADD CONSTRAINT `fk_degree_subdegree_subdegree_idSubdegree` FOREIGN KEY (`subdegree_idSubdegree`) REFERENCES `subdegree` (`idSubdegree`);
+
+--
+-- Constraints for table `petition`
+--
+ALTER TABLE `petition`
+  ADD CONSTRAINT `fk_petition_status_idStatus` FOREIGN KEY (`status_idStatus`) REFERENCES `status` (`idStatus`),
+  ADD CONSTRAINT `fk_petition_student_user_idUser` FOREIGN KEY (`student_user_idUser`) REFERENCES `student` (`user_idUser`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_petition_subject_idSubject` FOREIGN KEY (`subject_idSubject`) REFERENCES `subject` (`idSubject`),
+  ADD CONSTRAINT `fk_petition_tutor_user_idUser` FOREIGN KEY (`tutor_user_idUser`) REFERENCES `tutor` (`user_idUser`) ON UPDATE CASCADE;
 
 --
 -- Constraints for table `review`
