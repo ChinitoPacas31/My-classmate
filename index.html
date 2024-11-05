@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyClassmate</title>
+    <link rel="icon" href="icon.png">
+    <!-- Enlace a la hoja de estilos de Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" 
+    integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" 
+    crossorigin="anonymous">
+    
+    <!-- Enlace a la biblioteca jQuery -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    
+    <!-- Enlace a Popper.js, utilizado para el manejo de popups -->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    
+    <!-- Enlace al script de Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
+        <style>
+        .full-height {
+            height: 55vh; /* Ocupa toda la altura de la pantalla */
+            display: flex;
+            justify-content: center;
+            align-items: center; 
+        }
+        .container-targets{
+          margin-right: 15px;
+          margin-left: 15px;
+        }
+        .content-container {
+            text-align: center; /* Centra el texto */
+            padding: 15px;
+            max-width: 900px; /* Limita el ancho del contenedor */
+            width: 100%; /* Para que sea responsive */
+        }
+        .content-container img {
+            width: 100%;
+            max-width: 400px; /* Limita el ancho máximo de la imagen */
+            height: auto;
+            border-radius: 50px;
+            margin-top: 20px;
+        }
+        .full-height2 {
+            height: 40vh; /* Ocupa toda la altura de la pantalla */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .content-container2 {
+            text-align: center; /* Centra el texto */
+            padding: 30px;
+            background-color: #ffbf00; /* Color de fondo claro */
+            border-radius: 50px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 2); /* Sombra */
+            max-width: 1000px; /* Limita el ancho del contenedor */
+            width: 100%; /* Para que sea responsive */
+        }
+              /* Imagen de fondo borrosa */
+      body, html {
+          height: 100%;
+          margin: 0;
+      }
+
+      .background-image {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background-image: url('pizarron.jpeg'); /* Cambia esta ruta por la de tu imagen */
+          background-size: cover;
+          background-position: center;
+          filter: blur(10px); /* Aplica el desenfoque */
+          z-index: -1; /* Mantener la imagen detrás del contenido */
+      }
+      .content {
+          position: relative;
+          z-index: 1;
+          color: white;
+          text-align: center;
+      }
+          #carouselExampleControls {
+          max-width: 2000px; /* Ajusta el ancho máximo según necesites */
+          margin: auto; /* Centra el carrusel en la página */
+      }
+
+      .carousel-inner img {
+          height: 300px; /* Ajusta la altura de las imágenes según necesites */
+          object-fit: cover; /* Asegura que las imágenes mantengan su proporción y no se deformen */
+      }
+
+      </style>
+  </head>
+<body>
+  <div class="background-image">
+    
+  </div>
+    <!-- Barra de navegación -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="index.html" >   
+          <h2>MyClassmate</h2>
+        </a>
+
+        <!-- Botón para colapsar la barra de navegación en dispositivos pequeños -->
+        <button class="navbar-toggler" type="button" 
+        data-toggle="collapse" 
+        data-target="#navbarSupportedContent" 
+        aria-controls="navbarSupportedContent" 
+        aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle mx-2" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+              Menú
+              </a>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="perfil.html">Perfil</a>
+                <a class="dropdown-item" href="#">Citas (No disponible por el momento)</a>
+                <a class="dropdown-item" href="#">Horarios (No disponible por el momento)</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Preguntas Frecuentes (No disponible por el momento)</a>
+                <a class="dropdown-item" href="#">Ayuda (No disponible por el momento)</a>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="terms.html">Terminos y Condiciones</a>
+            </li>
+          </ul>
+
+          <!-- Botones de Log In y Register -->
+          <a class="nav-item mr-2" href="login.html" >  
+            <button type="button" class="btn btn-dark">
+            Log In
+          </button>
+        </a>
+
+        <a class="nav-item mr-2" href="register.html" >  
+            <button type="button" class="btn btn-dark">
+            Register
+          </button>
+        </a>
+          
+        </div>
+      </nav>
+
+      <div class="text-center" style="margin-top: 90px; color: white;">
+        <h1>Counseling Services for Students</h1>
+    </div>
+
+      <div class="text-center" style="margin: 40px; color: white;">
+        <h2>Conectando estudiantes, potenciando aprendizajes.</h2>
+      </div>
+    
+        <div class="text-center" style="margin: 40px;">
+          <button type="button" class="btn btn-dark">Get Started</button>
+          <button type="button" class="btn btn-warning">Learn More</button>
+        </div>
+      
+      <br>
+
+    <!-- Tarjeta de David Bustillos -->
+    <div class="row justify-content-center container-targets">
+
+    <div class="card mx-3 mb-3" style="width: 18rem;">
+        <img style= "height: 349px;" src="userxd.png" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">David Julian Bustillos Mata</h5>
+          <h5 class="card-title">★★★★★ (5 de 5)</h5>
+          <p class="card-text">Soy muy bueno en la programación</p>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">POO</li>
+          <li class="list-group-item">Bases de datos</li>
+          <li class="list-group-item">Tercer Cuatrimestre</li>
+        </ul>
+        <div class="card-body">
+          <a href="https://www.instagram.com/davld_j/?utm_source=ig_web_button_share_sheet" class="card-link">Instagram</a>
+        </div>
+      </div>
+      
+      <!-- Tarjeta de Josué Temoltzi -->
+      <div class="card mx-3 mb-3" style="width: 18rem;">
+        <img style= "height: 349px;" src="userxd.png" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">Josué Temoltzi</h5>
+          <h5 class="card-title">★★★☆☆ (3 de 5)</h5>
+          <p class="card-text">Soy muy bueno en la programación</p>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">POO</li>
+          <li class="list-group-item">Bases de datos</li>
+          <li class="list-group-item">Diseño digital</li>
+        </ul>
+        <div class="card-body">
+          <a href="https://www.instagram.com/ricardo_temoltzi?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" class="card-link">Instagram</a>
+        </div>
+      </div>
+
+      <!-- Tarjeta de Luis Domínguez -->
+      <div class="card mx-3 mb-3" style="width: 18rem;">
+        <img style= "height: 349px;" src="userxd.png" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">Luis Domínguez</h5>
+          <h5 class="card-title">★★★★★ (5 de 5)</h5>
+          <p class="card-text">Soy muy bueno en la programación</p>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">POO</li>
+          <li class="list-group-item">Bases de datos</li>
+          <li class="list-group-item">Diseño digital</li>
+        </ul>
+        <div class="card-body">
+          <a href="https://www.instagram.com/davld_j/?utm_source=ig_web_button_share_sheet" class="card-link">Instagram</a>
+        </div>
+      </div>
+
+      <!-- Tarjeta de Joel Rocha -->
+      <div class="card mx-3 mb-3" style="width: 18rem;">
+        <img style= "height: 349px;" src="userxd.png" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">Joel Rocha</h5>
+          <h5 class="card-title">★★★★☆ (4 de 5)</h5>
+          <p class="card-text">Soy muy bueno en la programación</p>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">POO</li>
+          <li class="list-group-item">Bases de datos</li>
+          <li class="list-group-item">Diseño digital</li>
+        </ul>
+        <div class="card-body">
+          <a href="https://www.instagram.com/joel_rocha31?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" class="card-link">Instagram</a>
+        </div>
+      </div>
+    </div>
+
+      <br>
+
+      <div class="container-fluid full-height my-5">
+        <div class="content-container">
+            <!-- Texto centrado -->
+            <h2>Bienvenido a MyClassmate</h2>
+            <p>
+                En MyClassmate, conectamos a estudiantes para que puedan aprender juntos. Ya sea que necesites ayuda en una materia específica o quieras enseñar lo que sabes, aquí encontrarás lo que necesitas.
+            </p>
+            <p>
+                ¡Únete a nuestra comunidad y comienza a mejorar tus habilidades hoy mismo!
+            </p>
+
+            <!-- Imagen centrada debajo del texto -->
+            <img src="https://praxis.com.do/media/zoo/images/ser-estudiante_e90ec9521e69e1ffaba859b4b3449b15.jpg" alt="Imagen representativa">
+        </div>
+        <div class="container-fluid full-height2">
+          <div class="content-container2">
+              <!-- Texto centrado -->
+              <h2>Ready to start?</h2>
+              <p>
+                Estás a un paso de transformar tu experiencia académica! En MyClassmate, creemos que el aprendizaje colaborativo es la clave para el éxito.
+              </p>
+              <p>
+                Regístrate hoy mismo y comienza a conectar con otros estudiantes que comparten tus objetivos.
+              </p>
+          </div>
+      </div>
+    </div>
+
+  <!-- Carrusel -->
+  <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="real3.png" class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item">
+            <img src="real2.png" class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item">
+            <img src="real .png" class="d-block w-100" alt="Hola">
+        </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-target="#carouselExampleControls" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-target="#carouselExampleControls" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </button>
+</div>
+
+<!-- Footer Section -->
+<footer class="text-white text-center py-4 mt-5" style="background-color: #0D1F2D;">
+  <div class="container">
+      <div class="row">
+          <div class="col-md-4">
+              <h6>Enlaces:</h6>
+              <ul class="list-unstyled">
+                  <li><a href="#" class="text-white">Inicio</a></li>
+                  <li><a href="#" class="text-white">Nosotros</a></li>
+                  <li><a href="#" class="text-white">Blog</a></li>
+                  <li><a href="#" class="text-white">Contacto</a></li>
+              </ul>
+          </div>
+          <div class="col-md-4">
+              <h6>Redes Sociales</h6>
+              <ul class="list-unstyled">
+                  <li><a href="#" class="text-white">Facebook</a></li>
+                  <li><a href="#" class="text-white">Twitter</a></li>
+                  <li><a href="#" class="text-white">Instagram</a></li>
+              </ul>
+          </div>
+          <div class="col-md-4">
+              <h6>Newsletter</h6>
+              <form action="">
+                  <input type="email" class="form-control" placeholder="Your Email">
+                  <button class="btn btn-warning mt-2" type="submit">Subscribe</button>
+              </form>
+          </div>
+      </div>
+  </div>
+</footer>
+
+</body>
+</html>
