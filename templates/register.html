@@ -55,7 +55,7 @@
     <div class="background-image"></div>
  <!-- Navegación principal -->
  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="index.html" >   
+  <a class="navbar-brand" href="/" >   
     <h2>MyClassmate</h2>
   </a>
 
@@ -71,13 +71,13 @@
     <ul class="navbar-nav mr-auto">
     </ul>
 
-    <a class="nav-item" href="login.html" >  
+    <a class="nav-item" href="{{ url_for('login') }}" >  
       <button type="button" class="btn btn-dark">
       Log In
     </button>
   </a>
 
-  <a class="nav-item mr-2" href="register.html" >  
+  <a class="nav-item mr-2" href="{{ url_for('register') }}" >  
       <button type="button" class="btn btn-dark">
       Register
     </button>
@@ -131,7 +131,7 @@
             <button type="submit" class="btn btn-dark w-100 bg-warning" style="color: rgb(0, 0, 0);">Registrar</button>
           </form>
           <div class="card-footer text-center">
-            <small>¿Ya tienes una cuenta? <a href="{{ url_for('login') }}">Registrarse</a></small>
+            <small>¿Ya tienes una cuenta? <a href="{{ url_for('login') }}">Log in</a></small>
           </div>
           
         </div>
