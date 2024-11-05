@@ -6,7 +6,7 @@ app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 
 def get_db_connection():
-    return mysql.connector.connect(user="root", password="", host="localhost", port="3306", database="myClassmate")
+    return mysql.connector.connect(user="root", password="", host="localhost", port="3308", database="myclassmate")
 
 @app.route('/')
 def index():
@@ -72,3 +72,4 @@ def logout():
 
 if __name__ == '__main__':
     app.run(port=3000, debug=True)
+    
