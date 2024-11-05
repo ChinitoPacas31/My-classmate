@@ -1,0 +1,11 @@
+<h2>Horarios Disponibles</h2>
+<ul>
+  {% for schedule in schedules %}
+    <li>
+      Año: {{ schedule['year'] }}, Semana: {{ schedule['week'] }}, Día: {{ schedule['day_idDay'] }}, Horario: {{ schedule['timeSlot'] }}
+      <form action="{{ url_for('book_appointment', tutor_id=tutor_id, schedule_id=schedule['idSchedule']) }}" method="post">
+        <button type="submit">Reservar</button>
+      </form>
+    </li>
+  {% endfor %}
+</ul>

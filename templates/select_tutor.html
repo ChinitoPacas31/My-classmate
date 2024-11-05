@@ -1,0 +1,6 @@
+<h2>Selecciona un Tutor</h2>
+<ul>
+  {% for tutor in tutors %}
+    <li><a href="{{ url_for('view_schedule', tutor_id=tutor['idUser']) }}">{{ tutor['name'] }}</a></li>
+  {% endfor %}
+</ul>
