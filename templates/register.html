@@ -55,10 +55,9 @@
     <div class="background-image"></div>
  <!-- Navegación principal -->
  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="index.html" >   
+  <a class="navbar-brand" href="/" >   
     <h2>MyClassmate</h2>
   </a>
-
   <button class="navbar-toggler" type="button" 
   data-toggle="collapse" 
   data-target="#navbarSupportedContent" 
@@ -71,17 +70,11 @@
     <ul class="navbar-nav mr-auto">
     </ul>
 
-    <a class="nav-item" href="login.html" >  
-      <button type="button" class="btn btn-dark">
-      Log In
-    </button>
-  </a>
+    <a class="nav-item" href="login.html" >    
+      <a href="{{ url_for('login') }}" class="btn btn-dark">Iniciar sesión</a>
+</a>
 
-  <a class="nav-item mr-2" href="register.html" >  
-      <button type="button" class="btn btn-dark">
-      Register
-    </button>
-  </a>
+
   </div>
 </nav>
 
