@@ -64,7 +64,6 @@ def login():
         cur.execute('SELECT * FROM user WHERE email = %s', (email,))
         user = cur.fetchone()
 
-        cur.close()
         conn.close()
 
         if user and user['password'] == password:  # Compara directamente la contraseña almacenada
@@ -82,6 +81,10 @@ def logout():
     session.pop('user_name', None)
     return redirect(url_for('index'))
 
+@app.route('/perfil')
+def perfil():
+    # Aquí puedes agregar la lógica para el perfil del usuario
+    return render_template('perfil.html')
 
 if __name__ == '__main__':
     app.run(port=3000, debug=True)
