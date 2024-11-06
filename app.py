@@ -12,6 +12,8 @@ def get_db_connection():
 def index():
     return render_template('index.html')
 
+from datetime import datetime
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
@@ -22,6 +24,8 @@ def register():
         term = request.form['term']
         email = request.form['email']
         password = request.form['password']
+        is_tutor = request.form['is_tutor']
+        cost = request.form['cost'] if is_tutor == 'yes' else None
 
         if not email.endswith('@utch.edu.mx'):
             return 'El correo debe tener la terminación @utch.edu.mx'
@@ -29,7 +33,16 @@ def register():
         conn = get_db_connection()
         cur = conn.cursor()
 
-        cur.execute('INSERT INTO user (name, lastName, college_idCollege, idDegree_subdegree, term, email, password) VALUES (%s, %s, %s, %s, %s, %s, %s)', (name, lastName, college_idCollege, idDegree_subdegree, term, email, password))
+        # Inserción en la tabla `user`
+        cur.execute('INSERT INTO user (name, lastName, college_idCollege, idDegree_subdegree, term, email, password) VALUES (%s, %s, %s, %s, %s, %s, %s)',(name, lastName, college_idCollege, idDegree_subdegree, term, email, password))
+        user_id = cur.lastrowid  # Recupera el id del usuario recién insertado
+
+        # Inserción automática en la tabla `student`
+        cur.execute('INSERT INTO student (user_idUser, online, createdAt, active) VALUES (%s, %s, %s, %s)', (user_id, 0, datetime.now(), 1))
+
+        # Si el usuario selecciona ser tutor, inserta en la tabla `tutor`
+        if is_tutor == 'yes' and cost:
+            cur.execute('INSERT INTO tutor (user_idUser, asesoryCost, meanRating, online, createdAt, active) VALUES (%s, %s, %s, %s, %s, %s)', (user_id, cost, 0, 0, datetime.now(), 1))
 
         conn.commit()
         cur.close()
