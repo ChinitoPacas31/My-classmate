@@ -140,17 +140,15 @@
             {% else %}
             
             <!-- Botones de Log In y Register -->
-            <a class="nav-item" href="{{ url_for('register') }}" >  
-              <button type="button" class="btn btn-dark">
-              Register
-            </button>
-          </a>
-             
-              <a class="nav-item" href="{{ url_for('login') }}" >  
-                <button type="button" class="btn btn-dark">
-                Log In
-              </button>
-            </a>
+            <div class="ml-auto">
+              <a class="nav-item" href="{{ url_for('register') }}">
+                  <button type="button" class="btn btn-dark">Register</button>
+              </a>
+              <a class="nav-item" href="{{ url_for('login') }}">
+                  <button type="button" class="btn btn-dark">Log In</button>
+              </a>
+          </div>
+      
           {% endif %}
           </div>
         </nav>
