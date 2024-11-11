@@ -14,6 +14,62 @@ def index():
 
 from datetime import datetime
 
+@app.route('/agendar', methods=['GET', 'POST'])
+def agendar():
+    # Verificar si el usuario está autenticado
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+
+    if request.method == 'POST':
+        # Obtener y validar tutor_id del formulario
+        tutor_id = request.form.get('tutor_user_idUser')
+        student_id = session['user_id']
+        fecha = request.form['scheduledDate']
+        slot_time_id = request.form['slootTime_idSlootTime']
+
+        # Verificar que tutor_id no esté vacío y convertirlo a entero
+        if not tutor_id:
+            return "Por favor selecciona un tutor", 400
+        
+        try:
+            tutor_id = int(tutor_id)
+        except ValueError:
+            return "ID del tutor no válido", 400
+
+        # Guardar el registro en la tabla schedule
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        try:
+            cursor.execute(
+                """
+                INSERT INTO schedule (tutor_user_idUser, student_user_idUser, scheduledDate, slootTime_idSlootTime)
+                VALUES (%s, %s, %s, %s)
+                """,
+                (tutor_id, student_id, fecha, slot_time_id)
+            )
+            conn.commit()
+        finally:
+            cursor.close()
+            conn.close()
+
+        return redirect(url_for('agendar'))
+
+    # Obtener todos los horarios disponibles para el dropdown
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("SELECT idSlootTime, startTime, endTime FROM sloottime")
+    slot_times = cursor.fetchall()
+
+    # Obtener todos los tutores (id y nombre) para el dropdown
+    cursor.execute("SELECT idUser, name FROM user INNER JOIN tutor ON user.idUser = tutor.user_idUser")
+    tutors = cursor.fetchall()
+    print(tutors)  # Verificar los datos de los tutores en la consola para depuración
+
+    cursor.close()
+    conn.close()
+
+    return render_template('agendar.html', slot_times=slot_times, tutors=tutors)
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':

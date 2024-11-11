@@ -1,0 +1,24 @@
+<form action="{{ url_for('agendar') }}" method="POST">
+    <label for="tutor_user_idUser">Tutor:</label>
+    <select id="tutor_user_idUser" name="tutor_user_idUser" required>
+        <option value="" disabled selected>Selecciona un tutor</option>
+        {% for tutor in tutors %}
+            <option value="{{ tutor.idUser }}">{{ tutor.name }}</option>
+        {% endfor %}
+    </select><br>
+
+    <label for="scheduledDate">Fecha Programada:</label>
+    <input type="date" id="scheduledDate" name="scheduledDate" required><br>
+
+    <label for="slootTime_idSlootTime">Horario:</label>
+    <select id="slootTime_idSlootTime" name="slootTime_idSlootTime" required>
+        <option value="" disabled selected>Selecciona un horario</option>
+        {% for slot in slot_times %}
+            <option value="{{ slot.idSlootTime }}">
+                {{ slot.startTime }} - {{ slot.endTime }}
+            </option>
+        {% endfor %}
+    </select><br>
+
+    <button type="submit">Agendar</button>
+</form>
