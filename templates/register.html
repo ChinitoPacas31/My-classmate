@@ -23,22 +23,33 @@
         /* Imagen de fondo borrosa */
   
         body, html {
-            height: 100%;
+            background-color: #e2e7e6;
             margin: 0;
         }
-  
-        .background-image {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-image: url('pizarron.jpeg'); /* Cambia esta ruta por la de tu imagen */
-            background-size: cover;
-            background-position: center;
-            filter: blur(10px); /* Aplica el desenfoque */
-            z-index: -1; /* Mantener la imagen detrás del contenido */
-        }
+        .background-nav{
+        background-color: #3e5d58;
+      }
+      .background-image {
+        background-color: #e2e7e6;
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+      }
+      .custom-badge {
+        background-color: #3e5d58; /* color de fondo personalizado */
+        color: white; /* color del texto */
+        padding: 0.2em 0.4em;
+        font-size: 0.9em;
+        border-radius: 0.2em;
+      }       
+      .button-bg{
+        background-color:#3e5d58 ;
+      }
+      .card-header:first-child {
+       border-radius: calc(1.5rem - 1px) calc(1.5rem - 1px) 0 0;
+      }
         .btn{
           margin-left: auto; /* Empuja el botón hacia la derecha */
           margin-right: 0;
@@ -59,7 +70,7 @@
 <body>
     <div class="background-image"></div>
  <!-- Navegación principal -->
- <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+ <nav class="navbar navbar-expand-lg navbar-dark background-nav">
   <a class="navbar-brand" href="/" >   
     <h2>MyClassmate</h2>
   </a>
@@ -90,7 +101,7 @@
       <div class="card mt-5">
         <div class="card-header text-center">
           <div class="row justify-content-center mt-4">
-              <h3>My<span class="badge badge-warning">Register</span></h3>
+              <h3>My<span class="badge custom-badge ">Register</span></h3>
           </div>
         </div>
         <div class="card-body">
@@ -148,7 +159,7 @@
             </script>
 
             <!-- Botón para enviar el formulario -->
-            <button type="submit" class="btn btn-dark w-100 bg-warning" style="color: rgb(0, 0, 0);">Registrar</button>
+            <button type="submit" class="btn btn-dark w-100 button-bg" style="color: rgb(255, 255, 255);">Registrar</button>
           
           </form>
           <div class="card-footer text-center">
