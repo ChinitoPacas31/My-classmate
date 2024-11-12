@@ -125,6 +125,8 @@ def login():
         if user and user['password'] == password:  # Compara directamente la contraseña almacenada
             session['user_id'] = user['idUser']
             session['user_name'] = user['name']
+            session['user_email'] = user['email']
+            session['user_rating'] = user.get('meanRating', '0')
             return redirect(url_for('index'))
         else:
             return 'Invalid email or password'
@@ -141,6 +143,25 @@ def logout():
 def perfil():
     # Aquí puedes agregar la lógica para el perfil del usuario
     return render_template('perfil.html')
+    
+@app.route('/tutors')
+def tutors():
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    # Recupera datos de todos los tutores
+    cursor.execute("""
+        SELECT user.name, user.lastName, tutor.asesoryCost, tutor.meanRating, 
+               tutor.online, user.term
+        FROM user
+        INNER JOIN tutor ON user.idUser = tutor.user_idUser
+    """)
+    tutors = cursor.fetchall()
+    
+    cursor.close()
+    conn.close()
+
+    return render_template('tutors.html', tutors=tutors)
 
 if __name__ == '__main__':
     app.run(port=3000, debug=True)

@@ -72,11 +72,11 @@
                   </div>
                   <div class="col-md-8">
                     <ul class="list-group list-group-flush">
-                      <li class="list-group-item"><strong>Correo Electrónico:</strong> usuario@utch.edu.mx</li>
+                      <li class="list-group-item"><strong>Correo Electrónico:</strong> {{ session['user_email'] }}</li>
                       <li class="list-group-item"><strong>Calificación:</strong> 
                         <span class="text-warning">
                           ★★★★☆
-                        </span> (4.5 de 5)
+                        </span> ({{session['user_rating']}} de 5)
                       </li>
                       <li class="list-group-item"><strong>Materias que Asesora:</strong> 
                         <ul>

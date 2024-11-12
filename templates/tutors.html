@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutores</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+
+<div class="container">
+    <h1 class="text-center my-4">Lista de Tutores</h1>
+    <div class="row justify-content-center container-targets">
+        {% for tutor in tutors %}
+            <div class="card mx-3 mb-3" style="width: 18rem;">
+                <img style="height: 349px;" src="{{ url_for('static', filename='images/userxd.png') }}" class="card-img-top" alt="Foto del Tutor">
+                <div class="card-body">
+                    <h5 class="card-title">{{ tutor.name }} {{ tutor.lastName }}</h5>
+                    <h5 class="card-title">★★★★★ ({{ tutor.meanRating }} de 5)</h5>
+                    <p class="card-text">Soy muy bueno en la programación</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">POO</li>
+                    <li class="list-group-item">Bases de datos</li>
+                    <li class="list-group-item">{{ tutor.term }} Cuatrimestre</li>
+                </ul>
+                <div class="card-body">
+                    <a href="{{ url_for('agendar') }}" class="card-link">Agendar Cita</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+</body>
+</html>
