@@ -117,14 +117,25 @@
               <input type="text" class="form-control" id="lastName" placeholder="Ingresa tus apellidos" name="lastName" required>
             </div>
             <div class="mb-3">
-                <label for="college_idCollege" class="form-label">ID Universidad</label>
-                <input type="number" class="form-control" id="college_idCollege" placeholder="Ingresa tus apellidos" name="college_idCollege" required>
-              </div>
-              <div class="mb-3">
-                <label for="idDegree_subdegree" class="form-label">ID Especialidad</label>
-                <input type="number" class="form-control" id="idDegree_subdegree" placeholder="Ingresa tu especialidad" name="idDegree_subdegree" required>
-              </div>
-            <div class="mb-3">
+              <label for="college_idCollege" class="form-label">Universidad</label>
+              <select class="form-control" id="college_idCollege" name="college_idCollege" required>
+                  <option value="">Selecciona tu universidad</option>
+                  {% for college in colleges %}
+                      <option value="{{ college['idCollege'] }}">{{ college['name'] }}</option>
+                  {% endfor %}
+              </select>
+          </div>
+          
+          <div class="mb-3">
+              <label for="idDegree_subdegree" class="form-label">Especialidad</label>
+              <select class="form-control" id="idDegree_subdegree" name="idDegree_subdegree" required>
+                  <option value="">Selecciona tu especialidad</option>
+                  {% for subdegree in subdegrees %}
+                      <option value="{{ subdegree['idSubdegree'] }}">{{ subdegree['name'] }}</option>
+                  {% endfor %}
+              </select>
+          </div>
+          
                 <label for="term" class="form-label">Cuatrimestre</label>
                 <input type="number" class="form-control" id="term" placeholder="Ingresa tu Cuatrimestre" name="term" required>
               </div>

@@ -83,9 +83,11 @@ def register():
         is_tutor = request.form['is_tutor']
         cost = request.form['cost'] if is_tutor == 'yes' else None
 
+        # Verificar el dominio del correo electrónico
         if not email.endswith('@utch.edu.mx'):
             return 'El correo debe tener la terminación @utch.edu.mx'
 
+        # Conectar a la base de datos e insertar el usuario
         conn = get_db_connection()
         cur = conn.cursor()
 
@@ -106,7 +108,20 @@ def register():
 
         return redirect(url_for('index'))
     
-    return render_template('register.html')
+    # Obtener universidades y especialidades para los dropdowns
+    conn = get_db_connection()
+    cur = conn.cursor(dictionary=True)
+
+    cur.execute("SELECT idCollege, name FROM college")
+    colleges = cur.fetchall()  # Lista de universidades con id y nombre
+
+    cur.execute("SELECT idSubdegree, name FROM subdegree")
+    subdegrees = cur.fetchall()  # Lista de especialidades con id y nombre
+
+    cur.close()
+    conn.close()
+
+    return render_template('register.html', colleges=colleges, subdegrees=subdegrees)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
