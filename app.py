@@ -10,7 +10,24 @@ def get_db_connection():
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    # Recupera los 4 mejores tutores por calificación
+    cursor.execute("""
+        SELECT user.name, user.lastName, tutor.asesoryCost, tutor.meanRating, 
+               tutor.online, user.term
+        FROM user
+        INNER JOIN tutor ON user.idUser = tutor.user_idUser
+        ORDER BY tutor.meanRating DESC
+        LIMIT 4
+    """)
+    top_tutors = cursor.fetchall()
+    
+    cursor.close()
+    conn.close()
+
+    return render_template('index.html', top_tutors=top_tutors)
 
 from datetime import datetime
 
