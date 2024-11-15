@@ -6,7 +6,7 @@ app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 
 def get_db_connection():
-    return mysql.connector.connect(user="root", password="", host="localhost", port="3308", database="myclassmate")
+    return mysql.connector.connect(user="root", password="", host="localhost", port="3308", database="mycm")
 
 @app.route('/')
 def index():
@@ -57,7 +57,7 @@ def agendar():
     # Obtener todos los horarios disponibles para el dropdown
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
-    cursor.execute("SELECT idSlootTime, startTime, endTime FROM sloottime")
+    cursor.execute("SELECT idSlotTime, startTime, endTime FROM slottime")
     slot_times = cursor.fetchall()
 
     # Obtener todos los tutores (id y nombre) para el dropdown
