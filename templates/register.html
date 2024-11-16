@@ -29,14 +29,6 @@
         .background-nav{
         background-color: #3e5d58;
       }
-      .background-image {
-        background-color: #e2e7e6;
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-      }
       .custom-badge {
         background-color: #3e5d58; /* color de fondo personalizado */
         color: white; /* color del texto */
@@ -64,7 +56,20 @@
         .card{
           border-radius: 1.5rem;
         }
-  
+          /* Estilo para los botones "Register" y "Log In" */
+          .nav-item .btn {
+            background-color: #4f7368;  /* Verde suave */
+            color: white;  /* Color de texto blanco */
+            border-radius: 1.5rem;  /* Bordes redondeados */
+            padding: 0.5rem 2rem;  /* Espaciado dentro del botón */
+            font-size: 1rem;  /* Tamaño de fuente moderado */
+            transition: background-color 0.3s ease, transform 0.3s ease;  /* Transiciones suaves */
+        }
+
+        .nav-item .btn:hover {
+            background-color: #5e8e7a;  /* Verde más claro en hover */
+            transform: translateY(-2px);  /* Ligera elevación en hover */
+        }
     </style>
 </head>
 <body>
@@ -87,10 +92,8 @@
     <ul class="navbar-nav mr-auto">
     </ul>
 
-    <a class="nav-item" href="{{ url_for('login') }}" >  
-      <button type="button" class="btn btn-dark">
-      Log In
-    </button>
+    <a class="nav-item" href="{{ url_for('login') }}">
+      <button type="button" class="btn btn-dark">Log In</button>
   </a>
   </div>
 </nav>

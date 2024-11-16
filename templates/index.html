@@ -210,8 +210,30 @@
             color: white;
         }
         .btn-custom:hover {
-            background-color: #324c47;
+            background-color: #70a89f;
             color: white;
+        }
+        .btn-custom2 {
+            background-color:  #9673ca;
+            color: white;
+        }
+        .btn-custom2:hover {
+            background-color: #c8a9e1;
+            color: white;
+        }
+        /* Estilo para los botones "Register" y "Log In" */
+        .nav-item .btn {
+            background-color: #4f7368;  /* Verde suave */
+            color: white;  /* Color de texto blanco */
+            border-radius: 1.5rem;  /* Bordes redondeados */
+            padding: 0.5rem 2rem;  /* Espaciado dentro del botón */
+            font-size: 1rem;  /* Tamaño de fuente moderado */
+            transition: background-color 0.3s ease, transform 0.3s ease;  /* Transiciones suaves */
+        }
+
+        .nav-item .btn:hover {
+            background-color: #5e8e7a;  /* Verde más claro en hover */
+            transform: translateY(-2px);  /* Ligera elevación en hover */
         }
       </style>
 </head>
@@ -254,7 +276,8 @@
             <div  
                 class="mx-3" style="color: white;"> Hola, {{ session['user_name'] }}!
             </div>
-            <a href="{{ url_for('logout') }}">Cerrar sesión</a>
+            
+            <a href="{{ url_for('logout') }}" class="btn btn-custom2"> Cerrar sesión</a>
             {% else %}
             
             <!-- Botones de Log In y Register -->
@@ -266,6 +289,7 @@
                   <button type="button" class="btn btn-dark">Log In</button>
               </a>
           </div>
+          
       
           {% endif %}
           </div>

@@ -162,7 +162,7 @@ background-color: #e2e7e6;
                 <!-- Información del usuario -->
                 <div class="row">
                   <div class="col-md-4 text-center">
-                    <img style="width: 150px; height: 150px;" src="davidxd.jpeg" class="rounded-circle mb-3" alt="Foto de perfil">
+                    <img style="width: 150px; height: 150px;" src="{{ url_for('static', filename='images/userxd.png') }}" class="rounded-circle mb-3" alt="Foto de perfil">
                     <h3>{{ session['user_name'] }}</h3>
                     <p class="text-muted">Estudiante de Programación</p>
                     <p class="text-muted">Seguidores: 4</p>

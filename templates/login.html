@@ -14,21 +14,12 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
 
     <style>
-        /* Imagen de fondo borrosa */
         body, html {
             height: 100%;
             margin: 0;
         }
         .background-nav{
         background-color: #3e5d58;
-      }
-      .background-image {
-        background-color: #e2e7e6;
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
       }
       .button-bg{
         background-color:#3e5d58 ;
@@ -55,6 +46,20 @@
         .card{
           border-radius: 1.5rem;
         }
+                /* Estilo para los botones "Register" y "Log In" */
+                .nav-item .btn {
+            background-color: #4f7368;  /* Verde suave */
+            color: white;  /* Color de texto blanco */
+            border-radius: 1.5rem;  /* Bordes redondeados */
+            padding: 0.5rem 2rem;  /* Espaciado dentro del botón */
+            font-size: 1rem;  /* Tamaño de fuente moderado */
+            transition: background-color 0.3s ease, transform 0.3s ease;  /* Transiciones suaves */
+        }
+
+        .nav-item .btn:hover {
+            background-color: #5e8e7a;  /* Verde más claro en hover */
+            transform: translateY(-2px);  /* Ligera elevación en hover */
+        }
   
     </style>
 </head>
@@ -78,8 +83,8 @@
               <ul class="navbar-nav mr-auto">
               </ul>
     
-            <a class="nav-item mr-2" href="register.html" >  
-                    <a href="{{ url_for('register') }}" class="btn btn-dark">Registrarse</a> 
+              <a class="nav-item" href="{{ url_for('register') }}">
+                <button type="button" class="btn btn-dark">Register</button>
             </a>
             </div>
           </nav>
