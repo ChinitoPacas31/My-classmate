@@ -153,8 +153,8 @@ background-color: #e2e7e6;
           <div class="col-md-8">
             <div class="card shadow">
               <div class="card-header bg-nav-perfil text-white d-flex justify-content-between align-items-center">
-                <h2 class="mb-0">Perfil del Usuario</h2>
-                <a href="edit-profile.html" class="btn btn-dark btn-sm">Editar Perfil</a>
+                <h2 class="mb-0">MyUser</h2>
+                <a href="edit-profile.html" class="btn btn-dark btn-sm">Edit profile</a>
               </div>
 
               <div class="card-body">
@@ -169,17 +169,16 @@ background-color: #e2e7e6;
                   </div>
                   <div class="col-md-8">
                     <ul class="list-group list-group-flush">
-                      <li class="list-group-item"><strong>Correo Electrónico:</strong> {{ session['user_email'] }}</li>
-                      <li class="list-group-item"><strong>Calificación:</strong> 
+                      <li class="list-group-item"><strong>Email:</strong> {{ session['user_email'] }}</li>
+                      <li class="list-group-item"><strong>Rating:</strong> 
                         <span class="text-warning">
                           ★★★★☆
                         </span> ({{session['user_rating']}} de 5)
                       </li>
-                      <li class="list-group-item"><strong>Materias que Asesora:</strong> 
+                      <li class="list-group-item"><strong>MySubjects:</strong> 
                         <ul>
                           <li>Programación</li>
                           <li>Bases de datos</li>
-                          <li>Calculo</li>
                         </ul>
                       </li>
                       <li class="list-group-item"><strong>Disponibilidad:</strong> No definida</li>

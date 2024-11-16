@@ -145,6 +145,14 @@
         padding: 35px 0px;
     }
 }
+.btn-custom {
+    background-color: #3e5d58;
+    color: white;
+}
+.btn-custom:hover {
+    background-color: #324c47;
+    color: white;
+}
     </style>
 </head>
 <body>
@@ -203,7 +211,7 @@
       </nav>
 
 <div class="container py-5">
-    <h1 class="text-center mb-4">Busca tu tutor deseado</h1>
+    <h1 class="text-center mb-4">Search for your desired tutor</h1>
     <div class="row justify-content-center container-targets">
         {% for tutor in tutors %}
             <div class="card mx-3 mb-3" style="width: 18rem;">
@@ -219,7 +227,7 @@
                     <li class="list-group-item text-center">Cuatrimestre {{ tutor.term }} </li>
                 </ul>
                 <div class="card-body text-center">
-                    <a href="{{ url_for('agendar') }}" class="btn btn-primary">Agendar Cita</a>
+                    <a href="{{ url_for('agendar') }}" class="btn btn-custom">Agendar Cita</a>
                 </div>
             </div>
         {% endfor %}
