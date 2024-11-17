@@ -100,7 +100,6 @@
         padding: 35px 0px;
     }
 }
-/* Texto de bienvenido a myclassmate y ready to start?*/
         .full-height {
             display: flex;
             justify-content: center;
@@ -169,187 +168,6 @@
                 order: 2; /* Mueve esta sección debajo de full-height en móviles */
             }
         }
-        .container-targets {
-            gap: 1.5rem;
-        }
-        .card {
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            border: none;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .card:hover {
-            transform: translateY(-10px); /* Levanta el elemento */
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
-        }
-        .card-title {
-            color: #343a40;
-            font-weight: bold;
-        }
-        .card-text {
-            color: #6c757d;
-        }
-        .list-group-item {
-            font-size: 0.9rem;
-            color: #495057;
-        }
-        .card-link {
-            color: #007bff;
-            font-weight: bold;
-            text-decoration: none;
-        }
-        .card-link:hover {
-            text-decoration: underline;
-        }
-        h1 {
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: #343a40;
-        }
-        .btn-custom {
-            background-color: #3e5d58;
-            color: white;
-        }
-        .btn-custom:hover {
-            background-color: #70a89f;
-            color: white;
-        }
-        .btn-custom2 {
-            background-color:  #3e5d58;
-            color: white;
-        }
-        .btn-custom2:hover {
-            background-color: #70a89f;
-            color: white;
-        }
-        /* Estilo para los botones "Register" y "Log In" */
-        .nav-item .btn {
-            background-color: #4f7368;  /* Verde suave */
-            color: white;  /* Color de texto blanco */
-            border-radius: 1.5rem;  /* Bordes redondeados */
-            padding: 0.5rem 2rem;  /* Espaciado dentro del botón */
-            font-size: 1rem;  /* Tamaño de fuente moderado */
-            transition: background-color 0.3s ease, transform 0.3s ease;  /* Transiciones suaves */
-        }
-
-        .nav-item .btn:hover {
-            background-color: #5e8e7a;  /* Verde más claro en hover */
-            transform: translateY(-2px);  /* Ligera elevación en hover */
-        }
-        #como-funciona {
-        text-align: center;
-        padding: 50px;
-        background-color: #e2e7e6;
-        }
-        .steps {
-        display: flex;
-        justify-content: space-around;
-        flex-wrap: wrap;
-        }
-
-        .step {
-        width: 30%;
-        margin: 20px;
-        padding: 20px;
-        background: white;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .step img {
-        width: 100px; /* Ancho fijo */
-        height: 100px; /* Alto fijo */
-        object-fit: contain; /* Ajusta el contenido sin deformarlo */
-        margin-bottom: 15px; /* Espacio debajo de la imagen */
-        border-radius: 10px; /* Opcional: bordes redondeados */
-        }
-
-        .step h3 {
-        color: #333;
-        }
-
-        .step p {
-        color: #555;
-        }
-
-        .btnn {
-        display: inline-block;
-        margin-top: 10px;
-        padding: 10px 20px;
-        background: #3e5d58;
-        color: white;
-        border-radius: 5px;
-        text-decoration: none;
-        }
-        .btnn:hover {
-            background-color: #70a89f;
-            color: white;
-        }
-        .step {
-        width: 30%;
-        margin: 20px;
-        padding: 20px;
-        background: white;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra inicial */
-        transition: transform 0.3s ease, box-shadow 0.3s ease; /* Suavidad de la animación */
-        }
-        .step:hover {
-        transform: translateY(-10px); /* Levanta el elemento */
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
-        }
-
-.carousel-item img {
-  height: 400px; /* Ajusta el tamaño del carrusel */
-  object-fit: cover; /* Asegura que las imágenes se adapten sin distorsión */
-}
-
-.carousel-caption {
-  background: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente para destacar el texto */
-  padding: 20px;
-  border-radius: 10px;
-  animation: fadeIn 1s ease-in-out;
-}
-
-.carousel-caption h2 {
-  font-size: 2.5rem;
-  font-weight: bold;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-}
-
-.carousel-caption p {
-  font-size: 1.2rem;
-  margin-top: 10px;
-}
-
-.carousel-caption .btn {
-  margin-top: 15px;
-  padding: 10px 20px;
-  font-size: 1rem;
-  border-radius: 5px;
-  transition: all 0.3s ease;
-}
-
-.carousel-caption .btn:hover {
-  transform: scale(1.1);
-  box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.5);
-}
-
-/* Transición suave entre slides */
-.carousel-item {
-  transition: transform 0.6s ease, opacity 0.6s ease;
-}
-
-/* Efecto de fade-in para los captions */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
 
       </style>
 </head>
@@ -392,8 +210,7 @@
             <div  
                 class="mx-3" style="color: white;"> Hola, {{ session['user_name'] }}!
             </div>
-            
-            <a href="{{ url_for('logout') }}" class="btn btn-custom2"> Cerrar sesión</a>
+            <a href="{{ url_for('logout') }}">Cerrar sesión</a>
             {% else %}
             
             <!-- Botones de Log In y Register -->
@@ -405,7 +222,7 @@
                   <button type="button" class="btn btn-dark">Log In</button>
               </a>
           </div>
-          
+
           {% endif %}
           </div>
         </nav>
@@ -418,32 +235,83 @@
           <h2>Conectando estudiantes, potenciando aprendizajes.</h2>
         </div>   
         <br>
-        
-          <h1 class="text-center mb-4">The 4 best tutors</h1>
-          <div class="row justify-content-center container-targets">
-              {% for tutor in top_tutors %}
-                  <div class="card mx-3 mb-3" style="width: 18rem;">
-                      <img style="height: 18rem; object-fit: cover;" src="{{ url_for('static', filename='images/userxd.png') }}" class="card-img-top rounded-top" alt="Foto del Tutor">
-                      <div class="card-body">
-                          <h5 class="card-title text-center">{{ tutor.name }} {{ tutor.lastName }}</h5>
-                          <h6 class="card-title text-center text-warning">
-                              {% for i in range(tutor['meanRating']|int) %}★{% endfor %}
-                              {% if tutor['meanRating'] % 1 != 0 %}½{% endif %}
-                              ({{ tutor.meanRating }} de 5)
-                          </h6>
-                          <p class="card-text text-center">Soy muy bueno en la programación</p>
-                      </div>
-                      <ul class="list-group list-group-flush">
-                          <li class="list-group-item text-center">POO</li>
-                          <li class="list-group-item text-center">Bases de datos</li>
-                          <li class="list-group-item text-center">Cuatrimestre {{ tutor.term }} </li>
-                      </ul>
-                      <div class="card-body text-center">
-                          <a href="{{ url_for('agendar') }}" class="btn btn-custom">Agendar Cita</a>
-                      </div>
-                  </div>
-              {% endfor %}
+  
+      <!-- Tarjeta de David Bustillos -->
+      <div class="row justify-content-center container-targets">
+  
+      <div class="card mx-3 mb-3" style="width: 18rem;">
+        <img style= "height: 349px;" src="../static/images/userxd.png" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">David Julian Bustillos Mata</h5>
+            <h5 class="card-title">★★★★★ (5 de 5)</h5>
+            <p class="card-text">Soy muy bueno en la programación</p>
           </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">POO</li>
+            <li class="list-group-item">Bases de datos</li>
+            <li class="list-group-item">Tercer Cuatrimestre</li>
+          </ul>
+          <div class="card-body">
+            <a href="{{ url_for('agendar') }}" class="card-link">Agendar Cita</a>
+          </div>
+        </div>
+        
+        <!-- Tarjeta de Josué Temoltzi -->
+        <div class="card mx-3 mb-3" style="width: 18rem;">
+          <img style= "height: 349px;" src="../static/images/userxd.png" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Josué Temoltzi</h5>
+            <h5 class="card-title">★★★☆☆ (3 de 5)</h5>
+            <p class="card-text">Soy muy bueno en la programación</p>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">POO</li>
+            <li class="list-group-item">Bases de datos</li>
+            <li class="list-group-item">Diseño digital</li>
+          </ul>
+          <div class="card-body">
+            <a href="{{ url_for('agendar') }}" class="card-link">Agendar Cita</a>
+          </div>
+        </div>
+  
+        <!-- Tarjeta de Luis Domínguez -->
+        <div class="card mx-3 mb-3" style="width: 18rem;">
+          <img style= "height: 349px;" src="../static/images/userxd.png" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Luis Domínguez</h5>
+            <h5 class="card-title">★★★★★ (5 de 5)</h5>
+            <p class="card-text">Soy muy bueno en la programación</p>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">POO</li>
+            <li class="list-group-item">Bases de datos</li>
+            <li class="list-group-item">Diseño digital</li>
+          </ul>
+          <div class="card-body">
+            <a href="{{ url_for('agendar') }}" class="card-link">Agendar Cita</a>
+          </div>
+        </div>
+  
+        <!-- Tarjeta de Joel Rocha -->
+        <div class="card mx-3 mb-3" style="width: 18rem;">
+          <img style= "height: 349px;" src="../static/images/userxd.png" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Joel Rocha</h5>
+            <h5 class="card-title">★★★★☆ (4 de 5)</h5>
+            <p class="card-text">Soy muy bueno en la programación</p>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">POO</li>
+            <li class="list-group-item">Bases de datos</li>
+            <li class="list-group-item">Diseño digital</li>
+          </ul>
+          <div class="card-body">
+            <a href="{{ url_for('agendar') }}" class="card-link">Agendar Cita</a>
+          </div>
+        </div>
+      </div>
+  
+        <br>
   
         <div class="container-fluid full-height my-5">
           <div class="content-container">
@@ -473,76 +341,6 @@
         </div>
       </div>
 
-    <!-- Carrusel -->
-    <div id="carouselExampleControls" class="carousel slide my-3" data-ride="carousel">
-        <div class="carousel-inner">
-          <!-- Primera Slide -->
-          <div class="carousel-item active">
-            <img src="../static/images/Mycsmtefondo.jpeg" class="d-block w-100" alt="Fondo 1">
-            <div class="carousel-caption d-none d-md-block">
-              <h2 class="text-light">TEXTO</h2>
-              <p>PRUEBA TEXTO</p>
-            </div>
-          </div>
-          <!-- Segunda Slide -->
-          <div class="carousel-item">
-            <img src="../static/images/Mycsmtefondo.jpeg" class="d-block w-100" alt="Fondo 2">
-            <div class="carousel-caption d-none d-md-block">
-              <h2 class="text-light">TEXTO 2</h2>
-              <p>PRUEBA TEXTO 2</p>
-            </div>
-          </div>
-          <!-- Tercera Slide -->
-          <div class="carousel-item">
-            <img src="../static/images/Mycsmtefondo.jpeg" class="d-block w-100" alt="Fondo 3">
-            <div class="carousel-caption d-none d-md-block">
-              <h2 class="text-light">TEXTO 3</h2>
-              <p>PRUEBA TEXTO 3</p>
-            </div>
-          </div>
-        </div>
-        <!-- Controles -->
-        <button class="carousel-control-prev" type="button" data-target="#carouselExampleControls" data-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="sr-only">Anterior</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-target="#carouselExampleControls" data-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="sr-only">Siguiente</span>
-        </button>
-      </div>
-      
-  <section id="como-funciona">
-    <h2>¿Cómo funciona MyClassmate?</h2>
-    <div class="steps">
-        {% if session['user_id'] %}
-      <div class="step">
-        <img src="../static/images/formuser.png" alt="Registro">
-        <h3>Paso 1: Regístrate</h3>
-        <p>Felicidades, ya eres parte de la familia</p>
-      </div>
-      {% else %}
-      <div class="step">
-        <img src="../static/images/formuser.png" alt="Registro">
-        <h3>Paso 1: Regístrate</h3>
-        <p>Crea tu cuenta en minutos. Solo necesitas tu correo y algunos datos básicos.</p>
-        <a href="{{ url_for('register') }}" class="btnn">Regístrate aquí</a>
-      </div>
-      {% endif %}
-      <div class="step">
-        <img src="../static/images/lupas.jpg.avif" alt="Buscar Tutor">
-        <h3>Paso 2: Encuentra tu tutor ideal</h3>
-        <p>Explora tutores por materia, nivel educativo o disponibilidad.</p>
-      </div>
-      <div class="step">
-        <img src="../static/images/2693507.png" alt="Agenda">
-        <h3>Paso 3: Agenda tu sesión</h3>
-        <p>Elige el horario que más te convenga y reserva tu clase en segundos.</p>
-      </div>
-    </div>
-  </section>
-  
-
   <!-- Footer Section -->
   <footer class="pie-pagina">
     <div class="grupo-1">
@@ -568,8 +366,8 @@
                 <a href="https://www.instagram.com/joel_rocha31?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" class="fa fa-twitter"></a>
                 <a href="https://www.instagram.com/joel_rocha31?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" class="fa fa-youtube"></a>
             </div>
-            <div class="box" style="margin-top: 25px;">
-            <h2>CONTACTANOS</h2>
+            <div class="box" style="margin-top: 18px;">
+            <h2>CONTACTAOS</h2>
             <a href="mailto:example@example.com,example2@example.com">MyClassmate@gmail.com</a>
             </div>
         </div>
