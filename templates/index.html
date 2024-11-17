@@ -100,7 +100,6 @@
         padding: 35px 0px;
     }
 }
-/* Texto de bienvenido a myclassmate y ready to start?*/
         .full-height {
             display: flex;
             justify-content: center;
@@ -169,72 +168,7 @@
                 order: 2; /* Mueve esta sección debajo de full-height en móviles */
             }
         }
-        .container-targets {
-            gap: 1.5rem;
-        }
-        .card {
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            border: none;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-        }
-        .card-title {
-            color: #343a40;
-            font-weight: bold;
-        }
-        .card-text {
-            color: #6c757d;
-        }
-        .list-group-item {
-            font-size: 0.9rem;
-            color: #495057;
-        }
-        .card-link {
-            color: #007bff;
-            font-weight: bold;
-            text-decoration: none;
-        }
-        .card-link:hover {
-            text-decoration: underline;
-        }
-        h1 {
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: #343a40;
-        }
-        .btn-custom {
-            background-color: #3e5d58;
-            color: white;
-        }
-        .btn-custom:hover {
-            background-color: #70a89f;
-            color: white;
-        }
-        .btn-custom2 {
-            background-color:  #9673ca;
-            color: white;
-        }
-        .btn-custom2:hover {
-            background-color: #c8a9e1;
-            color: white;
-        }
-        /* Estilo para los botones "Register" y "Log In" */
-        .nav-item .btn {
-            background-color: #4f7368;  /* Verde suave */
-            color: white;  /* Color de texto blanco */
-            border-radius: 1.5rem;  /* Bordes redondeados */
-            padding: 0.5rem 2rem;  /* Espaciado dentro del botón */
-            font-size: 1rem;  /* Tamaño de fuente moderado */
-            transition: background-color 0.3s ease, transform 0.3s ease;  /* Transiciones suaves */
-        }
-
-        .nav-item .btn:hover {
-            background-color: #5e8e7a;  /* Verde más claro en hover */
-            transform: translateY(-2px);  /* Ligera elevación en hover */
-        }
+      
       </style>
 </head>
 <body>
@@ -276,8 +210,7 @@
             <div  
                 class="mx-3" style="color: white;"> Hola, {{ session['user_name'] }}!
             </div>
-            
-            <a href="{{ url_for('logout') }}" class="btn btn-custom2"> Cerrar sesión</a>
+            <a href="{{ url_for('logout') }}">Cerrar sesión</a>
             {% else %}
             
             <!-- Botones de Log In y Register -->
@@ -289,7 +222,6 @@
                   <button type="button" class="btn btn-dark">Log In</button>
               </a>
           </div>
-          
       
           {% endif %}
           </div>
@@ -303,32 +235,83 @@
           <h2>Conectando estudiantes, potenciando aprendizajes.</h2>
         </div>   
         <br>
-        
-          <h1 class="text-center mb-4">The 4 best tutors</h1>
-          <div class="row justify-content-center container-targets">
-              {% for tutor in top_tutors %}
-                  <div class="card mx-3 mb-3" style="width: 18rem;">
-                      <img style="height: 18rem; object-fit: cover;" src="{{ url_for('static', filename='images/userxd.png') }}" class="card-img-top rounded-top" alt="Foto del Tutor">
-                      <div class="card-body">
-                          <h5 class="card-title text-center">{{ tutor.name }} {{ tutor.lastName }}</h5>
-                          <h6 class="card-title text-center text-warning">
-                              {% for i in range(tutor['meanRating']|int) %}★{% endfor %}
-                              {% if tutor['meanRating'] % 1 != 0 %}½{% endif %}
-                              ({{ tutor.meanRating }} de 5)
-                          </h6>
-                          <p class="card-text text-center">Soy muy bueno en la programación</p>
-                      </div>
-                      <ul class="list-group list-group-flush">
-                          <li class="list-group-item text-center">POO</li>
-                          <li class="list-group-item text-center">Bases de datos</li>
-                          <li class="list-group-item text-center">Cuatrimestre {{ tutor.term }} </li>
-                      </ul>
-                      <div class="card-body text-center">
-                          <a href="{{ url_for('agendar') }}" class="btn btn-custom">Agendar Cita</a>
-                      </div>
-                  </div>
-              {% endfor %}
+  
+      <!-- Tarjeta de David Bustillos -->
+      <div class="row justify-content-center container-targets">
+  
+      <div class="card mx-3 mb-3" style="width: 18rem;">
+        <img style= "height: 349px;" src="../static/images/userxd.png" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">David Julian Bustillos Mata</h5>
+            <h5 class="card-title">★★★★★ (5 de 5)</h5>
+            <p class="card-text">Soy muy bueno en la programación</p>
           </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">POO</li>
+            <li class="list-group-item">Bases de datos</li>
+            <li class="list-group-item">Tercer Cuatrimestre</li>
+          </ul>
+          <div class="card-body">
+            <a href="{{ url_for('agendar') }}" class="card-link">Agendar Cita</a>
+          </div>
+        </div>
+        
+        <!-- Tarjeta de Josué Temoltzi -->
+        <div class="card mx-3 mb-3" style="width: 18rem;">
+          <img style= "height: 349px;" src="../static/images/userxd.png" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Josué Temoltzi</h5>
+            <h5 class="card-title">★★★☆☆ (3 de 5)</h5>
+            <p class="card-text">Soy muy bueno en la programación</p>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">POO</li>
+            <li class="list-group-item">Bases de datos</li>
+            <li class="list-group-item">Diseño digital</li>
+          </ul>
+          <div class="card-body">
+            <a href="{{ url_for('agendar') }}" class="card-link">Agendar Cita</a>
+          </div>
+        </div>
+  
+        <!-- Tarjeta de Luis Domínguez -->
+        <div class="card mx-3 mb-3" style="width: 18rem;">
+          <img style= "height: 349px;" src="../static/images/userxd.png" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Luis Domínguez</h5>
+            <h5 class="card-title">★★★★★ (5 de 5)</h5>
+            <p class="card-text">Soy muy bueno en la programación</p>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">POO</li>
+            <li class="list-group-item">Bases de datos</li>
+            <li class="list-group-item">Diseño digital</li>
+          </ul>
+          <div class="card-body">
+            <a href="{{ url_for('agendar') }}" class="card-link">Agendar Cita</a>
+          </div>
+        </div>
+  
+        <!-- Tarjeta de Joel Rocha -->
+        <div class="card mx-3 mb-3" style="width: 18rem;">
+          <img style= "height: 349px;" src="../static/images/userxd.png" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Joel Rocha</h5>
+            <h5 class="card-title">★★★★☆ (4 de 5)</h5>
+            <p class="card-text">Soy muy bueno en la programación</p>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">POO</li>
+            <li class="list-group-item">Bases de datos</li>
+            <li class="list-group-item">Diseño digital</li>
+          </ul>
+          <div class="card-body">
+            <a href="{{ url_for('agendar') }}" class="card-link">Agendar Cita</a>
+          </div>
+        </div>
+      </div>
+  
+        <br>
   
         <div class="container-fluid full-height my-5">
           <div class="content-container">
@@ -359,7 +342,7 @@
       </div>
   
     <!-- Carrusel -->
-    <div id="carouselExampleControls" class="carousel slide my-3" data-ride="carousel">
+    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
       <div class="carousel-inner">
           <div class="carousel-item active">
               <img src="../static/images/Mycsmtefondo.jpeg" class="d-block w-100" alt="no">
@@ -405,8 +388,8 @@
                 <a href="https://www.instagram.com/joel_rocha31?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" class="fa fa-twitter"></a>
                 <a href="https://www.instagram.com/joel_rocha31?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" class="fa fa-youtube"></a>
             </div>
-            <div class="box" style="margin-top: 25px;">
-            <h2>CONTACTANOS</h2>
+            <div class="box" style="margin-top: 18px;">
+            <h2>CONTACTAOS</h2>
             <a href="mailto:example@example.com,example2@example.com">MyClassmate@gmail.com</a>
             </div>
         </div>
