@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calificar Tutor</title>
+</head>
+<body>
+    <h1>Calificar un Tutor</h1>
+    <form action="{{ url_for('calificar') }}" method="post">
+        <label for="tutor">Selecciona un Tutor:</label>
+        <select name="tutor_user_idUser" id="tutor" required>
+            {% for tutor in tutors %}
+            <option value="{{ tutor.idUser }}">{{ tutor.name }} {{ tutor.lastName }}</option>
+            {% endfor %}
+        </select>
+        <br><br>
+        
+        <label for="rating">Calificación (1-5):</label>
+        <input type="number" id="rating" name="rating" min="1" max="5" required>
+        <br><br>
+
+        <label for="description">Comentario (opcional):</label>
+        <textarea id="description" name="description"></textarea>
+        <br><br>
+
+        <button type="submit">Enviar Calificación</button>
+    </form>
+</body>
+</html>

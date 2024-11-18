@@ -195,5 +195,56 @@ def tutors():
 
     return render_template('tutors.html', tutors=tutors)
 
+@app.route('/calificar', methods=['GET', 'POST'])
+def calificar():
+    # Verificar si el usuario está autenticado
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    if request.method == 'POST':
+        tutor_id = request.form.get('tutor_user_idUser')
+        student_id = session['user_id']
+        rating = request.form.get('rating')
+        description = request.form.get('description', '')
+
+        # Validar inputs
+        if not tutor_id or not rating:
+            return "Por favor selecciona un tutor y una calificación", 400
+
+        # Insertar nueva reseña en la tabla review
+        cursor.execute("""
+            INSERT INTO reviews (tutor_user_idUser, student_user_idUser, rating, description)
+            VALUES (%s, %s, %s, %s)
+        """, (tutor_id, student_id, rating, description))
+        conn.commit()
+
+        # Actualizar la calificación promedio del tutor
+        cursor.execute("""
+            UPDATE tutor
+            SET meanRating = (
+                SELECT AVG(rating)
+                FROM reviews
+                WHERE tutor_user_idUser = %s
+            )
+            WHERE user_idUser = %s
+        """, (tutor_id, tutor_id))
+        conn.commit()
+
+        cursor.close()
+        conn.close()
+        return redirect(url_for('tutors'))
+
+    # Obtener la lista de tutores
+    cursor.execute("SELECT idUser, name, lastName FROM user INNER JOIN tutor ON user.idUser = tutor.user_idUser")
+    tutors = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    return render_template('calificar.html', tutors=tutors)
+
 if __name__ == '__main__':
     app.run(port=3000, debug=True)
