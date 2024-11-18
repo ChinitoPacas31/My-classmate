@@ -119,7 +119,7 @@ def register():
         profile_picture_path = None
         if profile_picture and allowed_file(profile_picture.filename):
             filename = secure_filename(profile_picture.filename)
-            profile_picture_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            profile_picture_path = os.path.join(app.config['UPLOAD_FOLDER'], filename).replace("\\", "/")
             profile_picture.save(profile_picture_path)  # Guarda la imagen
         
 
@@ -200,9 +200,24 @@ def logout():
 
 @app.route('/perfil')
 def perfil():
-    # Aquí puedes agregar la lógica para el perfil del usuario
-    return render_template('perfil.html')
+    # Verifica si el usuario está autenticado
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
     
+    user_id = session['user_id']
+    conn = get_db_connection()
+    cur = conn.cursor(dictionary=True)
+
+    # Obtén la información del usuario desde la base de datos
+    cur.execute("SELECT name, lastName, email, term, profile_picture FROM user WHERE idUser = %s", (user_id,))
+    user = cur.fetchone()
+
+    cur.close()
+    conn.close()
+
+    # Pasa los datos del usuario a la plantilla
+    return render_template('perfil.html', user=user)
+
 @app.route('/tutors')
 def tutors():
     conn = get_db_connection()
