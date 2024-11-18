@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rate a Tutor</title>
+</head>
+<body>
+    <h1>Rate a Tutor</h1>
+    <form action="{{ url_for('rate_tutor') }}" method="POST">
+        <label for="tutor_id">Select a Tutor:</label>
+        <select name="tutor_id" id="tutor_id" required>
+            {% for tutor in tutors %}
+                <option value="{{ tutor.idUser }}">
+                    {{ tutor.name }} {{ tutor.lastName }} - ${{ tutor.asesoryCost }} per session
+                </option>
+            {% endfor %}
+        </select>
+        <br><br>
+
+        <label for="rating">Rating (1-5):</label>
+        <input type="number" name="rating" id="rating" min="1" max="5" required>
+        <br><br>
+
+        <label for="description">Description:</label>
+        <textarea name="description" id="description" rows="4" required></textarea>
+        <br><br>
+
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>

@@ -195,6 +195,68 @@ def tutors():
 
     return render_template('tutors.html', tutors=tutors)
 
+@app.route('/rate_tutor', methods=['GET', 'POST'])
+def rate_tutor():
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    if request.method == 'GET':
+        query = """
+        SELECT user.idUser, user.name, user.lastName, tutor.asesoryCost
+        FROM user
+        JOIN tutor ON user.idUser = tutor.user_idUser
+        WHERE tutor.active = 1
+        """
+        cursor.execute(query)
+        tutors = cursor.fetchall()  # Lista de tutores
+        conn.close()
+        return render_template('rate_tutor.html', tutors=tutors)
+
+    if request.method == 'POST':
+        tutor_id = request.form['tutor_id']
+        rating = request.form['rating']
+        description = request.form['description']
+        student_id = session['user_id']  # ID del estudiante en sesión
+
+        try:
+            # Insertar la reseña
+            insert_query = """
+            INSERT INTO review (tutor_user_idUser, student_user_idUser, rating, description, createdAt)
+            VALUES (%s, %s, %s, %s, NOW())
+            """
+            print(f"Insert query: {insert_query} with values ({tutor_id}, {student_id}, {rating}, {description})")
+            cursor.execute(insert_query, (tutor_id, student_id, rating, description))
+
+            # Confirmar cambios
+            conn.commit()
+            print("Review inserted successfully.")
+
+            # Actualizar calificación promedio del tutor
+            update_query = """
+            UPDATE tutor
+            SET meanRating = (
+                SELECT AVG(rating) FROM review WHERE tutor_user_idUser = %s
+            )
+            WHERE user_idUser = %s
+            """
+            print(f"Update query: {update_query} with tutor_id={tutor_id}")
+            cursor.execute(update_query, (tutor_id, tutor_id))
+
+            conn.commit()
+            print("Tutor rating updated successfully.")
+        except mysql.connector.Error as e:
+            conn.rollback()
+            print(f"Database Error: {e}")
+        finally:
+            conn.close()
+
+        return redirect(url_for('thank_you'))
+
+
+@app.route('/thank_you')
+def thank_you():
+    return render_template('thank_you.html')
+
 if __name__ == '__main__':
     app.run(port=3000, debug=True)
     
