@@ -148,6 +148,8 @@
 .btn-custom {
     background-color: #3e5d58;
     color: white;
+    font-size: 0.9rem;
+    padding: 8px 12px;
 }
 .btn-custom:hover {
     background-color: #324c47;
@@ -226,9 +228,12 @@
                     <li class="list-group-item text-center">Bases de datos</li>
                     <li class="list-group-item text-center">Cuatrimestre {{ tutor.term }} </li>
                 </ul>
-                <div class="card-body text-center">
+
+                <div class="card-body d-flex justify-content-between text-center">
                     <a href="{{ url_for('agendar') }}" class="btn btn-custom">Agendar Cita</a>
+                    <a href="{{ url_for('rate_tutor') }}" class="btn btn-custom">Calificar tutor</a>
                 </div>
+
             </div>
         {% endfor %}
     </div>
