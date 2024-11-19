@@ -110,7 +110,11 @@
         <div class="card-body">
 
           <!-- Formulario de inicio de sesión -->
-          <form action="{{ url_for('register') }}" method="POST">
+          <form action="{{ url_for('register') }}" method="POST" enctype="multipart/form-data">
+              <div class="mb-3">
+                <label for="name" class="form-label">Foto de perfil</label>
+                <input type="file" class="form-control" id="profile_picture" name="profile_picture" required>
+              </div>  
             <div class="mb-3">
               <label for="name" class="form-label">Nombres</label>
               <input type="name" class="form-control" id="name" placeholder="Ingresa tu nombre" name="name" required>
