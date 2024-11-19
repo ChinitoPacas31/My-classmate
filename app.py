@@ -216,7 +216,7 @@ def calificar():
 
         # Insertar nueva reseña en la tabla review
         cursor.execute("""
-            INSERT INTO reviews (tutor_user_idUser, student_user_idUser, rating, description)
+            INSERT INTO review (tutor_user_idUser, student_user_idUser, rating, description)
             VALUES (%s, %s, %s, %s)
         """, (tutor_id, student_id, rating, description))
         conn.commit()
@@ -226,7 +226,7 @@ def calificar():
             UPDATE tutor
             SET meanRating = (
                 SELECT AVG(rating)
-                FROM reviews
+                FROM review
                 WHERE tutor_user_idUser = %s
             )
             WHERE user_idUser = %s
