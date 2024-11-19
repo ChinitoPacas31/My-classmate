@@ -199,8 +199,23 @@ def logout():
 
 @app.route('/perfil')
 def perfil():
-    # Aquí puedes agregar la lógica para el perfil del usuario
-    return render_template('perfil.html')
+    # Verifica si el usuario está autenticado
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+    
+    user_id = session['user_id']
+    conn = get_db_connection()
+    cur = conn.cursor(dictionary=True)
+
+    # Obtén la información del usuario desde la base de datos
+    cur.execute("SELECT name, lastName, email, term, profile_picture FROM user WHERE idUser = %s", (user_id,))
+    user = cur.fetchone()
+
+    cur.close()
+    conn.close()
+
+    # Pasa los datos del usuario a la plantilla
+    return render_template('perfil.html', user=user)
     
 @app.route('/tutors')
 def tutors():
