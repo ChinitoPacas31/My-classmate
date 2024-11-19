@@ -5,6 +5,20 @@ import mysql.connector
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 
+#aqui empieza el desmadre de las fotos
+import os
+from werkzeug.utils import secure_filename
+
+# Configuración para subir imágenes
+UPLOAD_FOLDER = 'static/uploads'  # Asegúrate de que esta carpeta ya exista
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+# Función para verificar extensiones permitidas
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
 def get_db_connection():
     return mysql.connector.connect(user="root", password="", host="localhost", port="3308", database="classmy")
 
@@ -90,6 +104,7 @@ def agendar():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
+        profile_picture = request.files['profile_picture']
         name = request.form['name']
         lastName = request.form['lastName']
         college_idCollege = request.form['college_idCollege']
@@ -100,6 +115,13 @@ def register():
         is_tutor = request.form['is_tutor']
         cost = request.form['cost'] if is_tutor == 'yes' else None
 
+        # Manejar la foto de perfil
+        profile_picture_path = None
+        if profile_picture and allowed_file(profile_picture.filename):
+            filename = secure_filename(profile_picture.filename)
+            profile_picture_path = os.path.join(app.config['UPLOAD_FOLDER'], filename).replace("\\", "/")
+            profile_picture.save(profile_picture_path)  # Guarda la imagen
+
         # Verificar el dominio del correo electrónico
         if not email.endswith('@utch.edu.mx'):
             return 'El correo debe tener la terminación @utch.edu.mx'
@@ -109,7 +131,11 @@ def register():
         cur = conn.cursor()
 
         # Inserción en la tabla `user`
-        cur.execute('INSERT INTO user (name, lastName, college_idCollege, idDegree_subdegree, term, email, password) VALUES (%s, %s, %s, %s, %s, %s, %s)',(name, lastName, college_idCollege, idDegree_subdegree, term, email, password))
+        cur.execute(
+            'INSERT INTO user (name, lastName, college_idCollege, idDegree_subdegree, term, email, password, profile_picture) '
+            'VALUES (%s, %s, %s, %s, %s, %s, %s, %s)',
+            (name, lastName, college_idCollege, idDegree_subdegree, term, email, password, profile_picture_path)
+        )
         user_id = cur.lastrowid  # Recupera el id del usuario recién insertado
 
         # Inserción automática en la tabla `student`
