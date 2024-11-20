@@ -22,6 +22,7 @@ def allowed_file(filename):
 def get_db_connection():
     return mysql.connector.connect(user="root", password="", host="localhost", port="3308", database="myclassmate")
 
+
 @app.route('/')
 def index():
     conn = get_db_connection()
