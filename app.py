@@ -20,7 +20,7 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 def get_db_connection():
-    return mysql.connector.connect(user="root", password="", host="localhost", port="3308", database="classmy")
+    return mysql.connector.connect(user="root", password="", host="localhost", port="3306", database="classmy")
 
 @app.route('/')
 def index():
@@ -29,7 +29,7 @@ def index():
 
     # Recupera los 4 mejores tutores por calificación
     cursor.execute("""
-        SELECT user.name, user.lastName, tutor.asesoryCost, tutor.meanRating, 
+        SELECT user.name, user.lastName, user.profile_picture, tutor.asesoryCost, tutor.meanRating, 
                tutor.online, user.term
         FROM user
         INNER JOIN tutor ON user.idUser = tutor.user_idUser
@@ -224,7 +224,7 @@ def tutors():
 
     # Recupera datos de todos los tutores
     cursor.execute("""
-        SELECT user.name, user.lastName, tutor.asesoryCost, tutor.meanRating, 
+        SELECT user.name, user.lastName, user.profile_picture, tutor.asesoryCost, tutor.meanRating, 
                tutor.online, user.term
         FROM user
         INNER JOIN tutor ON user.idUser = tutor.user_idUser

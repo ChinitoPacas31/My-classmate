@@ -217,7 +217,7 @@
     <div class="row justify-content-center container-targets">
         {% for tutor in tutors %}
             <div class="card mx-3 mb-3" style="width: 18rem;">
-                <img style="height: 18rem; object-fit: cover;" src="{{ url_for('static', filename='images/userxd.png') }}" class="card-img-top rounded-top" alt="Foto del Tutor">
+                <img style="height: 18rem; object-fit: cover;" src="/{{ tutor.profile_picture }}" class="card-img-top rounded-top" alt="Foto de tutor">
                 <div class="card-body">
                     <h5 class="card-title text-center">{{ tutor.name }} {{ tutor.lastName }}</h5>
                     <h6 class="card-title text-center text-warning">★★★★★ ({{ tutor.meanRating }} de 5)</h6>
