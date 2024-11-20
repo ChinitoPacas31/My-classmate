@@ -20,7 +20,7 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 def get_db_connection():
-    return mysql.connector.connect(user="root", password="", host="localhost", port="3306", database="myClassmate")
+    return mysql.connector.connect(user="root", password="", host="localhost", port="3308", database="classmy")
 
 @app.route('/')
 def index():
