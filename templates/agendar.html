@@ -1,24 +1,32 @@
-<form action="{{ url_for('agendar') }}" method="POST">
-    <label for="tutor_user_idUser">Tutor:</label>
-    <select id="tutor_user_idUser" name="tutor_user_idUser" required>
-        <option value="" disabled selected>Selecciona un tutor</option>
-        {% for tutor in tutors %}
-            <option value="{{ tutor.idUser }}">{{ tutor.name }}</option>
-        {% endfor %}
-    </select><br>
+<form action="{{ url_for('agendar') }}" method="POST" class="p-4 bg-light rounded shadow">
+    <div class="mb-3">
+        <label for="tutor_user_idUser" class="form-label fw-bold">Tutor:</label>
+        <select id="tutor_user_idUser" name="tutor_user_idUser" class="form-select" required>
+            <option value="" disabled selected>Selecciona un tutor</option>
+            {% for tutor in tutors %}
+                <option value="{{ tutor.idUser }}">{{ tutor.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
 
-    <label for="scheduledDate">Fecha Programada:</label>
-    <input type="date" id="scheduledDate" name="scheduledDate" required><br>
+    <div class="mb-3">
+        <label for="scheduledDate" class="form-label fw-bold">Fecha Programada:</label>
+        <input type="date" id="scheduledDate" name="scheduledDate" class="form-control" required>
+    </div>
 
-    <label for="slootTime_idSlootTime">Horario:</label>
-    <select id="slootTime_idSlootTime" name="slootTime_idSlootTime" required>
-        <option value="" disabled selected>Selecciona un horario</option>
-        {% for slot in slot_times %}
-            <option value="{{ slot.idSlootTime }}">
-                {{ slot.startTime }} - {{ slot.endTime }}
-            </option>
-        {% endfor %}
-    </select><br>
+    <div class="mb-3">
+        <label for="slootTime_idSlootTime" class="form-label fw-bold">Horario:</label>
+        <select id="slootTime_idSlootTime" name="slootTime_idSlootTime" class="form-select" required>
+            <option value="" disabled selected>Selecciona un horario</option>
+            {% for slot in slot_times %}
+                <option value="{{ slot.idSlootTime }}">
+                    {{ slot.startTime }} - {{ slot.endTime }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
 
-    <button type="submit">Agendar</button>
+    <div class="d-grid">
+        <button type="submit" class="btn btn-primary">Agendar</button>
+    </div>
 </form>
