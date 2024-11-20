@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 05, 2024 at 08:03 PM
+-- Generation Time: Nov 20, 2024 at 08:29 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `myclassmate`
 --
+CREATE DATABASE IF NOT EXISTS `myclassmate` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `myclassmate`;
 
 -- --------------------------------------------------------
 
@@ -137,9 +139,21 @@ CREATE TABLE `review` (
   `tutor_user_idUser` int(11) NOT NULL,
   `student_user_idUser` int(11) NOT NULL,
   `rating` tinyint(1) NOT NULL CHECK (`rating` between 1 and 5),
-  `description` varchar(100) DEFAULT NULL,
-  `createdAt` timestamp NOT NULL DEFAULT current_timestamp()
+  `description` text DEFAULT NULL,
+  `createdAt` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Triggers `review`
+--
+DELIMITER $$
+CREATE TRIGGER `trg_meanRatingInsert` AFTER INSERT ON `review` FOR EACH ROW UPDATE tutor SET meanRating = (SELECT AVG(rating) FROM review GROUP BY tutor_user_idUser) WHERE NEW.tutor_user_idUser = tutor.user_idUser
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `trg_meanRatingUpdate` AFTER INSERT ON `review` FOR EACH ROW UPDATE tutor SET meanRating = (SELECT AVG(rating) FROM review GROUP BY tutor_user_idUser) WHERE NEW.tutor_user_idUser = tutor.user_idUser
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -190,11 +204,11 @@ CREATE TABLE `schedule` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `sloottime`
+-- Table structure for table `slottime`
 --
 
-CREATE TABLE `sloottime` (
-  `idSlootTime` int(11) NOT NULL,
+CREATE TABLE `slottime` (
+  `idSlotTime` int(11) NOT NULL,
   `startTime` time NOT NULL,
   `endTime` time NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -218,10 +232,26 @@ CREATE TABLE `status` (
 
 CREATE TABLE `student` (
   `user_idUser` int(11) NOT NULL,
-  `online` tinyint(1) NOT NULL DEFAULT 1 CHECK (`online` in (0,1)),
+  `online` tinyint(1) NOT NULL DEFAULT 0 CHECK (`online` in (0,1)),
   `createdAt` timestamp NOT NULL DEFAULT current_timestamp(),
   `active` tinyint(1) NOT NULL DEFAULT 1 CHECK (`active` in (0,1))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `student`
+--
+
+INSERT INTO `student` (`user_idUser`, `online`, `createdAt`, `active`) VALUES
+(7, 0, '2024-11-14 19:59:59', 1),
+(8, 0, '2024-11-14 19:59:59', 1),
+(9, 0, '2024-11-14 19:59:59', 1),
+(10, 0, '2024-11-14 19:59:59', 1),
+(11, 0, '2024-11-14 19:59:59', 1),
+(12, 0, '2024-11-14 19:59:59', 1),
+(13, 0, '2024-11-14 19:59:59', 1),
+(14, 0, '2024-11-14 19:59:59', 1),
+(15, 0, '2024-11-14 19:59:59', 1),
+(16, 0, '2024-11-14 19:59:59', 1);
 
 -- --------------------------------------------------------
 
@@ -492,7 +522,7 @@ CREATE TABLE `tutor` (
   `user_idUser` int(11) NOT NULL,
   `asesoryCost` decimal(10,2) NOT NULL,
   `meanRating` decimal(3,2) NOT NULL,
-  `online` tinyint(1) NOT NULL DEFAULT 1 CHECK (`online` in (0,1)),
+  `online` tinyint(1) NOT NULL DEFAULT 0 CHECK (`online` in (0,1)),
   `createdAt` timestamp NOT NULL DEFAULT current_timestamp(),
   `active` tinyint(1) NOT NULL DEFAULT 1 CHECK (`active` in (0,1))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -514,6 +544,18 @@ CREATE TABLE `tutornotification` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tutor_subject`
+--
+
+CREATE TABLE `tutor_subject` (
+  `idTutor_subject` int(11) NOT NULL,
+  `tutor_user_idUser` int(11) NOT NULL,
+  `subject_idSubject` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `user`
 --
 
@@ -525,8 +567,59 @@ CREATE TABLE `user` (
   `idDegree_subdegree` int(11) NOT NULL,
   `term` int(11) NOT NULL,
   `email` varchar(100) NOT NULL,
-  `password` varchar(50) NOT NULL
+  `password` varchar(300) NOT NULL,
+  `profile_picture` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`idUser`, `name`, `lastName`, `college_idCollege`, `idDegree_subdegree`, `term`, `email`, `password`, `profile_picture`) VALUES
+(7, 'Juan Carlos', 'Pérez Martínez', 1, 2, 3, 'a1234567890@utch.edu.mx', '5c587d49767fdced067af147fbd9329c:8625B5EC17B9EE8135EBF03F270757A3E06ECA343133D4362F6E37CCB9439D1F', NULL),
+(8, 'María Fernanda', 'Gómez Rodríguez', 1, 10, 5, 'a2345678901@utch.edu.mx', '579aece507f498769d30a41cf1353eb6:D762809E3134A64986BC40D79E57710EF90CF95AB919D364907A9CB7E4BBBDAC', NULL),
+(9, 'José Luis', 'Hernández Rivera', 1, 8, 2, 'a3456789012@utch.edu.mx', '8d23568009ceac66ed7a0100a5977626:46ED6B2533D4A5D9828DD2A403991D02B541F5749B79F4472BD51DA41D6F8BBB', NULL),
+(10, 'Ana Isabel', 'Sánchez Morales', 1, 1, 8, 'a4567890123@utch.edu.mx', '4beabfab649cf34395c34687a1f4272b:41363AD9D8FFBF4B73A2F0F47E15AE3917C55EB2DCA70CB6AA866B51A4EDB244', NULL),
+(11, 'Pedro Antonio', 'López García', 1, 3, 6, 'a5678901234@utch.edu.mx', '1c5c686abde1871555889e9c007770f9:AE3E55AD817C354B78D83C8CEF5DE566D38CBB0BB0A6A6D98711B5DF2D321176', NULL),
+(12, 'Laura Beatriz', 'Ramírez Torres', 1, 11, 7, 'a6789012345@utch.edu.mx', '949bff47fc53d70d8e031b46d4fc04e3:F69B208926BB12F09DA8EB41A728773B0241AADE9FF06C6E78BA42FC05B8F2F3', NULL),
+(13, 'Carlos Eduardo', 'Jiménez Vargas', 1, 5, 4, 'a7890123456@utch.edu.mx', '81b145225a9eda43aa7b58c00de6ecde:224B87D86C4C32F03A72F199B1D221FECDDAB9A0DC6276722238756C4BE3CBFB', NULL),
+(14, 'Sofía Valentina', 'Ortiz Castillo', 1, 1, 1, 'a8901234567@utch.edu.mx', '0143c90badb7110cd8148cc153a8056d:638F8F37C82B3D2D9D1CE5DE5A850069754EC8C5EB0AB0E852DC4F257E07179F', NULL),
+(15, 'Luis Fernando', 'Ramírez Gutiérrez', 1, 10, 9, 'a9012345678@utch.edu.mx', '7ddba72523cea445912fb02aa338e010:1EE572DE6D6BF4653BA710F08C31167AD273ABF3C0972682B870B61D45C703DA', NULL),
+(16, 'Gabriela Alejandra', 'Martínez Sánchez', 1, 2, 10, 'a9876543210@utch.edu.mx', 'd7db773456da60dae7e1e4311da4531a:41704C64DB5166E4680D2632399777A480481D25CE1CF2522CA9DB61109F78DE', NULL);
+
+--
+-- Triggers `user`
+--
+DELIMITER $$
+CREATE TRIGGER `trg_EncryptedPasswordInsert` BEFORE INSERT ON `user` FOR EACH ROW BEGIN
+    DECLARE salt CHAR(32);
+    DECLARE hashed_password VARCHAR(256);
+
+    SET salt = SUBSTRING(MD5(RAND()), 1, 32);
+
+    SET hashed_password = UPPER(SHA2(CONCAT(salt, NEW.password), 256));
+
+    SET NEW.password = CONCAT(salt, ':', hashed_password);
+END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `trg_EncryptedPasswordUpdate` BEFORE UPDATE ON `user` FOR EACH ROW BEGIN
+    DECLARE salt CHAR(32);
+    DECLARE hashed_password VARCHAR(256);
+
+    SET salt = SUBSTRING(MD5(RAND()), 1, 32);
+
+    SET hashed_password = UPPER(SHA2(CONCAT(salt, NEW.password), 256));
+
+    SET NEW.password = CONCAT(salt, ':', hashed_password);
+END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `trg_student` AFTER INSERT ON `user` FOR EACH ROW INSERT INTO student (user_idUser) VALUES (NEW.idUser)
+$$
+DELIMITER ;
 
 --
 -- Indexes for dumped tables
@@ -545,7 +638,7 @@ ALTER TABLE `college`
 --
 ALTER TABLE `degree`
   ADD PRIMARY KEY (`idDegree`),
-  ADD UNIQUE KEY `name` (`name`);
+  ADD UNIQUE KEY `Uq_degree_name` (`name`);
 
 --
 -- Indexes for table `degree_subdegree`
@@ -610,10 +703,10 @@ ALTER TABLE `schedule`
   ADD KEY `fk_schedule_slootTime_idSlootTime` (`slootTime_idSlootTime`);
 
 --
--- Indexes for table `sloottime`
+-- Indexes for table `slottime`
 --
-ALTER TABLE `sloottime`
-  ADD PRIMARY KEY (`idSlootTime`),
+ALTER TABLE `slottime`
+  ADD PRIMARY KEY (`idSlotTime`) USING BTREE,
   ADD UNIQUE KEY `startTime` (`startTime`),
   ADD UNIQUE KEY `endTime` (`endTime`);
 
@@ -642,7 +735,7 @@ ALTER TABLE `studentnotification`
 --
 ALTER TABLE `subdegree`
   ADD PRIMARY KEY (`idSubdegree`),
-  ADD UNIQUE KEY `name` (`name`);
+  ADD UNIQUE KEY `Uq_subdegree_name` (`name`);
 
 --
 -- Indexes for table `subject`
@@ -665,11 +758,19 @@ ALTER TABLE `tutornotification`
   ADD KEY `fk_notification_tutor_user_idUser` (`tutor_user_idUser`);
 
 --
+-- Indexes for table `tutor_subject`
+--
+ALTER TABLE `tutor_subject`
+  ADD PRIMARY KEY (`idTutor_subject`),
+  ADD KEY `fk_tutor_subject_tutor_user_idUser` (`tutor_user_idUser`),
+  ADD KEY `fk_tutor_subject_idSubject` (`subject_idSubject`) USING BTREE;
+
+--
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`idUser`),
-  ADD UNIQUE KEY `email` (`email`),
+  ADD UNIQUE KEY `Uq_user_email` (`email`) USING BTREE,
   ADD KEY `fk_user_idDegree_subdegree` (`idDegree_subdegree`),
   ADD KEY `fk_user_college_idCollege` (`college_idCollege`);
 
@@ -711,7 +812,7 @@ ALTER TABLE `petition`
 -- AUTO_INCREMENT for table `review`
 --
 ALTER TABLE `review`
-  MODIFY `idReview` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idReview` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `sale`
@@ -732,10 +833,10 @@ ALTER TABLE `schedule`
   MODIFY `idSchedule` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `sloottime`
+-- AUTO_INCREMENT for table `slottime`
 --
-ALTER TABLE `sloottime`
-  MODIFY `idSlootTime` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `slottime`
+  MODIFY `idSlotTime` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `status`
@@ -768,10 +869,16 @@ ALTER TABLE `tutornotification`
   MODIFY `idTutorNotification` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `tutor_subject`
+--
+ALTER TABLE `tutor_subject`
+  MODIFY `idTutor_subject` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `idUser` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idUser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- Constraints for dumped tables
@@ -822,7 +929,7 @@ ALTER TABLE `savedtutor`
 -- Constraints for table `schedule`
 --
 ALTER TABLE `schedule`
-  ADD CONSTRAINT `fk_schedule_slootTime_idSlootTime` FOREIGN KEY (`slootTime_idSlootTime`) REFERENCES `sloottime` (`idSlootTime`),
+  ADD CONSTRAINT `fk_schedule_slootTime_idSlootTime` FOREIGN KEY (`slootTime_idSlootTime`) REFERENCES `slottime` (`idSlotTime`),
   ADD CONSTRAINT `fk_schedule_student_user_idUser` FOREIGN KEY (`student_user_idUser`) REFERENCES `student` (`user_idUser`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_schedule_tutor_user_idUser` FOREIGN KEY (`tutor_user_idUser`) REFERENCES `tutor` (`user_idUser`) ON DELETE CASCADE ON UPDATE CASCADE;
 
@@ -851,15 +958,19 @@ ALTER TABLE `tutornotification`
   ADD CONSTRAINT `fk_notification_tutor_user_idUser` FOREIGN KEY (`tutor_user_idUser`) REFERENCES `tutor` (`user_idUser`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Constraints for table `tutor_subject`
+--
+ALTER TABLE `tutor_subject`
+  ADD CONSTRAINT `fk_tutor_subject_idSubject` FOREIGN KEY (`subject_idSubject`) REFERENCES `subject` (`idSubject`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_tutor_subject_tutor_user_idUser` FOREIGN KEY (`tutor_user_idUser`) REFERENCES `tutor` (`user_idUser`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Constraints for table `user`
 --
 ALTER TABLE `user`
   ADD CONSTRAINT `fk_user_college_idCollege` FOREIGN KEY (`college_idCollege`) REFERENCES `college` (`idCollege`),
   ADD CONSTRAINT `fk_user_idDegree_subdegree` FOREIGN KEY (`idDegree_subdegree`) REFERENCES `degree_subdegree` (`idDegree_subdegree`);
 COMMIT;
-
-ALTER TABLE user
-ADD COLUMN profile_picture VARCHAR(255);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

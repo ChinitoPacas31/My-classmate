@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 from werkzeug.security import generate_password_hash, check_password_hash
-import mysql.connector
+import mysql.connector, hashlib
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
@@ -20,7 +20,7 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 def get_db_connection():
-    return mysql.connector.connect(user="root", password="", host="localhost", port="3306", database="classmy")
+    return mysql.connector.connect(user="root", password="", host="localhost", port="3306", database="myClassmate")
 
 @app.route('/')
 def index():
@@ -180,7 +180,16 @@ def login():
 
         conn.close()
 
-        if user and user['password'] == password:  # Compara directamente la contraseña almacenada
+        if user:  # Compara directamente la contraseña almacenada
+            # Recuperar el valor almacenado en `password` y separar salt y hash
+            salted_password = user['password']
+            salt, stored_hash = salted_password.split(':')
+
+            # Generar el hash de la contraseña ingresada con el salt
+            attempt_hash = hashlib.sha256((salt + password).encode('utf-8')).hexdigest().upper()
+
+        # Verificar si el hash generado coincide con el almacenado
+        if attempt_hash == stored_hash:
             session['user_id'] = user['idUser']
             session['user_name'] = user['name']
             session['user_email'] = user['email']
