@@ -972,6 +972,8 @@ ALTER TABLE `user`
   ADD CONSTRAINT `fk_user_idDegree_subdegree` FOREIGN KEY (`idDegree_subdegree`) REFERENCES `degree_subdegree` (`idDegree_subdegree`);
 COMMIT;
 
+INSERT INTO sloottime(startTime, endTime) VALUES ('6:00', '7:00'), ('6:30', '7:30'), ('7:00', '8:00'), ('7:30', '8:30'), ('8:00', '9:00'), ('8:30', '9:30'), ('9:00', '10:00'), ('9:30', '10:30'), ('10:00', '11:00'), ('10:30', '11:30'), ('11:00', '12:00'), ('11:30', '12:30'), ('12:00', '13:00'), ('12:30', '13:30'), ('13:00', '14:00'), ('13:30', '14:30'), ('14:00', '15:00'), ('14:30', '15:30'), ('15:00', '16:00'), ('15:30', '16:30'), ('16:00', '17:00'), ('16:30', '17:30'), ('17:00', '18:00'), ('17:30', '18:30'), ('18:00', '19:00'), ('18:30', '19:30'), ('19:00', '20:00'), ('19:30', '20:30'), ('20:00', '21:00'), ('20:30', '21:30'), ('21:00', '22:00');
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
