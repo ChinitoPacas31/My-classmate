@@ -535,34 +535,45 @@
     </div>
   </section>
 
-  <!-- Pie de página -->
-<footer class="pie-pagina">
-  <div class="grupo-1">
-      <div class="box">
-          <figure>
-              <img src="../static/images/iconofooter.png" alt="Logo de la empresa">
-          </figure>
-          <p>MyClassmate - Conectando estudiantes y potenciando aprendizajes.</p>
-      </div>
-      <div class="box">
-          <h2>Sobre Nosotros</h2>
-          <p>Ofrecemos una plataforma que conecta estudiantes con tutores calificados para maximizar su aprendizaje.</p>
-      </div>
-      <div class="box red-social">
-          <a href="https://facebook.com" target="_blank">
-              <img src="../static/images/facebook-icon.png" alt="Facebook" style="width: 45px; height: 45px;">
-          </a>
-          <a href="https://twitter.com" target="_blank">
-              <img src="../static/images/twitter-icon.png" alt="Twitter" style="width: 45px; height: 45px;">
-          </a>
-          <a href="https://instagram.com" target="_blank">
-              <img src="../static/images/instagram-icon.png" alt="Instagram" style="width: 45px; height: 45px;">
-          </a>
-      </div>
-  </div>
-  <div class="grupo-2">
-      <small>&copy; 2024 MyClassmate. Todos los derechos reservados.</small>
-  </div>
+  <!-- Footer Section -->
+  <footer class="pie-pagina">
+    <div class="grupo-1">
+        <div class="box">
+            <figure>
+                    <img src="../static/images/iconofooter.png" alt="MyClassmate-logo">
+            </figure>
+        </div>
+        <div class="box">
+            <h2>SOBRE NOSOTROS</h2>
+            <p>Ya sea que necesites ayuda en una materia específica o quieras enseñar lo que sabes, aquí encontrarás lo que necesitas. 
+              ¡Únete a nuestra comunidad y comienza a mejorar tus habilidades hoy mismo!
+            </p>
+            <div class="text-center" style="margin: 5px;">
+              <a href="{{ url_for('login') }}" class="btn btn-dark">Get Started</a>
+            </div>
+        </div>
+        <div class="box">
+            <h2>SIGUENOS</h2>
+            <div class="red-social">
+              <a href="https://facebook.com" target="_blank">
+                <img src="../static/images/facebook-icon.png" alt="Facebook" style="width: 45px; height: 45px;">
+            </a>
+            <a href="https://twitter.com" target="_blank">
+                <img src="../static/images/twitter-icon.png" alt="Twitter" style="width: 45px; height: 45px;">
+            </a>
+            <a href="https://instagram.com" target="_blank">
+                <img src="../static/images/instagram-icon.png" alt="Instagram" style="width: 45px; height: 45px;">
+            </a>
+            </div>
+            <div class="box" style="margin-top: 18px;">
+            <h2>CONTACTAOS</h2>
+            <a href="mailto:example@example.com,example2@example.com">myclassmate8@gmail.com</a>
+            </div>
+        </div>
+    </div>
+    <div class="grupo-2">
+        <small>&copy; 2024 <b>MyClassmate</b> - Todos los Derechos Reservados.</small>
+    </div>
 </footer>
 </body>
 </html>
