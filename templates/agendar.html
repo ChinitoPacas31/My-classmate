@@ -1,24 +1,22 @@
-<form action="{{ url_for('agendar') }}" method="POST">
-    <label for="tutor_user_idUser">Tutor:</label>
-    <select id="tutor_user_idUser" name="tutor_user_idUser" required>
-        <option value="" disabled selected>Selecciona un tutor</option>
+<form method="POST" action="/agendar">
+    <label for="tutor_user_idUser">Selecciona un tutor:</label>
+    <select name="tutor_user_idUser" required>
+        <option value="">-- Selecciona un tutor --</option>
         {% for tutor in tutors %}
-            <option value="{{ tutor.idUser }}">{{ tutor.name }}</option>
+        <option value="{{ tutor.idUser }}">{{ tutor.name }}</option>
         {% endfor %}
-    </select><br>
+    </select>
 
-    <label for="scheduledDate">Fecha Programada:</label>
-    <input type="date" id="scheduledDate" name="scheduledDate" required><br>
+    <label for="scheduledDate">Fecha:</label>
+    <input type="date" name="scheduledDate" required>
 
-    <label for="slootTime_idSlootTime">Horario:</label>
-    <select id="slootTime_idSlootTime" name="slootTime_idSlootTime" required>
-        <option value="" disabled selected>Selecciona un horario</option>
+    <label for="slootTime_idSlootTime">Selecciona un horario:</label>
+    <select name="slootTime_idSlootTime" required>
+        <option value="">-- Selecciona un horario --</option>
         {% for slot in slot_times %}
-            <option value="{{ slot.idSlootTime }}">
-                {{ slot.startTime }} - {{ slot.endTime }}
-            </option>
+        <option value="{{ slot.idSlotTime }}">{{ slot.startTime }} - {{ slot.endTime }}</option>
         {% endfor %}
-    </select><br>
+    </select>
 
     <button type="submit">Agendar</button>
 </form>
