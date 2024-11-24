@@ -20,7 +20,7 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 def get_db_connection():
-    return mysql.connector.connect(user="root", password="", host="localhost", port="3306", database="myclassmate")
+    return mysql.connector.connect(user="root", password="", host="localhost", port="3308", database="myclassmate")
 
 
 @app.route('/')
@@ -53,11 +53,11 @@ def agendar():
         return redirect(url_for('login'))
 
     if request.method == 'POST':
-        # Obtener y validar tutor_id del formulario
+        # Obtener y validar los datos del formulario
         tutor_id = request.form.get('tutor_user_idUser')
         student_id = session['user_id']
         fecha = request.form['scheduledDate']
-        slot_time_id = request.form['slootTime_idSlootTime']
+        slot_time_id = request.form.get('slootTime_idSlootTime')
 
         # Verificar que tutor_id no esté vacío y convertirlo a entero
         if not tutor_id:
@@ -67,6 +67,15 @@ def agendar():
             tutor_id = int(tutor_id)
         except ValueError:
             return "ID del tutor no válido", 400
+
+        # Verificar que slot_time_id no esté vacío y convertirlo a entero
+        if not slot_time_id:
+            return "Por favor selecciona un horario", 400
+        
+        try:
+            slot_time_id = int(slot_time_id)
+        except ValueError:
+            return "ID del horario no válido", 400
 
         # Guardar el registro en la tabla schedule
         conn = get_db_connection()
@@ -101,6 +110,7 @@ def agendar():
     conn.close()
 
     return render_template('agendar.html', slot_times=slot_times, tutors=tutors)
+
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
