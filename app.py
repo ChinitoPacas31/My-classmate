@@ -281,7 +281,7 @@ def edit_profile():
     # Renderiza el formulario de edición de perfil
     return render_template('edit_profile.html')
 
-        
+
 
 @app.route('/tutors')
 def tutors():
