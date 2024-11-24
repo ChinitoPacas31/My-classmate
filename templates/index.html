@@ -370,17 +370,14 @@
                 Menú
                 </a>
                 <div class="dropdown-menu">
-                  <a class="dropdown-item" href="{{ url_for('perfil') }}" >Perfil</a>
-                  <a class="dropdown-item" href="citas.html">Horarios</a>
+                  <a class="dropdown-item" href="{{ url_for('perfil') }}" >Profile</a>
+                  <a class="dropdown-item" href="">Schedules</a>
                   <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="preguntas.html">Ayuda</a>
+                  <a class="dropdown-item" href="/help">Help</a>
                 </div>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="terms.html">Terminos y Condiciones</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('tutors') }}">Tutores</a>
+                <a class="nav-link" href="{{ url_for('tutors') }}">Tutors</a>
               </li>
             </ul>
             <div  

@@ -141,7 +141,7 @@ def register():
         conn = get_db_connection()
         cur = conn.cursor()
 
-        # Inserción en la tabla `user`
+        # Inserción en la tabla user
         cur.execute(
             'INSERT INTO user (name, lastName, college_idCollege, idDegree_subdegree, term, email, password, profile_picture) '
             'VALUES (%s, %s, %s, %s, %s, %s, %s, %s)',
@@ -149,10 +149,10 @@ def register():
         )
         user_id = cur.lastrowid  # Recupera el id del usuario recién insertado
 
-        # Inserción automática en la tabla `student`
+        # Inserción automática en la tabla student
         cur.execute('INSERT INTO student (user_idUser, online, createdAt, active) VALUES (%s, %s, %s, %s)', (user_id, 0, datetime.now(), 1))
 
-        # Si el usuario selecciona ser tutor, inserta en la tabla `tutor`
+        # Si el usuario selecciona ser tutor, inserta en la tabla tutor
         if is_tutor == 'yes' and cost:
             cur.execute('INSERT INTO tutor (user_idUser, asesoryCost, meanRating, online, createdAt, active) VALUES (%s, %s, %s, %s, %s, %s)', (user_id, cost, 0, 0, datetime.now(), 1))
 
@@ -192,7 +192,7 @@ def login():
         conn.close()
 
         if user:  # Compara directamente la contraseña almacenada
-            # Recuperar el valor almacenado en `password` y separar salt y hash
+            # Recuperar el valor almacenado en password y separar salt y hash
             salted_password = user['password']
             salt, stored_hash = salted_password.split(':')
 
