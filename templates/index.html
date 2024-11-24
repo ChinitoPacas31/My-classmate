@@ -418,8 +418,8 @@
                         <div class="card-body">
                             <h5 class="card-title text-center">{{ tutor.name }} {{ tutor.lastName }}</h5>
                             <h6 class="card-title text-center text-warning">
-                                {% for i in range(tutor['meanRating']|int) %}★{% endfor %}
-                                {% if tutor['meanRating'] % 1 != 0 %}½{% endif %}
+                                {% for i in range(tutor['meanRating']|int) %}★{% endfor %}<br>
+                                {% if tutor['meanRating'] % 1 != 0 %}{% endif %}
                                 ({{ tutor.meanRating }} de 5)
                             </h6>
                             <p class="card-text text-center">Soy muy bueno en la programación</p>
