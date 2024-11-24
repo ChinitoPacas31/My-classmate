@@ -148,7 +148,7 @@ background-color: #e2e7e6;
       </div>
     </nav>
 
-      <!-- Contenedor principal -->
+    <!-- Contenedor principal -->
     <div class="container my-5">
 
         <!-- Tarjeta del perfil del usuario -->
@@ -174,7 +174,12 @@ background-color: #e2e7e6;
                       <li class="list-group-item"><strong>University:</strong> {{ user['college_name'] }} </li>
                       <li class="list-group-item"><strong>Term:</strong> {{ user['term'] }} </li>
                       <li class="list-group-item"><strong>MyDegree:</strong> {{ user['degree_name'] }} </li>
-                      <li class="list-group-item"><strong>MySubdegree:</strong> {{ user['subdegree_name'] }} </li>
+                      {% if user.asesoryCost is not none %}
+                      <li class="list-group-item"><strong>Rating:</strong> {% for i in range(user['meanRating']|int) %}★{% endfor %}
+                        {% if user['meanRating'] % 1 != 0 %}½{% endif %}
+                        ({{ user.meanRating }} de 5) </li>                           
+                      <li class="list-group-item"><strong>Asesory Cost:</strong> {{ user['asesoryCost'] }} </li>
+                      {% endif %}
                     </ul>
                   </div>
                 </div>
@@ -182,7 +187,8 @@ background-color: #e2e7e6;
             </div>
           </div>
         </div>
-    
+
+      {% if user.asesoryCost is not none %}
         <!-- Sección de comentarios/reseñas -->
         <div class="row justify-content-center my-5">
           <div class="col-md-8">
@@ -191,26 +197,22 @@ background-color: #e2e7e6;
                 <h3>Reseñas de estudiantes</h3>
               </div>
               <div class="card-body">
-
-                <!-- Ejemplo de comentario -->
+                {% if reviews %}
+                {% for review in reviews %}
                 <div class="media mb-4">
-                  <img src="https://via.placeholder.com/64" class="mr-3 rounded-circle" alt="Usuario">
+                  <img src="/{{ review['student_profile_picture'] }}" style="width: 50px; height: 50px;" class="mr-3 rounded-circle" alt="Usuario">
                   <div class="media-body">
-                    <h5 class="mt-0">Estudiante 1</h5>
-                    <p>El tutor fue muy claro y me ayudó a entender Programación Orientada a Objetos. ¡Excelente experiencia!</p>
-                    <span class="text-warning">★★★★☆ (4 de 5)</span>
+                    <h5 class="mt-0">{{ review['student_name'] }} {{ review['student_lastname'] }}</h5>
+                    <p>{{ review['description'] }}</p>
+                    <span class="text-warning">{% for i in range(review['rating']|int) %}★{% endfor %}
+                     {% if review['rating'] % 1 != 0 %}½{% endif %}
+                     ({{ review.rating }} de 5) </span>
                   </div>
                 </div>
-    
-                <!-- Ejemplo de otro comentario -->
-                <div class="media mb-4">
-                  <img src="https://via.placeholder.com/64" class="mr-3 rounded-circle" alt="Usuario">
-                  <div class="media-body">
-                    <h5 class="mt-0">Estudiante 2</h5>
-                    <p>Me ayudó mucho con calculo, las explicaciones fueron fáciles de entender. Lo recomiendo mucho.</p>
-                    <span class="text-warning">★★★★★ (5 de 5)</span>
-                  </div>
-                </div>
+                {% endfor %}
+                {% else %}
+                    <p>No hay reseñas para este tutor.</p>
+                {% endif %}
     
                 <!-- Boton de ver más comentarios -->
                 <div class="text-center">
@@ -220,10 +222,13 @@ background-color: #e2e7e6;
             </div>
           </div>
         </div>
+    
+       {% endif %}
       </div>
+
       <!-- Footer Section -->
-  <footer class="pie-pagina">
-    <div class="grupo-1">
+      <footer class="pie-pagina">
+       <div class="grupo-1">
         <div class="box">
             <figure>
                     <img src="../static/images/iconofooter.png" alt="MyClassmate-logo">
@@ -250,9 +255,9 @@ background-color: #e2e7e6;
             <h2>CONTACTANOS</h2>
             <a href="mailto:example@example.com,example2@example.com">myclassmate8@gmail.com</a>
             </div>
-        </div>
-    </div>
-    <div class="grupo-2">
+            </div>
+         </div>
+         <div class="grupo-2">
         <small>&copy; 2024 <b>MyClassmate</b> - Todos los Derechos Reservados.</small>
     </div>
 </footer>

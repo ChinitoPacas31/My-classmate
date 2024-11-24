@@ -20,7 +20,7 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 def get_db_connection():
-    return mysql.connector.connect(user="root", password="", host="localhost", port="3308", database="myclassmate")
+    return mysql.connector.connect(user="root", password="", host="localhost", port="3306", database="myclassmate")
 
 
 @app.route('/')
@@ -237,21 +237,40 @@ def perfil():
             user.profile_picture, 
             degree.name AS degree_name, 
             subdegree.name AS subdegree_name,
-            college.name AS college_name
+            college.name AS college_name,
+            tutor.asesoryCost,
+            tutor.meanRating
         FROM user
         LEFT JOIN degree_subdegree ON user.idDegree_Subdegree = degree_subdegree.idDegree_Subdegree
         LEFT JOIN degree ON degree_subdegree.degree_idDegree = degree.idDegree
         LEFT JOIN subdegree ON degree_subdegree.subdegree_idSubdegree = subdegree.idSubdegree
         LEFT JOIN college ON user.college_idCollege = college.idCollege
+        LEFT JOIN tutor ON user.idUser = tutor.user_idUser
         WHERE user.idUser = %s
     """, (user_id,))
     user = cur.fetchone()
+    
+    #REVIEWS
+    # Verificar si el usuario es tutor 
+    cur.execute("SELECT * FROM tutor WHERE user_idUser = %s", (user_id,))
+    tutor = cur.fetchone()
+
+    # Si el usuario es tutor, obtener las reseñas
+    reviews = []
+    if tutor:
+        cur.execute("""
+            SELECT review.rating, review.description, user.name AS student_name, user.lastName AS student_lastname, user.profile_picture AS student_profile_picture
+            FROM review
+            JOIN user ON review.student_user_idUser = user.idUser
+            WHERE tutor_user_idUser = %s
+        """, (user_id,))
+    reviews = cur.fetchall()
 
     cur.close()
     conn.close()
 
     # Pasa los datos del usuario a la plantilla
-    return render_template('perfil.html', user=user)
+    return render_template('perfil.html', user=user, tutor=tutor, reviews=reviews)
 
 @app.route('/edit_profile', methods=['GET', 'POST'])
 def edit_profile():
