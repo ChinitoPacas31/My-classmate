@@ -353,5 +353,41 @@ def calificar():
 
     return render_template('calificar.html', tutors=tutors)
 
+@app.route('/delete_account', methods=['POST'])
+def delete_account():
+    # Verifica si el usuario está autenticado
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+
+    user_id = session['user_id']
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    try:
+        # Elimina primero cualquier dato relacionado con el usuario (dependiendo de tu base de datos, puedes tener relaciones que también debas borrar)
+        cursor.execute('DELETE FROM review WHERE tutor_user_idUser = %s OR student_user_idUser = %s', (user_id, user_id))
+        cursor.execute('DELETE FROM tutor WHERE user_idUser = %s', (user_id,))
+        cursor.execute('DELETE FROM student WHERE user_idUser = %s', (user_id,))
+        cursor.execute('DELETE FROM user WHERE idUser = %s', (user_id,))
+
+        conn.commit()
+
+        # Cierra la sesión del usuario
+        session.pop('user_id', None)
+        session.pop('user_name', None)
+        session.pop('user_email', None)
+        session.pop('user_rating', None)
+
+    except Exception as e:
+        conn.rollback()
+        print(f"Error al eliminar la cuenta: {e}")
+
+    finally:
+        cursor.close()
+        conn.close()
+
+    return redirect(url_for('index'))  # Redirige al inicio después de eliminar la cuenta
+
+
 if __name__ == '__main__':
     app.run(port=3000, debug=True)
