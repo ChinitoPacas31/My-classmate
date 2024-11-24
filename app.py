@@ -46,6 +46,10 @@ def index():
 
 from datetime import datetime
 
+@app.route('/help')
+def help():
+    return render_template('help.html')
+
 @app.route('/agendar', methods=['GET', 'POST'])
 def agendar():
     # Verificar si el usuario está autenticado
