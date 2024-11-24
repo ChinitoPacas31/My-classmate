@@ -71,9 +71,9 @@
             transform: translateY(-2px);  /* Ligera elevación en hover */
         }
         .scrollable-form {
-          max-height: 400px; /* Ajusta la altura según lo necesario */
-          overflow-y: auto;
-        }
+  max-height: 400px; /* Ajusta la altura según lo necesario */
+  overflow-y: auto;
+}
     </style>
 </head>
 <body>
@@ -112,12 +112,13 @@
           </div>
         </div>
         <div class="card-body scrollable-form">
+
           <!-- Formulario de inicio de sesión -->
           <form action="{{ url_for('register') }}" method="POST" enctype="multipart/form-data">
-            <div class="mb-3">
-              <label for="name" class="form-label">Foto de perfil</label>
-              <input type="file" class="form-control" id="profile_picture" name="profile_picture" required>
-            </div>  
+              <div class="mb-3">
+                <label for="name" class="form-label">Foto de perfil</label>
+                <input type="file" class="form-control" id="profile_picture" name="profile_picture" required>
+              </div>  
             <div class="mb-3">
               <label for="name" class="form-label">Nombres</label>
               <input type="name" class="form-control" id="name" placeholder="Ingresa tu nombre" name="name" required>
@@ -129,33 +130,35 @@
             <div class="mb-3">
               <label for="college_idCollege" class="form-label">Universidad</label>
               <select class="form-control" id="college_idCollege" name="college_idCollege" required>
-                <option value="">Selecciona tu universidad</option>
-                {% for college in colleges %}
-                  <option value="{{ college['idCollege'] }}">{{ college['name'] }}</option>
-                {% endfor %}
+                  <option value="">Selecciona tu universidad</option>
+                  {% for college in colleges %}
+                      <option value="{{ college['idCollege'] }}">{{ college['name'] }}</option>
+                  {% endfor %}
               </select>
-            </div>
-            <div class="mb-3">
+          </div>
+          
+          <div class="mb-3">
               <label for="idDegree_subdegree" class="form-label">Especialidad</label>
               <select class="form-control" id="idDegree_subdegree" name="idDegree_subdegree" required>
-                <option value="">Selecciona tu especialidad</option>
-                {% for subdegree in subdegrees %}
-                  <option value="{{ subdegree['idSubdegree'] }}">{{ subdegree['name'] }}</option>
-                {% endfor %}
+                  <option value="">Selecciona tu especialidad</option>
+                  {% for subdegree in subdegrees %}
+                      <option value="{{ subdegree['idSubdegree'] }}">{{ subdegree['name'] }}</option>
+                  {% endfor %}
               </select>
-            </div>
-            <div class="mb-3">
-              <label for="term" class="form-label">Cuatrimestre</label>
-              <input type="number" class="form-control" id="term" placeholder="Ingresa tu cuatrimestre" name="term" min="0" max="11" required>
-            </div>
-            <div class="mb-3">
-              <label for="email" class="form-label">Correo electronico</label>
-              <input type="email" class="form-control" id="email" placeholder="Ingresa tu correo institucional " name="email" required>
-            </div>
+          </div>
+              <div class="mb-3">
+                <label for="term" class="form-label">Cuatrimestre</label>
+                <input type="number" class="form-control" id="term" placeholder="Ingresa tu cuatrimestre" name="term" min="0" max="11" required>
+              </div>
+              <div class="mb-3">
+                <label for="email" class="form-label">Correo electronico</label>
+                <input type="email" class="form-control" id="email" placeholder="Ingresa tu correo institucional " name="email" required>
+              </div>
             <div class="mb-3">
               <label for="password" class="form-label">Contraseña:</label>
               <input type="password" class="form-control" id="password" placeholder="Ingresa tu contraseña" name="password" required>
             </div>
+
             <div class="mb-3">
               <label for="is_tutor" class="form-label">¿Quieres ser tutor?</label>
               <select class="form-control" id="is_tutor" name="is_tutor" onchange="toggleTutorFields()">
@@ -163,15 +166,29 @@
                 <option value="yes">Sí</option>
               </select>
             </div>
+            
             <div class="mb-3" id="tutor_fields" style="display: none;">
               <label for="cost" class="form-label">Costo de la asesoría</label>
               <input type="number" class="form-control" id="cost" name="cost" placeholder="Ingresa el costo de la asesoría">
             </div>
+            
+            <script>
+              function toggleTutorFields() {
+                var tutorFields = document.getElementById('tutor_fields');
+                var isTutor = document.getElementById('is_tutor').value;
+                tutorFields.style.display = isTutor === 'yes' ? 'block' : 'none';
+              }
+            </script>
+
+            <!-- Botón para enviar el formulario -->
             <button type="submit" class="btn btn-dark w-100 button-bg" style="color: rgb(255, 255, 255);">Registrar</button>
+          
           </form>
           <div class="card-footer text-center">
             <small>¿Ya tienes una cuenta? <a href="{{ url_for('login') }}">Log in</a></small>
           </div>
+
+          
         </div>
       </div>
     </div>
