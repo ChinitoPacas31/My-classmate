@@ -20,7 +20,7 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 def get_db_connection():
-    return mysql.connector.connect(user="root", password="", host="localhost", port="3306", database="myclassmate")
+    return mysql.connector.connect(user="root", password="", host="localhost", port="3308", database="myclassmate")
 
 
 @app.route('/')
@@ -93,7 +93,7 @@ def agendar():
             cursor.close()
             conn.close()
 
-        return redirect(url_for('agendar'))
+        return redirect(url_for('tutors'))
 
     # Obtener todos los horarios disponibles para el dropdown
     conn = get_db_connection()
