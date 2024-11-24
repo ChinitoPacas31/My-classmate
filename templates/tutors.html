@@ -196,9 +196,11 @@
             </li>
           </ul>
           <div  
-              class="mx-3" style="color: white;"> Hola, {{ session['user_name'] }}!
+              class="mx-3" style="color: white;"> Hi, {{ session['user_name'] }}!
           </div>
-          <a href="{{ url_for('logout') }}">Cerrar sesión</a>
+          <a href="{{ url_for('logout') }}">
+            <button type="button" class="btn btn-dark" style="margin-right: 1.9rem;">Log out</button>
+          </a>
           {% else %}
           
           <!-- Botones de Log In y Register -->
