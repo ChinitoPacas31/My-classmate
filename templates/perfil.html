@@ -187,7 +187,7 @@ background-color: #e2e7e6;
                       <li class="list-group-item"><strong>MyDegree:</strong> {{ user['degree_name'] }} </li>
                       {% if user.asesoryCost is not none %}                         
                       <li class="list-group-item" style="display: flex;"><strong>Asesory Cost:&nbsp</strong> {{ user['asesoryCost'] }} <div class="text-warning" style="margin-left: 3.5rem;"> {% for i in range(user['meanRating']|int) %}★{% endfor %}
-                        {% if user['meanRating'] % 1 != 0 %}½{% endif %}</div>
+                        {% if user['meanRating'] % 1 != 0 %}{% endif %}</div>
                         ({{ user.meanRating }} de 5) </li>
                       {% endif %}
                     </ul>
