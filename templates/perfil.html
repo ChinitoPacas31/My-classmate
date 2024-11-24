@@ -113,7 +113,7 @@ background-color: #e2e7e6;
     border-color: #d62728;
 }
 .scrollable-form {
-  max-height: 500px; /* Ajusta la altura según lo necesario */
+  max-height: 370px; /* Ajusta la altura según lo necesario */
   overflow-y: auto;
 }
 </style>
@@ -204,13 +204,13 @@ background-color: #e2e7e6;
 
       {% if user.asesoryCost is not none %}
         <!-- Sección de comentarios/reseñas -->
-        <div class="row justify-content-center my-5 scrollable-form">
+        <div class="row justify-content-center my-5">
           <div class="col-md-8">
             <div class="card shadow">
               <div class="card-header bg-secondary text-white">
                 <h3>Reseñas de estudiantes</h3>
               </div>
-              <div class="card-body">
+              <div class="card-body scrollable-form">
                 {% if reviews %}
                 {% for review in reviews %}
                 <div class="media mb-4">
