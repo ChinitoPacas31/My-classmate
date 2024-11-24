@@ -267,6 +267,7 @@ def perfil():
             FROM review
             JOIN user ON review.student_user_idUser = user.idUser
             WHERE tutor_user_idUser = %s
+            ORDER BY createdAt DESC
         """, (user_id,))
     reviews = cur.fetchall()
 
