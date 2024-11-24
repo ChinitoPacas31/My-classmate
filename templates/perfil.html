@@ -157,7 +157,7 @@ background-color: #e2e7e6;
             <div class="card shadow">
               <div class="card-header bg-nav-perfil text-white d-flex justify-content-between align-items-center">
                 <h2 class="mb-0">MyUser</h2>
-                <a href="edit-profile.html" class="btn btn-dark btn-sm">Edit profile</a>
+                <a href="/edit_profile" class="btn btn-dark btn-sm">Edit profile</a>
               </div>
 
               <div class="card-body">
@@ -166,25 +166,15 @@ background-color: #e2e7e6;
                 <div class="row">
                   <div class="col-md-4 text-center">
                     <img style="width: 150px; height: 150px;" src="/{{ user.profile_picture }}" class="" alt="Foto de perfil">
-                    <h3>{{ user['name'] }} {{ user['lastName'] }}</h1></h3>
-                    <p class="text-muted">Estudiante de Programación</p>
-                    <p class="text-muted">Seguidores: 4</p>
+                    <h3>{{ user['name'] }} {{ user['lastName'] }}</h3>       
                   </div>
                   <div class="col-md-8">
                     <ul class="list-group list-group-flush">
-                      <li class="list-group-item"><strong>Email:</strong> {{ session['user_email'] }}</li>
-                      <li class="list-group-item"><strong>Rating:</strong> 
-                        <span class="text-warning">
-                          ★★★★☆
-                        </span> ({{session['user_rating']}} de 5)
-                      </li>
-                      <li class="list-group-item"><strong>MySubjects:</strong> 
-                        <ul>
-                          <li>Programación</li>
-                          <li>Bases de datos</li>
-                        </ul>
-                      </li>
-                      <li class="list-group-item"><strong>Disponibilidad:</strong> No definida</li>
+                      <li class="list-group-item"><strong>Email:</strong> {{ user['email'] }} </li>
+                      <li class="list-group-item"><strong>University:</strong> {{ user['college_name'] }} </li>
+                      <li class="list-group-item"><strong>Term:</strong> {{ user['term'] }} </li>
+                      <li class="list-group-item"><strong>MyDegree:</strong> {{ user['degree_name'] }} </li>
+                      <li class="list-group-item"><strong>MySubdegree:</strong> {{ user['subdegree_name'] }} </li>
                     </ul>
                   </div>
                 </div>

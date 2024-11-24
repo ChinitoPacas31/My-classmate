@@ -217,8 +217,24 @@ def perfil():
     conn = get_db_connection()
     cur = conn.cursor(dictionary=True)
 
-    # Obtén la información del usuario desde la base de datos
-    cur.execute("SELECT name, lastName, email, term, profile_picture FROM user WHERE idUser = %s", (user_id,))
+    # Obtén la información del usuario y las relaciones necesarias
+    cur.execute("""
+        SELECT 
+            user.name, 
+            user.lastName, 
+            user.email, 
+            user.term, 
+            user.profile_picture, 
+            degree.name AS degree_name, 
+            subdegree.name AS subdegree_name,
+            college.name AS college_name
+        FROM user
+        LEFT JOIN degree_subdegree ON user.idDegree_Subdegree = degree_subdegree.idDegree_Subdegree
+        LEFT JOIN degree ON degree_subdegree.degree_idDegree = degree.idDegree
+        LEFT JOIN subdegree ON degree_subdegree.subdegree_idSubdegree = subdegree.idSubdegree
+        LEFT JOIN college ON user.college_idCollege = college.idCollege
+        WHERE user.idUser = %s
+    """, (user_id,))
     user = cur.fetchone()
 
     cur.close()
@@ -226,7 +242,18 @@ def perfil():
 
     # Pasa los datos del usuario a la plantilla
     return render_template('perfil.html', user=user)
-    
+
+@app.route('/edit_profile', methods=['GET', 'POST'])
+def edit_profile():
+    if request.method == 'POST':
+        # Aquí manejas la lógica de actualización de perfil (por ejemplo, actualizar nombre, email, etc.)
+        pass
+
+    # Renderiza el formulario de edición de perfil
+    return render_template('edit_profile.html')
+
+        
+
 @app.route('/tutors')
 def tutors():
     conn = get_db_connection()
