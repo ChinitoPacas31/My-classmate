@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 25, 2024 at 09:45 PM
+-- Generation Time: Nov 25, 2024 at 09:53 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `myclassmate`
 --
+CREATE DATABASE IF NOT EXISTS `myclassmate` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `myclassmate`;
 
 -- --------------------------------------------------------
 
