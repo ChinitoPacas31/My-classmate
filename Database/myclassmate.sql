@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 20, 2024 at 08:29 AM
+-- Generation Time: Nov 25, 2024 at 09:45 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -20,8 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `myclassmate`
 --
-CREATE DATABASE IF NOT EXISTS `myclassmate` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `myclassmate`;
 
 -- --------------------------------------------------------
 
@@ -140,18 +138,34 @@ CREATE TABLE `review` (
   `student_user_idUser` int(11) NOT NULL,
   `rating` tinyint(1) NOT NULL CHECK (`rating` between 1 and 5),
   `description` text DEFAULT NULL,
-  `createdAt` datetime DEFAULT current_timestamp()
+  `createdAt` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `review`
+--
+
+INSERT INTO `review` (`idReview`, `tutor_user_idUser`, `student_user_idUser`, `rating`, `description`, `createdAt`) VALUES
+(56, 7, 16, 5, 'Muy profesional el tutor. Súper atento. Se nota que sabe del tema.', '2024-11-25 14:44:43'),
+(57, 7, 12, 4, NULL, '2024-11-25 14:44:43'),
+(58, 8, 13, 3, 'Es bueno como tutor, pero llegó tarde a la asesoría.', '2024-11-25 14:44:43'),
+(59, 11, 13, 5, NULL, '2024-11-25 14:44:43'),
+(60, 10, 15, 3, 'Se confundía facilmente con sus propias explicaciones.', '2024-11-25 14:44:43'),
+(61, 9, 15, 2, 'Se nota que no preparó el material para la asesoría.', '2024-11-25 14:44:43'),
+(62, 9, 16, 5, NULL, '2024-11-25 14:44:43'),
+(63, 8, 14, 4, 'Muy bueno. La recomiendo completamente.', '2024-11-25 14:44:43'),
+(64, 11, 12, 4, NULL, '2024-11-25 14:44:43'),
+(65, 7, 16, 1, 'No se presentó y ni siquiera avisó. Por ninguna circunstancia lo recomendaría', '2024-11-25 14:44:43');
 
 --
 -- Triggers `review`
 --
 DELIMITER $$
-CREATE TRIGGER `trg_meanRatingInsert` AFTER INSERT ON `review` FOR EACH ROW UPDATE tutor SET meanRating = (SELECT AVG(rating) FROM review GROUP BY tutor_user_idUser) WHERE NEW.tutor_user_idUser = tutor.user_idUser
+CREATE TRIGGER `trg_meanRatingInsert` AFTER INSERT ON `review` FOR EACH ROW UPDATE tutor SET meanRating = (SELECT AVG(rating) FROM review WHERE tutor_user_idUser = NEW.tutor_user_idUser) WHERE NEW.tutor_user_idUser = tutor.user_idUser
 $$
 DELIMITER ;
 DELIMITER $$
-CREATE TRIGGER `trg_meanRatingUpdate` AFTER INSERT ON `review` FOR EACH ROW UPDATE tutor SET meanRating = (SELECT AVG(rating) FROM review GROUP BY tutor_user_idUser) WHERE NEW.tutor_user_idUser = tutor.user_idUser
+CREATE TRIGGER `trg_meanRatingUpdate` AFTER INSERT ON `review` FOR EACH ROW UPDATE tutor SET meanRating = (SELECT AVG(rating) FROM review WHERE tutor_user_idUser = NEW.tutor_user_idUser) WHERE NEW.tutor_user_idUser = tutor.user_idUser
 $$
 DELIMITER ;
 
@@ -212,6 +226,43 @@ CREATE TABLE `slottime` (
   `startTime` time NOT NULL,
   `endTime` time NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `slottime`
+--
+
+INSERT INTO `slottime` (`idSlotTime`, `startTime`, `endTime`) VALUES
+(1, '06:00:00', '07:00:00'),
+(2, '06:30:00', '07:30:00'),
+(3, '07:00:00', '08:00:00'),
+(4, '07:30:00', '08:30:00'),
+(5, '08:00:00', '09:00:00'),
+(6, '08:30:00', '09:30:00'),
+(7, '09:00:00', '10:00:00'),
+(8, '09:30:00', '10:30:00'),
+(9, '10:00:00', '11:00:00'),
+(10, '10:30:00', '11:30:00'),
+(11, '11:00:00', '12:00:00'),
+(12, '11:30:00', '12:30:00'),
+(13, '12:00:00', '13:00:00'),
+(14, '12:30:00', '13:30:00'),
+(15, '13:00:00', '14:00:00'),
+(16, '13:30:00', '14:30:00'),
+(17, '14:00:00', '15:00:00'),
+(18, '14:30:00', '15:30:00'),
+(19, '15:00:00', '16:00:00'),
+(20, '15:30:00', '16:30:00'),
+(21, '16:00:00', '17:00:00'),
+(22, '16:30:00', '17:30:00'),
+(23, '17:00:00', '18:00:00'),
+(24, '17:30:00', '18:30:00'),
+(25, '18:00:00', '19:00:00'),
+(26, '18:30:00', '19:30:00'),
+(27, '19:00:00', '20:00:00'),
+(28, '19:30:00', '20:30:00'),
+(29, '20:00:00', '21:00:00'),
+(30, '20:30:00', '21:30:00'),
+(31, '21:00:00', '22:00:00');
 
 -- --------------------------------------------------------
 
@@ -527,6 +578,17 @@ CREATE TABLE `tutor` (
   `active` tinyint(1) NOT NULL DEFAULT 1 CHECK (`active` in (0,1))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `tutor`
+--
+
+INSERT INTO `tutor` (`user_idUser`, `asesoryCost`, `meanRating`, `online`, `createdAt`, `active`) VALUES
+(7, 70.00, 3.33, 0, '2024-11-20 23:12:01', 1),
+(8, 50.00, 3.50, 0, '2024-11-20 23:12:01', 1),
+(9, 60.00, 3.50, 0, '2024-11-20 23:12:01', 1),
+(10, 50.00, 3.00, 0, '2024-11-20 23:12:01', 1),
+(11, 100.00, 4.50, 0, '2024-11-20 23:12:01', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -721,6 +783,7 @@ ALTER TABLE `status`
 -- Indexes for table `student`
 --
 ALTER TABLE `student`
+  ADD UNIQUE KEY `uni_user_idUser` (`user_idUser`),
   ADD KEY `fk_student_user_idUser` (`user_idUser`);
 
 --
@@ -748,6 +811,7 @@ ALTER TABLE `subject`
 -- Indexes for table `tutor`
 --
 ALTER TABLE `tutor`
+  ADD UNIQUE KEY `uni_user_idUser` (`user_idUser`),
   ADD KEY `fk_tutor_user_idUser` (`user_idUser`);
 
 --
@@ -812,7 +876,7 @@ ALTER TABLE `petition`
 -- AUTO_INCREMENT for table `review`
 --
 ALTER TABLE `review`
-  MODIFY `idReview` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `idReview` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
 
 --
 -- AUTO_INCREMENT for table `sale`
@@ -836,7 +900,7 @@ ALTER TABLE `schedule`
 -- AUTO_INCREMENT for table `slottime`
 --
 ALTER TABLE `slottime`
-  MODIFY `idSlotTime` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idSlotTime` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `status`
@@ -972,10 +1036,16 @@ ALTER TABLE `user`
   ADD CONSTRAINT `fk_user_idDegree_subdegree` FOREIGN KEY (`idDegree_subdegree`) REFERENCES `degree_subdegree` (`idDegree_subdegree`);
 COMMIT;
 
+<<<<<<< HEAD
+=======
 INSERT INTO slottime(startTime, endTime) VALUES ('6:00', '7:00'), ('6:30', '7:30'), ('7:00', '8:00'), ('7:30', '8:30'), ('8:00', '9:00'), ('8:30', '9:30'), ('9:00', '10:00'), ('9:30', '10:30'), ('10:00', '11:00'), ('10:30', '11:30'), ('11:00', '12:00'), ('11:30', '12:30'), ('12:00', '13:00'), ('12:30', '13:30'), ('13:00', '14:00'), ('13:30', '14:30'), ('14:00', '15:00'), ('14:30', '15:30'), ('15:00', '16:00'), ('15:30', '16:30'), ('16:00', '17:00'), ('16:30', '17:30'), ('17:00', '18:00'), ('17:30', '18:30'), ('18:00', '19:00'), ('18:30', '19:30'), ('19:00', '20:00'), ('19:30', '20:30'), ('20:00', '21:00'), ('20:30', '21:30'), ('21:00', '22:00');
 
 ALTER TABLE student ADD CONSTRAINT UNIQUE (user_idUser);
 
+<<<<<<< Updated upstream
+=======
+>>>>>>> a9047baf1372a3061dc80cad557e7c741ffd996a
+>>>>>>> Stashed changes
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
