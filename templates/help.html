@@ -183,16 +183,13 @@
               Menu
               </a>
               <div class="dropdown-menu">
-                <a class="dropdown-item" href="{{ url_for('perfil') }}" >Profile</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{{ url_for('help') }}">Help</a>
-              </div>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('tutors') }}">Tutors</a>
-            </li>
+                <a class="dropdown-item" href="/perfil">Profile</a>
+
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="{{ url_for('tutors') }}">Tutors</a>
+            </div>
           </ul>
-          <div  
+            <div 
               class="mx-3" style="color: white;"> Hi, {{ session['user_name'] }}!
           </div>
           <a href="{{ url_for('logout') }}">
