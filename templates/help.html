@@ -162,8 +162,32 @@
 .dropdown-menu {
   margin-top: 8px;
   border-radius: 0;
-  
 }
+    /* Animación personalizada para mostrar el menú */
+    @keyframes fadeDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Aplicar la animación al mostrar */
+    .dropdown-menu.show {
+      animation: fadeDown 0.3s ease-in-out;
+    }
+.dropdown-item {
+  color: #ffffff;
+}
+    /* Efecto hover para el botón del dropdown */
+    .dropdown-toggle:hover {
+      background-color: #497d6d; /* Cambia el color del fondo */
+      border-radius: 5px; /* Opción de redondear bordes */
+      transition: background-color 0.3s, color 0.3s; /* Transición suave */
+    }
     </style>
 </head>
 <body>
@@ -186,7 +210,7 @@
                 <a class="nav-link dropdown-toggle mx-2" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
                     <span class="navbar-toggler-icon"></span>
                 </a>
-                <div class="dropdown-menu">
+                <div class="dropdown-menu" style="background-color: #3e5d58;" >
                     <a class="dropdown-item" href="/perfil">Profile</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="{{ url_for('tutors') }}">Tutors</a>
