@@ -539,31 +539,31 @@
       </div>
       
   <section id="como-funciona">
-    <h2>¿Cómo funciona MyClassmate?</h2>
+    <h2>How does MyClassmate work?</h2>
     <div class="steps">
         {% if session['user_id'] %}
       <div class="step">
         <img src="../static/images/formuser.png" alt="Registro">
-        <h3>Paso 1: Regístrate</h3>
-        <p>Felicidades, ya eres parte de la familia</p>
+        <h3>Step 1: Register</h3>
+        <p>Congratulations, you are now part of the family.</p>
       </div>
       {% else %}
       <div class="step">
         <img src="../static/images/formuser.png" alt="Registro">
-        <h3>Paso 1: Regístrate</h3>
-        <p>Crea tu cuenta en minutos. Solo necesitas tu correo y algunos datos básicos.</p>
-        <a href="{{ url_for('register') }}" class="btnn">Regístrate aquí</a>
+        <h3>Step 1: Sign up</h3>
+        <p>Create your account in minutes. All you need is your email address and some basic information.</p>
+        <a href="{{ url_for('register') }}" class="btnn">Sign up here</a>
       </div>
       {% endif %}
       <div class="step">
         <img src="../static/images/lupas.jpg.avif" alt="Buscar Tutor">
-        <h3>Paso 2: Encuentra tu tutor ideal</h3>
-        <p>Explora tutores por materia, nivel educativo o disponibilidad.</p>
+        <h3>Step 2: Find your ideal tutor</h3>
+        <p>Browse tutors by subject, educational level or availability.</p>
       </div>
       <div class="step">
         <img src="../static/images/2693507.png" alt="Agenda">
-        <h3>Paso 3: Agenda tu sesión</h3>
-        <p>Elige el horario que más te convenga y reserva tu clase en segundos.</p>
+        <h3>Step 3: Schedule your session</h3>
+        <p>Choose the schedule that suits you best and book your class in seconds.</p>
       </div>
     </div>
   </section>
