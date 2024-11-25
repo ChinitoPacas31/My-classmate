@@ -158,63 +158,75 @@
     background-color: #324c47;
     color: white;
 }
+.dropdown-menu {
+  margin-top: 8px;
+  border-radius: 0;
+  
+}
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark background-nav">
-        <a class="navbar-brand" href="/" >   
-          <h2>MyClassmate</h2>
-        </a>
-        {% if session['user_id'] %}
+    <nav class="navbar navbar-expand-lg navbar-dark background-nav" style="padding-left: 0;">
         <!-- Botón para colapsar la barra de navegación en dispositivos pequeños -->
         <button class="navbar-toggler" type="button" 
-        data-toggle="collapse" 
-        data-target="#navbarSupportedContent" 
-        aria-controls="navbarSupportedContent" 
-        aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
+            data-toggle="collapse" 
+            data-target="#navbarSupportedContent" 
+            aria-controls="navbarSupportedContent" 
+            aria-expanded="false" 
+            aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
         </button>
-      
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle mx-2" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
-              Menú
-              </a>
-              <div class="dropdown-menu">
-                <a class="dropdown-item" href="/perfil">Profile</a>
-
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="/help">Help</a>
-                
-          </ul>
-            <div 
-              class="mx-3" style="color: white;"> Hi, {{ session['user_name'] }}!
-          </div>
-          <a href="{{ url_for('logout') }}">
-            <button type="button" class="btn btn-dark" style="margin-right: 1.9rem;">Log out</button>
-          </a>
-          {% else %}
-          
-          <!-- Botones de Log In y Register -->
-          <div class="ml-auto">
-            <a class="nav-item" href="{{ url_for('register') }}">
-                <button type="button" class="btn btn-dark">Register</button>
-            </a>
-            <a class="nav-item" href="{{ url_for('login') }}">
-                <button type="button" class="btn btn-dark">Log In</button>
-            </a>
-        </div>
     
-        {% endif %}
+        <!-- Contenido colapsable -->
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <!-- Menú de navegación -->
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle mx-2" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+                        <span class="navbar-toggler-icon"></span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="/perfil">Profile</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="/help">Help</a>
+                    </div>
+                </li>
+                    <!-- Logo a la derecha -->
+        <a class="navbar-brand ml-auto" href="/">
+          <h2>MyClassmate</h2>
+      </a>
+            </ul>
+            
+    
+            <!-- Mensaje de usuario y botón Log Out -->
+            {% if session['user_id'] %}
+            <div class="d-flex align-items-center">
+                <div class="mx-3" style="color: white;">
+                    Hi, {{ session['user_name'] }}!
+                </div>
+                <a href="{{ url_for('logout') }}">
+                    <button type="button" class="btn btn-dark" style="margin-right: 1.9rem;">Log out</button>
+                </a>
+            </div>
+            {% else %}
+            <!-- Botones de Log In y Register -->
+            <div class="ml-auto">
+                <a class="nav-item" href="{{ url_for('register') }}">
+                    <button type="button" class="btn btn-dark">Register</button>
+                </a>
+                <a class="nav-item" href="{{ url_for('login') }}">
+                    <button type="button" class="btn btn-dark">Log In</button>
+                </a>
+            </div>
+            {% endif %}
         </div>
-      </nav>
+    </nav>
 
 <div class="container py-5">
     <h1 class="text-center mb-4">Search for your desired tutor</h1>
     <div class="row justify-content-center container-targets">
         {% for tutor in tutors %}
-            <div class="card mx-3 mb-3" style="width: 18rem;">
+            <div class="card mx-3 mb-3" style="width: 18rem; padding-left: 0px; padding-right: 0px;">
                 <img style="height: 18rem; object-fit: cover;" src="/{{ tutor.profile_picture }}" class="card-img-top rounded-top" alt="Foto de tutor">
                 <div class="card-body">
                     <h5 class="card-title text-center">{{ tutor.name }} {{ tutor.lastName }}</h5>
