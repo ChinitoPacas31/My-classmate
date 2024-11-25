@@ -20,7 +20,7 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 def get_db_connection():
-    return mysql.connector.connect(user="root", password="", host="localhost", port="3306", database="myclassmate")
+    return mysql.connector.connect(user="root", password="", host="localhost", port="3308", database="myclassmate")
 
 
 @app.route('/')
@@ -135,13 +135,12 @@ def register():
         if profile_picture and allowed_file(profile_picture.filename):
             filename = secure_filename(profile_picture.filename)
             profile_picture_path = os.path.join(app.config['UPLOAD_FOLDER'], filename).replace("\\", "/")
-            profile_picture.save(profile_picture_path)  # Guarda la imagen
+            profile_picture.save(profile_picture_path)
 
         # Verificar el dominio del correo electrónico
         if not email.endswith('@utch.edu.mx'):
             return 'El correo debe tener la terminación @utch.edu.mx'
 
-        # Conectar a la base de datos e insertar el usuario
         conn = get_db_connection()
         cur = conn.cursor()
 
@@ -151,12 +150,14 @@ def register():
             'VALUES (%s, %s, %s, %s, %s, %s, %s, %s)',
             (name, lastName, college_idCollege, idDegree_subdegree, term, email, password, profile_picture_path)
         )
-        user_id = cur.lastrowid  # Recupera el id del usuario recién insertado
+        user_id = cur.lastrowid
 
-        # Inserción automática en la tabla student
-        cur.execute('INSERT INTO student (user_idUser, online, createdAt, active) VALUES (%s, %s, %s, %s)', (user_id, 0, datetime.now(), 1))
+        # Verificar si el usuario ya está en la tabla student
+        cur.execute('SELECT COUNT(*) FROM student WHERE user_idUser = %s', (user_id,))
+        if cur.fetchone()[0] == 0:
+            cur.execute('INSERT INTO student (user_idUser, online, createdAt, active) VALUES (%s, %s, %s, %s)', (user_id, 0, datetime.now(), 1))
 
-        # Si el usuario selecciona ser tutor, inserta en la tabla tutor
+        # Inserción en la tabla tutor si aplica
         if is_tutor == 'yes' and cost:
             cur.execute('INSERT INTO tutor (user_idUser, asesoryCost, meanRating, online, createdAt, active) VALUES (%s, %s, %s, %s, %s, %s)', (user_id, cost, 0, 0, datetime.now(), 1))
 

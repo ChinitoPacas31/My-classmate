@@ -221,6 +221,7 @@
     <div class="col-md-6">
       <label for="tutor" class="form-label">select a tutor:</label>
       <select name="tutor_user_idUser" id="tutor" class="form-select" required>
+        <option value="">Select a tutor</option>
         {% for tutor in tutors %}
           <option value="{{ tutor.idUser }}">{{ tutor.name }} {{ tutor.lastName }}</option>
         {% endfor %}
