@@ -8,6 +8,8 @@ app.secret_key = 'your_secret_key'
 #aqui empieza el desmadre de las fotos
 import os
 from werkzeug.utils import secure_filename
+import time
+from datetime import datetime
 
 # Configuración para subir imágenes
 UPLOAD_FOLDER = 'static/uploads'  # Asegúrate de que esta carpeta ya exista
@@ -20,7 +22,7 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 def get_db_connection():
-    return mysql.connector.connect(user="root", password="", host="localhost", port="3306", database="myclassmate")
+    return mysql.connector.connect(user="root", password="", host="localhost", port="3308", database="myclassmate")
 
 
 @app.route('/')
@@ -133,8 +135,14 @@ def register():
         # Manejar la foto de perfil
         profile_picture_path = None
         if profile_picture and allowed_file(profile_picture.filename):
+            # Obtener nombre seguro
             filename = secure_filename(profile_picture.filename)
+            # Agregar timestamp al nombre del archivo
+            timestamp = time.strftime("%Y%m%d_%H%M%S")
+            filename = f"{filename.rsplit('.', 1)[0]}_{timestamp}.{filename.rsplit('.', 1)[1]}"
+            # Generar ruta completa
             profile_picture_path = os.path.join(app.config['UPLOAD_FOLDER'], filename).replace("\\", "/")
+            # Guardar archivo en el servidor
             profile_picture.save(profile_picture_path)
 
         # Verificar el dominio del correo electrónico
