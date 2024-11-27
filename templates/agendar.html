@@ -188,6 +188,7 @@
       border-radius: 5px; /* Opción de redondear bordes */
       transition: background-color 0.3s, color 0.3s; /* Transición suave */
     }
+
 </style>
   <body>
     <!-- Barra de navegación -->
@@ -261,16 +262,34 @@
             {% endfor %}
           </select>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-3">
           <label for="scheduledDate" class="form-label">Date</label>
           <input type="date" name="scheduledDate" class="form-control" required>
         </div>
-        <div class="col-md-12">
+        <div class="col-md-3">
+          <label for="tutor_user_idUser" class="form-label">subject</label>
+          <select name="tutor_user_idUser" class="form-select" required>
+            <option value="">Select a tutor</option>
+            {% for tutor in tutors %}
+              <option value="{{ tutor.idUser }}">{{ tutor.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col-md-6">
           <label for="slootTime_idSlootTime" class="form-label">Schedule</label>
           <select name="slootTime_idSlootTime" class="form-select" required>
             <option value="">Select a schedule</option>
             {% for slot in slot_times %}
               <option value="{{ slot.idSlotTime }}">{{ slot.startTime }} - {{ slot.endTime }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label for="tutor_user_idUser" class="form-label">Description</label>
+          <select name="tutor_user_idUser" class="form-select" required>
+            <option value="">Specify a meeting point whithin the universitiy</option>
+            {% for tutor in tutors %}
+              <option value="{{ tutor.idUser }}">{{ tutor.name }}</option>
             {% endfor %}
           </select>
         </div>
