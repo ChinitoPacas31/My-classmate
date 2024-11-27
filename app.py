@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_mail import Mail, Message
 import mysql.connector, hashlib
 
 app = Flask(__name__)
@@ -22,7 +23,15 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 def get_db_connection():
-    return mysql.connector.connect(user="root", password="", host="localhost", port="3306", database="myclassmate")
+    return mysql.connector.connect(user="root", password="", host="localhost", port="3308", database="myclassmate")
+
+# Configuración de Flask-Mail (asegúrate de reemplazar con tus credenciales)
+app.config['MAIL_SERVER'] = 'smtp.googlemail.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USERNAME'] = 'myclassmate8@gmail.com'  # Cambia esto
+app.config['MAIL_PASSWORD'] = 'zlcq jjta ripg yruz'        # Cambia esto
+mail = Mail(app)
 
 
 @app.route('/')
@@ -65,25 +74,22 @@ def agendar():
         fecha = request.form['scheduledDate']
         slot_time_id = request.form.get('slootTime_idSlootTime')
 
-        # Verificar que tutor_id no esté vacío y convertirlo a entero
         if not tutor_id:
             return "Por favor selecciona un tutor", 400
-        
+
         try:
             tutor_id = int(tutor_id)
         except ValueError:
             return "ID del tutor no válido", 400
 
-        # Verificar que slot_time_id no esté vacío y convertirlo a entero
         if not slot_time_id:
             return "Por favor selecciona un horario", 400
-        
+
         try:
             slot_time_id = int(slot_time_id)
         except ValueError:
             return "ID del horario no válido", 400
 
-        # Validar formato de fecha
         try:
             fecha = datetime.strptime(fecha, '%Y-%m-%d')
         except ValueError:
@@ -93,7 +99,6 @@ def agendar():
         conn = get_db_connection()
         cursor = conn.cursor()
         try:
-            # Transacción: Insertar cita en `schedule`
             cursor.execute(
                 """
                 INSERT INTO schedule (tutor_user_idUser, student_user_idUser, scheduledDate, slootTime_idSlootTime)
@@ -102,7 +107,6 @@ def agendar():
                 (tutor_id, student_id, fecha, slot_time_id)
             )
             
-            # Generar notificación para el tutor
             notification_description = f"El estudiante {session['user_name']} ha agendado una cita para {fecha}."
             cursor.execute(
                 """
@@ -111,6 +115,12 @@ def agendar():
                 """,
                 (tutor_id, student_id, notification_description, 0, datetime.now())
             )
+
+            # Obtener el correo del tutor
+            cursor.execute("SELECT email FROM user WHERE idUser = %s", (tutor_id,))
+            tutor_email = cursor.fetchone()
+            if tutor_email:
+                tutor_email = tutor_email[0]
 
             conn.commit()
         except Exception as e:
@@ -121,9 +131,28 @@ def agendar():
             cursor.close()
             conn.close()
 
+        # Enviar correo al tutor
+        if tutor_email:
+            try:
+                msg = Message(
+                    "Nueva cita agendada",
+                    sender="noreply@miapp.com",
+                    recipients=[tutor_email]
+                )
+                msg.body = f"""
+                Hola,
+                
+                Se ha agendado una nueva cita para el {fecha.strftime('%Y-%m-%d')}.
+                Estudiante: {session['user_name']}
+                """
+                mail.send(msg)
+            except Exception as e:
+                print(f"Error al enviar el correo: {e}")
+                return "Cita agendada, pero no se pudo enviar el correo", 500
+
         return redirect(url_for('tutors'))
 
-    # Obtener todos los horarios disponibles para el dropdown
+    # Obtener horarios disponibles para el formulario
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
     try:
