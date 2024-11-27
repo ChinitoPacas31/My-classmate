@@ -189,29 +189,29 @@ background-color: #e2e7e6;
                       <div class="dropdown-divider"></div>
                       <a class="dropdown-item" href="/help">Help</a>
                   </div>
-              </li>
+                 </li>
                   <!-- Logo a la derecha -->
-      <a class="navbar-brand ml-auto" href="/">
-        <h2>MyClassmate</h2>
-    </a>
+                        <a class="navbar-brand ml-auto" href="/"><h2>MyClassmate</h2></a>       
                             <!-- Menú de notificaciones -->
                             <ul class="navbar-nav mr-auto">
                               <li class="nav-item dropdown">
                                   <a class="nav-link  mx-2" href="#" role="button" data-toggle="dropdown" aria-expanded="false" style="padding-top: 17px;">                                
                                     <i class="bi bi-bell"></i>
                                   </a>
+                                  {% for notis in notis %}
                                   <div class="dropdown-menu" style="background-color: #3e5d58;">
-                                    <img src="" style="width: 50px; height: 50px;" class="mr-3 rounded-circle" alt="Usuario">
+                                     <img src="/{{ notis['profile_picture'] }}" style="width: 50px; height: 50px;" class="mr-3 rounded-circle" alt="Usuario">
                                      <a class="dropdown-item text-muted d-block">                                     
-                                     <strong>New message from John</strong>
-                                     <small>2 minutes ago</small>
-                                    </a> 
-                                        </li>
-                                    </ul>
+                                        <strong>{{ notis['description'] }}</strong>
+                                        <small>2 minutes ago</small>
+                                     </a>  
+                                      </li>
+                              </ul>
                               </li>
-                </div>
-          </ul>
-          
+                            </ul>
+        </div>
+        {% endfor %}
+
           <!-- Mensaje de usuario y botón Log Out -->
           {% if session['user_id'] %}
           <div class="d-flex align-items-center">
@@ -233,7 +233,7 @@ background-color: #e2e7e6;
               </a>
           </div>
           {% endif %}
-      </div>
+    </div>
   </nav>
 
     <!-- Contenedor principal -->
@@ -349,3 +349,13 @@ background-color: #e2e7e6;
 </footer>
   </body>
 </html>
+<!--
+{% for notis in notis %}
+                                  <div class="dropdown-menu" style="background-color: #3e5d58;">
+                                     <img src="/{{ notis['profile_picture'] }}" style="width: 50px; height: 50px;" class="mr-3 rounded-circle" alt="Usuario">
+                                     <a class="dropdown-item text-muted d-block">                                     
+                                        <strong>{{ notis['description'] }}</strong>
+                                        <small>2 minutes ago</small>
+                                      </a> 
+                                  </div>
+                                    {% endfor %} -->
