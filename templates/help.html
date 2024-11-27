@@ -323,14 +323,17 @@
              </figure>
          </div>
          <div class="box">
-             <h2>ABOUT US</h2>
-             <p>Whether you need help in a specific subject or want to teach what you know, you'll find what you need here. 
-               Join our community and start improving your skills today!
-             </p>
-             <div class="text-center" style="margin: 5px;">
-               <a href="{{ url_for('login') }}" class="btn btn-dark">Get Started</a>
-             </div>
-         </div>
+          <h2>ABOUT US</h2>
+          <p>Whether you need help in a specific subject or want to teach what you know, you'll find what you need here. 
+            Join our community and start improving your skills today!
+          </p>
+          {% if session['user_id'] %}
+          {% else %}
+          <div class="text-center" style="margin: 5px;">
+            <a href="{{ url_for('login') }}" class="btn btn-dark">Get Started</a>
+          </div>
+          {% endif %}
+      </div>
          <div class="box">
              <h2>FOLLOW US</h2>
              <div class="red-social">
