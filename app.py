@@ -22,7 +22,7 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 def get_db_connection():
-    return mysql.connector.connect(user="root", password="", host="localhost", port="3306", database="myclassmate")
+    return mysql.connector.connect(user="root", password="", host="localhost", port="3308", database="myclassmate")
 
 
 @app.route('/')
@@ -83,10 +83,17 @@ def agendar():
         except ValueError:
             return "ID del horario no válido", 400
 
-        # Guardar el registro en la tabla schedule
+        # Validar formato de fecha
+        try:
+            fecha = datetime.strptime(fecha, '%Y-%m-%d')
+        except ValueError:
+            return "Formato de fecha inválido. Usa AAAA-MM-DD.", 400
+
+        # Guardar el registro en la tabla schedule y crear una notificación
         conn = get_db_connection()
         cursor = conn.cursor()
         try:
+            # Transacción: Insertar cita en `schedule`
             cursor.execute(
                 """
                 INSERT INTO schedule (tutor_user_idUser, student_user_idUser, scheduledDate, slootTime_idSlootTime)
@@ -94,7 +101,22 @@ def agendar():
                 """,
                 (tutor_id, student_id, fecha, slot_time_id)
             )
+            
+            # Generar notificación para el tutor
+            notification_description = f"El estudiante {session['user_name']} ha agendado una cita para {fecha}."
+            cursor.execute(
+                """
+                INSERT INTO tutorsNotification (tutor_user_idUser, student_user_idUser, description, seen, createdAt)
+                VALUES (%s, %s ,%s, %s, %s)
+                """,
+                (tutor_id, student_id, notification_description, 0, datetime.now())
+            )
+
             conn.commit()
+        except Exception as e:
+            conn.rollback()
+            print(f"Error al agendar cita o crear notificación: {e}")
+            return "Hubo un error al procesar la solicitud", 500
         finally:
             cursor.close()
             conn.close()
@@ -104,16 +126,18 @@ def agendar():
     # Obtener todos los horarios disponibles para el dropdown
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
-    cursor.execute("SELECT idSlotTime, startTime, endTime FROM slottime")
-    slot_times = cursor.fetchall()
+    try:
+        cursor.execute("SELECT idSlotTime, startTime, endTime FROM slottime")
+        slot_times = cursor.fetchall()
 
-    # Obtener todos los tutores (id y nombre) para el dropdown
-    cursor.execute("SELECT idUser, name FROM user INNER JOIN tutor ON user.idUser = tutor.user_idUser")
-    tutors = cursor.fetchall()
-    print(tutors)  # Verificar los datos de los tutores en la consola para depuración
-
-    cursor.close()
-    conn.close()
+        cursor.execute("SELECT idUser, name FROM user INNER JOIN tutor ON user.idUser = tutor.user_idUser")
+        tutors = cursor.fetchall()
+    except Exception as e:
+        print(f"Error al cargar datos para agendar: {e}")
+        return "Error al cargar datos para agendar", 500
+    finally:
+        cursor.close()
+        conn.close()
 
     return render_template('agendar.html', slot_times=slot_times, tutors=tutors)
 
@@ -235,12 +259,16 @@ def perfil():
     # Verifica si el usuario está autenticado
     if 'user_id' not in session:
         return redirect(url_for('login'))
-    
-    user_id = session['user_id']
+
+    # Obtén el user_id de la sesión
+    user_id = session.get('user_id')  # Obtén el ID del usuario de la sesión de manera segura
+    if not user_id:
+        return redirect(url_for('login'))
+
     conn = get_db_connection()
     cur = conn.cursor(dictionary=True)
 
-    # Obtén la información del usuario y las relaciones necesarias
+    # Obtén la información del usuario y sus relaciones necesarias
     cur.execute("""
         SELECT 
             user.name, 
@@ -262,14 +290,16 @@ def perfil():
         WHERE user.idUser = %s
     """, (user_id,))
     user = cur.fetchone()
-    
-    #REVIEWS
-    # Verificar si el usuario es tutor 
+
+    # Verificar si el usuario es tutor
     cur.execute("SELECT * FROM tutor WHERE user_idUser = %s", (user_id,))
     tutor = cur.fetchone()
 
-    # Si el usuario es tutor, obtener las reseñas
+    # Inicializa listas vacías para reseñas y notificaciones
     reviews = []
+    notis = []
+
+    # Si el usuario es tutor, obtener reseñas y notificaciones
     if tutor:
         cur.execute("""
             SELECT review.rating, review.description, user.name AS student_name, user.lastName AS student_lastname, user.profile_picture AS student_profile_picture
@@ -278,13 +308,23 @@ def perfil():
             WHERE tutor_user_idUser = %s
             ORDER BY createdAt DESC
         """, (user_id,))
-    reviews = cur.fetchall()
+        reviews = cur.fetchall() or []
 
+        cur.execute("""
+            SELECT tutorsNotification.tutor_user_idUser, tutorsNotification.student_user_idUser, tutorsNotification.description, tutorsNotification.seen, tutorsNotification.createdAt, user.name AS student_name, user.lastname AS student_lastname, user.profile_picture 
+            FROM tutorsNotification
+            JOIN user ON tutorsNotification.student_user_idUser = user.idUser
+            WHERE tutorsNotification.tutor_user_idUser = %s
+            ORDER BY tutorsNotification.createdAt DESC
+        """, (user_id,))
+        notis = cur.fetchall() or []
+
+    # Cierra la conexión a la base de datos
     cur.close()
     conn.close()
 
     # Pasa los datos del usuario a la plantilla
-    return render_template('perfil.html', user=user, tutor=tutor, reviews=reviews)
+    return render_template('perfil.html', user=user, tutor=tutor, reviews=reviews, notis=notis)
 
 @app.route('/edit_profile', methods=['GET', 'POST'])
 def edit_profile():
