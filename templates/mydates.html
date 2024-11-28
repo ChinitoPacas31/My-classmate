@@ -235,32 +235,33 @@ background-color: #e2e7e6;
 </nav>
     <!-- Contenedor principal -->
     <div class="container my-5">
-        <!-- Sección de comentarios/reseñas -->
-        <div class="row justify-content-center my-5">
+      <!-- Sección de comentarios/reseñas -->
+      <div class="row justify-content-center my-5">
           <div class="col-md-12">
-            <div class="card shadow">
-              <div class="card-header bg-secondary text-white">
-                <h3>Appointment history</h3>
-              </div>
-
-                {% if notis %}
-                {% for noti in notis %}
-                <div class="media mb-4">
-                  <img src="/{{ noti['profile_picture'] }}" style="width: 50px; height: 50px;" class="mr-3 rounded-circle" alt="Usuario">                  <div class="media-body">
-                    <h5 class="mt-0">{{ noti['student_name'] }} {{ noti['student_lastname'] }}</h5>
-                    <p>{{ noti['description'] }}</p>
-                    <small>{{ noti['timestamp'] }}</small>
+              <div class="card shadow" style="background-color: #f5f5f5;">
+                  <div class="card-header bg-secondary text-white">
+                      <h3>Appointment history</h3>
                   </div>
-                </div>
-                {% endfor %}
-                {% else %}
-                    <p>No hay citas.</p>
-                {% endif %}
-            </div>
+  
+                  {% if notis %}
+                  {% for noti in notis %}
+                  <div class="media mb-4 p-3" style="border-bottom: 1px solid #ddd; background-color: #fff;">
+                      <img src="/{{ noti['profile_picture'] }}" style="width: 70px; height: 70px;" class="mr-3 rounded-circle" alt="Usuario">
+                      <div class="media-body">
+                          <h5 class="mt-0">{{ noti['student_name'] }} {{ noti['student_lastname'] }}</h5>
+                          <p>{{ noti['description'] }}</p>
+                      </div>
+                      <small class="d-block mt-2 text-muted">{{ noti['timestamp'] }}</small>
+                  </div>
+                  {% endfor %}
+                  {% else %}
+                      <p>No hay citas.</p>
+                  {% endif %}
+              </div>
           </div>
-        </div>
-
-    </div>
+      </div>
+  </div>
+  
 
       <!-- Footer Section -->
       <footer class="pie-pagina">

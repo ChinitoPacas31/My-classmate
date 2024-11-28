@@ -262,7 +262,7 @@ def register():
         if 'subjects' in request.form:
             selected_subjects = request.form.getlist('subjects')  # Lista de ids de materias seleccionadas
             for subject_id in selected_subjects:
-                cur.execute('INSERT INTO user_subject (user_idUser, subject_idSubject) VALUES (%s, %s)', (user_id, subject_id))
+                cur.execute('INSERT INTO tutor_subject (tutor_user_idUser, subject_idSubject) VALUES (%s, %s)', (user_id, subject_id))
 
         conn.commit()
         cur.close()
@@ -302,6 +302,7 @@ def register():
     conn.close()
 
     return render_template('register.html', colleges=colleges, subdegrees=subdegrees, categories=categories)
+
 
 
 @app.route('/login', methods=['GET', 'POST'])
