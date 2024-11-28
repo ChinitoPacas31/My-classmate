@@ -228,14 +228,10 @@ def register():
         # Manejar la foto de perfil
         profile_picture_path = None
         if profile_picture and allowed_file(profile_picture.filename):
-            # Obtener nombre seguro
             filename = secure_filename(profile_picture.filename)
-            # Agregar timestamp al nombre del archivo
             timestamp = time.strftime("%Y%m%d_%H%M%S")
             filename = f"{filename.rsplit('.', 1)[0]}_{timestamp}.{filename.rsplit('.', 1)[1]}"
-            # Generar ruta completa
             profile_picture_path = os.path.join(app.config['UPLOAD_FOLDER'], filename).replace("\\", "/")
-            # Guardar archivo en el servidor
             profile_picture.save(profile_picture_path)
 
         # Verificar el dominio del correo electrónico
@@ -262,26 +258,51 @@ def register():
         if is_tutor == 'yes' and cost:
             cur.execute('INSERT INTO tutor (user_idUser, asesoryCost, meanRating, online, createdAt, active) VALUES (%s, %s, %s, %s, %s, %s)', (user_id, cost, 0, 0, datetime.now(), 1))
 
+        # Manejar las materias seleccionadas
+        if 'subjects' in request.form:
+            selected_subjects = request.form.getlist('subjects')  # Lista de ids de materias seleccionadas
+            for subject_id in selected_subjects:
+                cur.execute('INSERT INTO user_subject (user_idUser, subject_idSubject) VALUES (%s, %s)', (user_id, subject_id))
+
         conn.commit()
         cur.close()
         conn.close()
 
         return redirect(url_for('index'))
     
-    # Obtener universidades y especialidades para los dropdowns
+    # Obtener universidades, especialidades, categorías y materias para los dropdowns
     conn = get_db_connection()
     cur = conn.cursor(dictionary=True)
 
+    # Obtener universidades
     cur.execute("SELECT idCollege, name FROM college")
-    colleges = cur.fetchall()  # Lista de universidades con id y nombre
+    colleges = cur.fetchall()
 
+    # Obtener especialidades
     cur.execute("SELECT idSubdegree, name FROM subdegree")
-    subdegrees = cur.fetchall()  # Lista de especialidades con id y nombre
+    subdegrees = cur.fetchall()
+
+    # Obtener categorías y materias
+    cur.execute("""
+        SELECT idSubjectCategory, name 
+        FROM subjectcategory
+    """)
+    categories = cur.fetchall()
+
+    # Obtener materias por categoría
+    for category in categories:
+        cur.execute("""
+            SELECT idSubject, name 
+            FROM subject 
+            WHERE subjectCategory_idSubjectCategory = %s
+        """, (category['idSubjectCategory'],))
+        category['subjects'] = cur.fetchall()
 
     cur.close()
     conn.close()
 
-    return render_template('register.html', colleges=colleges, subdegrees=subdegrees)
+    return render_template('register.html', colleges=colleges, subdegrees=subdegrees, categories=categories)
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
