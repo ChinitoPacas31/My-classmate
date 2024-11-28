@@ -36,12 +36,15 @@ mail = Mail(app)
 
 @app.route('/')
 def index():
+    # Obtén el user_id de la sesión
+    user_id = session.get('user_id')  # Este se usa solo si necesitas saber el usuario actual logueado
+
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
 
     # Recupera los 4 mejores tutores por calificación
     cursor.execute("""
-        SELECT user.name, user.lastName, user.profile_picture, tutor.asesoryCost, tutor.meanRating, 
+        SELECT user.idUser, user.name, user.lastName, user.profile_picture, tutor.asesoryCost, tutor.meanRating, 
                tutor.online, user.term
         FROM user
         INNER JOIN tutor ON user.idUser = tutor.user_idUser
@@ -49,7 +52,20 @@ def index():
         LIMIT 4
     """)
     top_tutors = cursor.fetchall()
-    
+
+    # Agrega las materias de cada tutor
+    for tutor in top_tutors:
+        tutor_id = tutor['idUser']  # Usa el ID de cada tutor
+        cursor.execute("""
+            SELECT s.name AS subject_name, sc.name AS category_name
+            FROM tutor_subject ts
+            JOIN subject s ON ts.subject_idSubject = s.idSubject
+            JOIN subjectcategory sc ON s.subjectCategory_idSubjectCategory = sc.idSubjectCategory
+            WHERE ts.tutor_user_idUser = %s
+        """, (tutor_id,))
+        subjects = cursor.fetchall() or []
+        tutor['subjects'] = subjects  # Añade las materias a cada tutor
+
     cursor.close()
     conn.close()
 
@@ -482,17 +498,37 @@ def tutors():
 
     # Recupera datos de todos los tutores
     cursor.execute("""
-        SELECT user.name, user.lastName, user.profile_picture, tutor.asesoryCost, tutor.meanRating, 
-               tutor.online, user.term
+        SELECT tutor.user_idUser, user.name, user.lastName, user.profile_picture, 
+               tutor.asesoryCost, tutor.meanRating, tutor.online, user.term
         FROM user
         INNER JOIN tutor ON user.idUser = tutor.user_idUser
     """)
     tutors = cursor.fetchall()
+
+    # Diccionario para almacenar tutores y sus materias
+    tutors_with_subjects = []
     
+    for tutor in tutors:
+        tutor_id = tutor['user_idUser']
+        
+        # Recupera las materias del tutor
+        cursor.execute("""
+            SELECT s.name AS subject_name, sc.name AS category_name
+            FROM tutor_subject ts
+            JOIN subject s ON ts.subject_idSubject = s.idSubject
+            JOIN subjectcategory sc ON s.subjectCategory_idSubjectCategory = sc.idSubjectCategory
+            WHERE ts.tutor_user_idUser = %s
+        """, (tutor_id,))
+        subjects = cursor.fetchall()
+        
+        # Agrega las materias al tutor
+        tutor['subjects'] = subjects
+        tutors_with_subjects.append(tutor)
+
     cursor.close()
     conn.close()
 
-    return render_template('tutors.html', tutors=tutors)
+    return render_template('tutors.html', tutors=tutors_with_subjects)
 
 @app.route('/calificar', methods=['GET', 'POST'])
 def calificar():
