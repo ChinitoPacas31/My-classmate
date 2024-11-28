@@ -11,180 +11,188 @@
     crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap" rel="stylesheet">
 
+
+    <!-- Enlace a jQuery, necesario para el funcionamiento de Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+   
+    <!-- Enlace a Popper.js, utilizado para componentes de Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    
+    <!-- Enlace al archivo JavaScript de Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
+
     <style>
+        /* Imagen de fondo borrosa */
+  
         body, html {
-            background-color: #f8f9fa;
+            background-color: #e2e7e6;
             margin: 0;
-            font-family: Arial, sans-serif;
         }
-        .background-nav {
-            background-color: #3e5d58;
+        .background-nav{
+        background-color: #3e5d58;
+      }
+      .custom-badge {
+        background-color: #3e5d58; /* color de fondo personalizado */
+        color: white; /* color del texto */
+        padding: 0.2em 0.4em;
+        font-size: 0.9em;
+        border-radius: 0.2em;
+      }       
+      .button-bg{
+        background-color:#3e5d58 ;
+      }
+      .card-header:first-child {
+       border-radius: calc(1.5rem - 1px) calc(1.5rem - 1px) 0 0;
+      }
+        .btn{
+          margin-left: auto; /* Empuja el botón hacia la derecha */
+          margin-right: 0;
+          display: block;
         }
-        .custom-badge {
-            background-color: #3e5d58;
+        .content {
+            position: relative;
+            z-index: 1;
             color: white;
-            padding: 0.4em 0.6em;
-            font-size: 1rem;
-            border-radius: 0.3em;
-        }
-        .button-bg {
-            background-color: #3e5d58;
-        }
-        .card {
-            border-radius: 1.5rem;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-            border: none;
-        }
-        .card-header {
-            background-color: #4f7368;
-            color: white;
-            border-radius: 1.5rem 1.5rem 0 0;
-            padding: 1.5rem;
             text-align: center;
         }
-        .card-body {
-            padding: 2rem;
+        .card{
+          border-radius: 1.5rem;
         }
-        .form-control {
-            border-radius: 1rem;
-            border: 1px solid #ccc;
-            margin-bottom: 1rem;
+          /* Estilo para los botones "Register" y "Log In" */
+          .nav-item .btn {
+            background-color: #4f7368;  /* Verde suave */
+            color: white;  /* Color de texto blanco */
+            border-radius: 1.5rem;  /* Bordes redondeados */
+            padding: 0.5rem 2rem;  /* Espaciado dentro del botón */
+            font-size: 1rem;  /* Tamaño de fuente moderado */
+            transition: background-color 0.3s ease, transform 0.3s ease;  /* Transiciones suaves */
         }
-        .form-control:focus {
-            border-color: #4f7368;
-            box-shadow: 0 0 0 0.2rem rgba(79, 115, 104, 0.25);
+
+        .nav-item .btn:hover {
+            background-color: #5e8e7a;  /* Verde más claro en hover */
+            transform: translateY(-2px);  /* Ligera elevación en hover */
         }
-        button {
-            background-color: #4f7368;
-            color: white;
-            border: none;
-            border-radius: 1.5rem;
-            padding: 0.75rem 2rem;
-            font-size: 1rem;
-            font-weight: bold;
-            transition: background-color 0.3s ease;
-        }
-        button:hover {
-            background-color: #5e8e7a;
-        }
-        label {
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-            display: block;
-        }
-        input[type="radio"] {
-            margin-right: 0.5rem;
-        }
-        #tutor-cost, #subject-selection {
-            margin-top: 1.5rem;
-        }
-        h3 {
-            font-family: 'Oswald', sans-serif;
-            letter-spacing: 1px;
-        }
+        .scrollable-form {
+  max-height: 400px; /* Ajusta la altura según lo necesario */
+  overflow-y: auto;
+}
+.oswald-font {
+            
+    font-family: 'Oswald', sans-serif;
+    letter-spacing: 2px;  /* Espaciado entre letras */
+    transform: scaleY(0.8);  /* Comprime las letras en el eje Y (vertical) */
+}
     </style>
 </head>
 <body>
-    <!-- Navegación principal -->
-    <nav class="navbar navbar-expand-lg navbar-dark background-nav">
-        <a class="navbar-brand ml-auto oswald-font" href="/" style="margin-right: 320px;">
+    <div class="background-image"></div>
+ <!-- Navegación principal -->
+ <nav class="navbar navbar-expand-lg navbar-dark background-nav">
+          <!-- Logo a la derecha --> 
+          <a class="navbar-brand ml-auto oswald-font" href="/" style="margin-right: 320px;">
             <h2 style="font-family: 'Oswald', sans-serif; letter-spacing: 1px; font-size: 2.5rem;">MYCLASSMATE</h2>
-        </a>
+          </a>
 
-        <button class="navbar-toggler" type="button" 
-        data-toggle="collapse" 
-        data-target="#navbarSupportedContent" 
-        aria-controls="navbarSupportedContent" 
-        aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+  <button class="navbar-toggler" type="button" 
+  data-toggle="collapse" 
+  data-target="#navbarSupportedContent" 
+  aria-controls="navbarSupportedContent" 
+  aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto"></ul>
-            <a class="nav-item" href="{{ url_for('login') }}">
-                <button type="button" class="btn btn-dark">Log In</button>
-            </a>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+    </ul>
+
+    <a class="nav-item" href="{{ url_for('login') }}">
+      <button type="button" class="btn btn-dark">Log In</button>
+  </a>
+  </div>
+</nav>
+
+<div class="container" style="margin-bottom: 3.2rem; ">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card mt-5">
+        <div class="card-header text-center">
+          <div class="row justify-content-center mt-4">
+              <h3>My<span class="badge custom-badge ">Register</span></h3>
+          </div>
         </div>
-    </nav>
+        <div class="card-body scrollable-form">
 
-    <!-- Contenido principal -->
-    <div class="container" style="margin-bottom: 3.2rem; margin-top: 2rem;">
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-header">
-                        <h3>My<span class="badge custom-badge">Register</span></h3>
-                    </div>
-                    <div class="card-body">
-                        <form method="POST" enctype="multipart/form-data">
-                            <input type="text" name="name" class="form-control" placeholder="Nombre" required>
-                            <input type="text" name="lastName" class="form-control" placeholder="Apellido" required>
-                            <select name="college_idCollege" class="form-control" required>
-                                {% for college in colleges %}
-                                <option value="{{ college.idCollege }}">{{ college.name }}</option>
-                                {% endfor %}
-                            </select>
-                            <select name="idDegree_subdegree" class="form-control" required>
-                                {% for subdegree in subdegrees %}
-                                <option value="{{ subdegree.idSubdegree }}">{{ subdegree.name }}</option>
-                                {% endfor %}
-                            </select>
-                            <input type="text" name="term" class="form-control" placeholder="Término">
-                            <input type="email" name="email" class="form-control" placeholder="Correo electrónico" required>
-                            <input type="password" name="password" class="form-control" placeholder="Contraseña" required>
-                            <input type="file" name="profile_picture" class="form-control-file" accept="image/*">
-
-                            <label>¿Quieres ser tutor?</label>
-                            <input type="radio" name="is_tutor" value="yes" id="tutor-yes">
-                            <label for="tutor-yes">Sí</label>
-                            <input type="radio" name="is_tutor" value="no" id="tutor-no" checked>
-                            <label for="tutor-no">No</label>
-
-                            <div id="tutor-cost" style="display: none;">
-                                <label for="cost">Costo por asesoría:</label>
-                                <input type="number" name="cost" id="cost" class="form-control" placeholder="Costo por asesoría">
-                            </div>
-
-                            <div id="subject-selection" style="display: none;">
-                                <label>Materias que deseas impartir:</label>
-                                {% for category in categories %}
-                                <h5>{{ category.name }}</h5>
-                                {% for subject in category.subjects %}
-                                <div class="form-check">
-                                    <input type="checkbox" name="subjects" value="{{ subject.idSubject }}" id="subject-{{ subject.idSubject }}" class="form-check-input">
-                                    <label for="subject-{{ subject.idSubject }}" class="form-check-label">{{ subject.name }}</label>
-                                </div>
-                                {% endfor %}
-                                {% endfor %}
-                            </div>
-
-                            <button type="submit" class="btn btn-block mt-4">Registrar</button>
-                        </form>
-
-                        <script>
-                            const tutorYes = document.getElementById('tutor-yes');
-                            const tutorNo = document.getElementById('tutor-no');
-                            const tutorCost = document.getElementById('tutor-cost');
-                            const subjectSelection = document.getElementById('subject-selection');
-
-                            tutorYes.addEventListener('change', () => {
-                                if (tutorYes.checked) {
-                                    tutorCost.style.display = 'block';
-                                    subjectSelection.style.display = 'block';
-                                }
-                            });
-
-                            tutorNo.addEventListener('change', () => {
-                                if (tutorNo.checked) {
-                                    tutorCost.style.display = 'none';
-                                    subjectSelection.style.display = 'none';
-                                }
-                            });
-                        </script>
-                    </div>
-                </div>
+          <form method="POST" enctype="multipart/form-data">
+            <!-- Campos generales -->
+            <input type="text" name="name" placeholder="Nombre" required>
+            <input type="text" name="lastName" placeholder="Apellido" required>
+            <select name="college_idCollege" required>
+                {% for college in colleges %}
+                <option value="{{ college.idCollege }}">{{ college.name }}</option>
+                {% endfor %}
+            </select>
+            <select name="idDegree_subdegree" required>
+                {% for subdegree in subdegrees %}
+                <option value="{{ subdegree.idSubdegree }}">{{ subdegree.name }}</option>
+                {% endfor %}
+            </select> 
+            <input type="text" name="term" placeholder="Término">
+            <input type="email" name="email" placeholder="Correo electrónico" required>
+            <input type="password" name="password" placeholder="Contraseña" required>
+            <input type="file" name="profile_picture" accept="image/*">
+          
+            <!-- Selección de tutor -->
+            <label>¿Quieres ser tutor?</label>
+            <input type="radio" name="is_tutor" value="yes" id="tutor-yes">
+            <label for="tutor-yes">Sí</label>
+            <input type="radio" name="is_tutor" value="no" id="tutor-no" checked>
+            <label for="tutor-no">No</label>
+          
+            <!-- Campo para el costo, se muestra solo si es tutor -->
+            <div id="tutor-cost" style="display: none;">
+                <label for="cost">Costo por asesoría:</label>
+                <input type="number" name="cost" id="cost" placeholder="Costo por asesoría">
             </div>
-        </div>
-    </div>
+          
+            <!-- Selección de materias -->
+            <div id="subject-selection" style="display: none;">
+                <label>Materias que deseas impartir:</label>
+                {% for category in categories %}
+                <h4>{{ category.name }}</h4>
+                {% for subject in category.subjects %}
+                <div>
+                    <input type="checkbox" name="subjects" value="{{ subject.idSubject }}" id="subject-{{ subject.idSubject }}">
+                    <label for="subject-{{ subject.idSubject }}">{{ subject.name }}</label>
+                </div>
+                {% endfor %}
+                {% endfor %}
+            </div>
+          
+            <button type="submit">Registrar</button>
+          </form>
+          
+          <script>
+            // Mostrar/Ocultar campos relacionados al tutor
+            const tutorYes = document.getElementById('tutor-yes');
+            const tutorNo = document.getElementById('tutor-no');
+            const tutorCost = document.getElementById('tutor-cost');
+            const subjectSelection = document.getElementById('subject-selection');
+          
+            tutorYes.addEventListener('change', () => {
+                if (tutorYes.checked) {
+                    tutorCost.style.display = 'block';
+                    subjectSelection.style.display = 'block';
+                }
+            });
+          
+            tutorNo.addEventListener('change', () => {
+                if (tutorNo.checked) {
+                    tutorCost.style.display = 'none';
+                    subjectSelection.style.display = 'none';
+                }
+            });
+          </script>
+           
+</div>
 </body>
 </html>
