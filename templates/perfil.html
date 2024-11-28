@@ -269,7 +269,16 @@ background-color: #e2e7e6;
                       <li class="list-group-item" style="display: flex;"><strong>Asesory Cost:&nbsp</strong> {{ user['asesoryCost'] }} <div class="text-warning" style="margin-left: 3.5rem;"> {% for i in range(user['meanRating']|int) %}★{% endfor %}
                         {% if user['meanRating'] % 1 != 0 %}{% endif %}</div>
                         ({{ user.meanRating }} de 5) </li>
-                      {% endif %}
+                      <!-- Materias que imparte -->
+            <li class="list-group-item"><strong>MySubjects</strong>
+            <ul>
+                {% for subject in subjects %}
+                    <li>
+                        <strong>{{ subject.subject_name }}</strong> 
+                    </li>
+                {% endfor %}
+            </ul></li>
+            {% endif %}
                     </ul>
                   </div>
                 </div>

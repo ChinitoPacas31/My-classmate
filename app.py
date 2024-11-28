@@ -419,12 +419,14 @@ def perfil():
     cur.execute("SELECT * FROM tutor WHERE user_idUser = %s", (user_id,))
     tutor = cur.fetchone()
 
-    # Inicializa listas vacías para reseñas y notificaciones
+    # Inicializa listas vacías para reseñas, notificaciones y materias
     reviews = []
     notis = []
+    subjects = []
 
-    # Si el usuario es tutor, obtener reseñas y notificaciones
+    # Si el usuario es tutor, obtener reseñas, notificaciones y materias
     if tutor:
+        # Reseñas del tutor
         cur.execute("""
             SELECT review.rating, review.description, user.name AS student_name, user.lastName AS student_lastname, user.profile_picture AS student_profile_picture
             FROM review
@@ -434,6 +436,7 @@ def perfil():
         """, (user_id,))
         reviews = cur.fetchall() or []
 
+        # Notificaciones para el tutor
         cur.execute("""
             SELECT tutorsNotification.tutor_user_idUser, tutorsNotification.student_user_idUser, tutorsNotification.description, tutorsNotification.seen, tutorsNotification.createdAt, user.name AS student_name, user.lastname AS student_lastname, user.profile_picture 
             FROM tutorsNotification
@@ -443,12 +446,23 @@ def perfil():
         """, (user_id,))
         notis = cur.fetchall() or []
 
+        # Materias que imparte el tutor
+        cur.execute("""
+            SELECT s.name AS subject_name, sc.name AS category_name
+            FROM tutor_subject ts
+            JOIN subject s ON ts.subject_idSubject = s.idSubject
+            JOIN subjectcategory sc ON s.subjectCategory_idSubjectCategory = sc.idSubjectCategory
+            WHERE ts.tutor_user_idUser = %s
+        """, (user_id,))
+        subjects = cur.fetchall() or []
+
     # Cierra la conexión a la base de datos
     cur.close()
     conn.close()
 
-    # Pasa los datos del usuario a la plantilla
-    return render_template('perfil.html', user=user, tutor=tutor, reviews=reviews, notis=notis)
+    # Pasa los datos del usuario y materias a la plantilla
+    return render_template('perfil.html', user=user, tutor=tutor, reviews=reviews, notis=notis, subjects=subjects)
+
 
 @app.route('/edit_profile', methods=['GET', 'POST'])
 def edit_profile():
