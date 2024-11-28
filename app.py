@@ -617,5 +617,6 @@ def delete_account():
     return redirect(url_for('index'))  # Redirige al inicio después de eliminar la cuenta
 
 
+
 if __name__ == '__main__':
     app.run(port=3000, debug=True)

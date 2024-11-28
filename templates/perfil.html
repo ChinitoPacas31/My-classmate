@@ -246,9 +246,39 @@ background-color: #e2e7e6;
               <div class="card-header bg-nav-perfil text-white d-flex justify-content-between align-items-center">
                 <h2 class="mb-0">MyUser</h2>
                 <a href="/edit_profile" class="btn btn-dark btn-sm">Edit profile</a>
-                <form action="/delete_account" method="POST">
-                  <button type="submit" class="btn btn-danger btn-sm ml-2">Eliminar cuenta</button>
-              </form>
+                <!-- Formulario de eliminación de cuenta -->
+<form action="/delete_account" method="POST" id="delete-form">
+  <button type="button" class="btn btn-danger btn-sm ml-2" data-toggle="modal" data-target="#deleteModal">Eliminar cuenta</button>
+</form>
+
+<!-- Modal de confirmación -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+<div class="modal-dialog" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="deleteModalLabel" style="color: black;">Confirmar eliminación</h5> <!-- Título en negro -->
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body" style="color: black;"> <!-- Texto del modal en negro -->
+      ¿Estás seguro de que deseas eliminar tu cuenta? Esta acción no se puede deshacer.
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+      <button type="button" class="btn btn-danger" onclick="submitDelete()">Eliminar cuenta</button>
+    </div>
+  </div>
+</div>
+</div>
+
+<script>
+  function submitDelete() {
+      // Envía el formulario de eliminación si el usuario confirma
+      document.getElementById('delete-form').submit();
+  }
+</script>
+
               </div>
 
               <div class="card-body">
