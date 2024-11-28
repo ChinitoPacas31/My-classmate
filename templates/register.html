@@ -121,129 +121,77 @@
         </div>
         <div class="card-body scrollable-form">
 
-          <!-- Formulario de inicio de sesión -->
-          <form action="{{ url_for('register') }}" method="POST" enctype="multipart/form-data">
-              <div class="mb-3">
-                <label for="name" class="form-label">Foto de perfil</label>
-                <input type="file" class="form-control" id="profile_picture" name="profile_picture" required>
-              </div>  
-            <div class="mb-3">
-              <label for="name" class="form-label">Nombres</label>
-              <input type="name" class="form-control" id="name" placeholder="Ingresa tu nombre" name="name" required>
-            </div>
-            <div class="mb-3">
-              <label for="lastName" class="form-label">Apellidos</label>
-              <input type="text" class="form-control" id="lastName" placeholder="Ingresa tus apellidos" name="lastName" required>
-            </div>
-            <div class="mb-3">
-              <label for="college_idCollege" class="form-label">Universidad</label>
-              <select class="form-control" id="college_idCollege" name="college_idCollege" required>
-                  <option value="">Selecciona tu universidad</option>
-                  {% for college in colleges %}
-                      <option value="{{ college['idCollege'] }}">{{ college['name'] }}</option>
-                  {% endfor %}
-              </select>
-          </div>
+          <form method="POST" enctype="multipart/form-data">
+            <!-- Campos generales -->
+            <input type="text" name="name" placeholder="Nombre" required>
+            <input type="text" name="lastName" placeholder="Apellido" required>
+            <select name="college_idCollege" required>
+                {% for college in colleges %}
+                <option value="{{ college.idCollege }}">{{ college.name }}</option>
+                {% endfor %}
+            </select>
+            <select name="idDegree_subdegree" required>
+                {% for subdegree in subdegrees %}
+                <option value="{{ subdegree.idSubdegree }}">{{ subdegree.name }}</option>
+                {% endfor %}
+            </select>
+            <input type="text" name="term" placeholder="Término">
+            <input type="email" name="email" placeholder="Correo electrónico" required>
+            <input type="password" name="password" placeholder="Contraseña" required>
+            <input type="file" name="profile_picture" accept="image/*">
           
-          <div class="mb-3">
-              <label for="idDegree_subdegree" class="form-label">Especialidad</label>
-              <select class="form-control" id="idDegree_subdegree" name="idDegree_subdegree" required>
-                  <option value="">Selecciona tu especialidad</option>
-                  {% for subdegree in subdegrees %}
-                      <option value="{{ subdegree['idSubdegree'] }}">{{ subdegree['name'] }}</option>
-                  {% endfor %}
-              </select>
-          </div>
-              <div class="mb-3">
-                <label for="term" class="form-label">Cuatrimestre</label>
-                <input type="number" class="form-control" id="term" placeholder="Ingresa tu cuatrimestre" name="term" min="0" max="11" required>
-              </div>
-              <div class="mb-3">
-                <label for="email" class="form-label">Correo electronico</label>
-                <input type="email" class="form-control" id="email" placeholder="Ingresa tu correo institucional " name="email" required>
-              </div>
-            <div class="mb-3">
-              <label for="password" class="form-label">Contraseña:</label>
-              <input type="password" class="form-control" id="password" placeholder="Ingresa tu contraseña" name="password" required>
-            </div>
-
-            <div class="mb-3">
-  <label for="is_tutor" class="form-label">¿Quieres ser tutor?</label>
-  <select class="form-control" id="is_tutor" name="is_tutor" onchange="toggleTutorFields()">
-    <option value="no">No</option>
-    <option value="yes">Sí</option>
-  </select>
-</div>
-
-<div id="tutor_fields" style="display: none;">
-  <div class="mb-3">
-    <label for="cost" class="form-label">Costo de la asesoría</label>
-    <input type="number" class="form-control" id="cost" name="cost" min="1" placeholder="Ingresa el costo de la asesoría">
-  </div>
-
-  <div class="mb-3">
-    <label class="form-label">Selecciona tus materias por categoría:</label>
-    
-    <!-- Botones dinámicos -->
-    <div class="d-flex flex-wrap justify-content-center">
-      {% for category in categories %}
-        <button 
-          type="button" 
-          class="btn mx-2 mb-2" 
-          style="background-color: #3e5d58; color: white;" 
-          onclick="toggleCategory('category_{{ category['idSubjectCategory'] }}')">
-          {{ category['name'] }}
-        </button>
-      {% endfor %}
-    </div>
-
-    <!-- Divs de materias dinámicos -->
-    {% for category in categories %}
-      <div id="category_{{ category['idSubjectCategory'] }}" style="display: none; margin-top: 10px;">
-        <p><strong>{{ category['name'] }}</strong></p>
-        {% for subject in category['subjects'] %}
-          <label>
-            <input type="checkbox" name="subjects[]" value="{{ subject['idSubject'] }}"> {{ subject['name'] }}
-          </label><br>
-        {% endfor %}
-      </div>
-    {% endfor %}
-  </div>
-</div>
-
-<script>
-  // Mostrar u ocultar campos de tutor
-  function toggleTutorFields() {
-    var tutorFields = document.getElementById('tutor_fields');
-    var isTutor = document.getElementById('is_tutor').value;
-    tutorFields.style.display = isTutor === 'yes' ? 'block' : 'none';
-  }
-
-  // Mostrar u ocultar materias de cada categoría
-  function toggleCategory(categoryId) {
-    var categoryDiv = document.getElementById(categoryId);
-    if (categoryDiv) {
-      categoryDiv.style.display = categoryDiv.style.display === 'none' ? 'block' : 'none';
-    }
-  }
-</script>
-
-            
-            
-
-            <!-- Botón para enviar el formulario -->
-            <button type="submit" class="btn btn-dark w-100 button-bg" style="color: rgb(255, 255, 255);">Registrar</button>
+            <!-- Selección de tutor -->
+            <label>¿Quieres ser tutor?</label>
+            <input type="radio" name="is_tutor" value="yes" id="tutor-yes">
+            <label for="tutor-yes">Sí</label>
+            <input type="radio" name="is_tutor" value="no" id="tutor-no" checked>
+            <label for="tutor-no">No</label>
           
+            <!-- Campo para el costo, se muestra solo si es tutor -->
+            <div id="tutor-cost" style="display: none;">
+                <label for="cost">Costo por asesoría:</label>
+                <input type="number" name="cost" id="cost" placeholder="Costo por asesoría">
+            </div>
+          
+            <!-- Selección de materias -->
+            <div id="subject-selection" style="display: none;">
+                <label>Materias que deseas impartir:</label>
+                {% for category in categories %}
+                <h4>{{ category.name }}</h4>
+                {% for subject in category.subjects %}
+                <div>
+                    <input type="checkbox" name="subjects" value="{{ subject.idSubject }}" id="subject-{{ subject.idSubject }}">
+                    <label for="subject-{{ subject.idSubject }}">{{ subject.name }}</label>
+                </div>
+                {% endfor %}
+                {% endfor %}
+            </div>
+          
+            <button type="submit">Registrar</button>
           </form>
-          <div class="card-footer text-center">
-            <small>¿Ya tienes una cuenta? <a href="{{ url_for('login') }}">Log in</a></small>
-          </div>
-
           
-        </div>
-      </div>
-    </div>
-  </div>
+          <script>
+            // Mostrar/Ocultar campos relacionados al tutor
+            const tutorYes = document.getElementById('tutor-yes');
+            const tutorNo = document.getElementById('tutor-no');
+            const tutorCost = document.getElementById('tutor-cost');
+            const subjectSelection = document.getElementById('subject-selection');
+          
+            tutorYes.addEventListener('change', () => {
+                if (tutorYes.checked) {
+                    tutorCost.style.display = 'block';
+                    subjectSelection.style.display = 'block';
+                }
+            });
+          
+            tutorNo.addEventListener('change', () => {
+                if (tutorNo.checked) {
+                    tutorCost.style.display = 'none';
+                    subjectSelection.style.display = 'none';
+                }
+            });
+          </script>
+           
 </div>
 </body>
 </html>

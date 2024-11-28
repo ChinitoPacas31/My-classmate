@@ -23,7 +23,7 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 def get_db_connection():
-    return mysql.connector.connect(user="root", password="", host="localhost", port="3306", database="myclassmate")
+    return mysql.connector.connect(user="root", password="", host="localhost", port="3308", database="myclassmate")
 
 # Configuración de Flask-Mail (asegúrate de reemplazar con tus credenciales)
 app.config['MAIL_SERVER'] = 'smtp.googlemail.com'
@@ -214,6 +214,7 @@ def agendar():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
+        # Obtener datos del formulario
         profile_picture = request.files['profile_picture']
         name = request.form['name']
         lastName = request.form['lastName']
@@ -222,10 +223,11 @@ def register():
         term = request.form['term']
         email = request.form['email']
         password = request.form['password']
-        is_tutor = request.form['is_tutor']
+        is_tutor = request.form.get('is_tutor', 'no')  # Default 'no'
         cost = request.form['cost'] if is_tutor == 'yes' else None
+        selected_subjects = request.form.getlist('subjects') if is_tutor == 'yes' else []
 
-        # Manejar la foto de perfil
+        # Validar foto de perfil
         profile_picture_path = None
         if profile_picture and allowed_file(profile_picture.filename):
             filename = secure_filename(profile_picture.filename)
@@ -234,74 +236,105 @@ def register():
             profile_picture_path = os.path.join(app.config['UPLOAD_FOLDER'], filename).replace("\\", "/")
             profile_picture.save(profile_picture_path)
 
-        # Verificar el dominio del correo electrónico
+        # Validar el correo electrónico
         if not email.endswith('@utch.edu.mx'):
-            return 'El correo debe tener la terminación @utch.edu.mx'
+            return 'El correo debe tener la terminación @utch.edu.mx', 400
 
+        # Validar que el costo esté presente si el usuario es tutor
+        if is_tutor == 'yes' and (not cost or not cost.isdigit() or int(cost) <= 0):
+            return 'Debes ingresar un costo válido para ser tutor', 400
+
+        # Conexión a la base de datos
         conn = get_db_connection()
         cur = conn.cursor()
 
-        # Inserción en la tabla user
-        cur.execute(
-            'INSERT INTO user (name, lastName, college_idCollege, idDegree_subdegree, term, email, password, profile_picture) '
-            'VALUES (%s, %s, %s, %s, %s, %s, %s, %s)',
-            (name, lastName, college_idCollege, idDegree_subdegree, term, email, password, profile_picture_path)
-        )
-        user_id = cur.lastrowid
+        try:
+            # Insertar en la tabla `user`
+            cur.execute(
+                '''
+                INSERT INTO user (name, lastName, college_idCollege, idDegree_subdegree, term, email, password, profile_picture) 
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+                ''',
+                (name, lastName, college_idCollege, idDegree_subdegree, term, email, password, profile_picture_path)
+            )
+            user_id = cur.lastrowid
 
-        # Verificar si el usuario ya está en la tabla student
-        cur.execute('SELECT COUNT(*) FROM student WHERE user_idUser = %s', (user_id,))
-        if cur.fetchone()[0] == 0:
-            cur.execute('INSERT INTO student (user_idUser, online, createdAt, active) VALUES (%s, %s, %s, %s)', (user_id, 0, datetime.now(), 1))
+            # Verificar si el usuario ya está en la tabla `student`
+            cur.execute('SELECT COUNT(*) FROM student WHERE user_idUser = %s', (user_id,))
+            if cur.fetchone()[0] == 0:
+                cur.execute(
+                    '''
+                    INSERT INTO student (user_idUser, online, createdAt, active) 
+                    VALUES (%s, %s, %s, %s)
+                    ''',
+                    (user_id, 0, datetime.now(), 1)
+                )
 
-        # Inserción en la tabla tutor si aplica
-        if is_tutor == 'yes' and cost:
-            cur.execute('INSERT INTO tutor (user_idUser, asesoryCost, meanRating, online, createdAt, active) VALUES (%s, %s, %s, %s, %s, %s)', (user_id, cost, 0, 0, datetime.now(), 1))
+            # Insertar en la tabla `tutor` si aplica
+            if is_tutor == 'yes' and cost:
+                cur.execute(
+                    '''
+                    INSERT INTO tutor (user_idUser, asesoryCost, meanRating, online, createdAt, active) 
+                    VALUES (%s, %s, %s, %s, %s, %s)
+                    ''',
+                    (user_id, cost, 0, 0, datetime.now(), 1)
+                )
 
-        # Manejar las materias seleccionadas
-        if 'subjects' in request.form:
-            selected_subjects = request.form.getlist('subjects')  # Lista de ids de materias seleccionadas
-            for subject_id in selected_subjects:
-                cur.execute('INSERT INTO tutor_subject (tutor_user_idUser, subject_idSubject) VALUES (%s, %s)', (user_id, subject_id))
+                # Validar y registrar materias seleccionadas
+                for subject_id in selected_subjects:
+                    cur.execute('SELECT COUNT(*) FROM subject WHERE idSubject = %s', (subject_id,))
+                    if cur.fetchone()[0] == 1:  # La materia existe
+                        cur.execute(
+                            '''
+                            INSERT INTO tutor_subject (tutor_user_idUser, subject_idSubject) 
+                            VALUES (%s, %s)
+                            ''',
+                            (user_id, subject_id)
+                        )
 
-        conn.commit()
-        cur.close()
-        conn.close()
+            conn.commit()
+        except Exception as e:
+            conn.rollback()  # Revertir cambios en caso de error
+            return f'Ocurrió un error: {str(e)}', 500
+        finally:
+            cur.close()
+            conn.close()
 
         return redirect(url_for('index'))
-    
-    # Obtener universidades, especialidades, categorías y materias para los dropdowns
+
+    # Si es un método GET, cargar datos para los dropdowns
     conn = get_db_connection()
     cur = conn.cursor(dictionary=True)
 
-    # Obtener universidades
-    cur.execute("SELECT idCollege, name FROM college")
-    colleges = cur.fetchall()
+    try:
+        # Obtener universidades
+        cur.execute("SELECT idCollege, name FROM college")
+        colleges = cur.fetchall()
 
-    # Obtener especialidades
-    cur.execute("SELECT idSubdegree, name FROM subdegree")
-    subdegrees = cur.fetchall()
+        # Obtener especialidades
+        cur.execute("SELECT idSubdegree, name FROM subdegree")
+        subdegrees = cur.fetchall()
 
-    # Obtener categorías y materias
-    cur.execute("""
-        SELECT idSubjectCategory, name 
-        FROM subjectcategory
-    """)
-    categories = cur.fetchall()
+        # Obtener categorías y materias
+        cur.execute("SELECT idSubjectCategory, name FROM subjectcategory")
+        categories = cur.fetchall()
 
-    # Obtener materias por categoría
-    for category in categories:
-        cur.execute("""
-            SELECT idSubject, name 
-            FROM subject 
-            WHERE subjectCategory_idSubjectCategory = %s
-        """, (category['idSubjectCategory'],))
-        category['subjects'] = cur.fetchall()
-
-    cur.close()
-    conn.close()
+        for category in categories:
+            cur.execute(
+                '''
+                SELECT idSubject, name 
+                FROM subject 
+                WHERE subjectCategory_idSubjectCategory = %s
+                ''',
+                (category['idSubjectCategory'],)
+            )
+            category['subjects'] = cur.fetchall()
+    finally:
+        cur.close()
+        conn.close()
 
     return render_template('register.html', colleges=colleges, subdegrees=subdegrees, categories=categories)
+
 
 
 
