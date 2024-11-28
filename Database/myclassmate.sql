@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 28-11-2024 a las 02:40:17
--- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.2.12
+-- Host: 127.0.0.1
+-- Generation Time: Nov 28, 2024 at 03:50 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `myclassmate`
+-- Database: `myclassmate`
 --
 CREATE DATABASE IF NOT EXISTS `myclassmate` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 USE `myclassmate`;
@@ -26,7 +26,7 @@ USE `myclassmate`;
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `college`
+-- Table structure for table `college`
 --
 
 CREATE TABLE `college` (
@@ -38,7 +38,7 @@ CREATE TABLE `college` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `college`
+-- Dumping data for table `college`
 --
 
 INSERT INTO `college` (`idCollege`, `name`, `emailExtension`, `createdAt`, `active`) VALUES
@@ -47,7 +47,7 @@ INSERT INTO `college` (`idCollege`, `name`, `emailExtension`, `createdAt`, `acti
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `degree`
+-- Table structure for table `degree`
 --
 
 CREATE TABLE `degree` (
@@ -57,7 +57,7 @@ CREATE TABLE `degree` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `degree`
+-- Dumping data for table `degree`
 --
 
 INSERT INTO `degree` (`idDegree`, `name`, `active`) VALUES
@@ -72,7 +72,7 @@ INSERT INTO `degree` (`idDegree`, `name`, `active`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `degree_subdegree`
+-- Table structure for table `degree_subdegree`
 --
 
 CREATE TABLE `degree_subdegree` (
@@ -82,7 +82,7 @@ CREATE TABLE `degree_subdegree` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `degree_subdegree`
+-- Dumping data for table `degree_subdegree`
 --
 
 INSERT INTO `degree_subdegree` (`idDegree_subdegree`, `degree_idDegree`, `subdegree_idSubdegree`) VALUES
@@ -102,7 +102,7 @@ INSERT INTO `degree_subdegree` (`idDegree_subdegree`, `degree_idDegree`, `subdeg
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `paymethod`
+-- Table structure for table `paymethod`
 --
 
 CREATE TABLE `paymethod` (
@@ -114,7 +114,7 @@ CREATE TABLE `paymethod` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `petition`
+-- Table structure for table `petition`
 --
 
 CREATE TABLE `petition` (
@@ -131,7 +131,7 @@ CREATE TABLE `petition` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `review`
+-- Table structure for table `review`
 --
 
 CREATE TABLE `review` (
@@ -144,7 +144,7 @@ CREATE TABLE `review` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `review`
+-- Dumping data for table `review`
 --
 
 INSERT INTO `review` (`idReview`, `tutor_user_idUser`, `student_user_idUser`, `rating`, `description`, `createdAt`) VALUES
@@ -167,7 +167,7 @@ INSERT INTO `review` (`idReview`, `tutor_user_idUser`, `student_user_idUser`, `r
 (72, 20, 20, 4, 'Ok', '2024-11-27 08:14:29');
 
 --
--- Disparadores `review`
+-- Triggers `review`
 --
 DELIMITER $$
 CREATE TRIGGER `trg_meanRatingInsert` AFTER INSERT ON `review` FOR EACH ROW UPDATE tutor SET meanRating = (SELECT AVG(rating) FROM review WHERE tutor_user_idUser = NEW.tutor_user_idUser) WHERE NEW.tutor_user_idUser = tutor.user_idUser
@@ -181,7 +181,7 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `sale`
+-- Table structure for table `sale`
 --
 
 CREATE TABLE `sale` (
@@ -201,7 +201,7 @@ CREATE TABLE `sale` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `savedtutor`
+-- Table structure for table `savedtutor`
 --
 
 CREATE TABLE `savedtutor` (
@@ -213,7 +213,7 @@ CREATE TABLE `savedtutor` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `schedule`
+-- Table structure for table `schedule`
 --
 
 CREATE TABLE `schedule` (
@@ -225,7 +225,7 @@ CREATE TABLE `schedule` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `schedule`
+-- Dumping data for table `schedule`
 --
 
 INSERT INTO `schedule` (`idSchedule`, `tutor_user_idUser`, `student_user_idUser`, `scheduledDate`, `slootTime_idSlootTime`) VALUES
@@ -244,7 +244,7 @@ INSERT INTO `schedule` (`idSchedule`, `tutor_user_idUser`, `student_user_idUser`
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `slottime`
+-- Table structure for table `slottime`
 --
 
 CREATE TABLE `slottime` (
@@ -254,7 +254,7 @@ CREATE TABLE `slottime` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `slottime`
+-- Dumping data for table `slottime`
 --
 
 INSERT INTO `slottime` (`idSlotTime`, `startTime`, `endTime`) VALUES
@@ -293,7 +293,7 @@ INSERT INTO `slottime` (`idSlotTime`, `startTime`, `endTime`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `status`
+-- Table structure for table `status`
 --
 
 CREATE TABLE `status` (
@@ -304,7 +304,7 @@ CREATE TABLE `status` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `student`
+-- Table structure for table `student`
 --
 
 CREATE TABLE `student` (
@@ -315,7 +315,7 @@ CREATE TABLE `student` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `student`
+-- Dumping data for table `student`
 --
 
 INSERT INTO `student` (`user_idUser`, `online`, `createdAt`, `active`) VALUES
@@ -340,7 +340,7 @@ INSERT INTO `student` (`user_idUser`, `online`, `createdAt`, `active`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `studentnotification`
+-- Table structure for table `studentnotification`
 --
 
 CREATE TABLE `studentnotification` (
@@ -354,7 +354,7 @@ CREATE TABLE `studentnotification` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `subdegree`
+-- Table structure for table `subdegree`
 --
 
 CREATE TABLE `subdegree` (
@@ -364,7 +364,7 @@ CREATE TABLE `subdegree` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `subdegree`
+-- Dumping data for table `subdegree`
 --
 
 INSERT INTO `subdegree` (`idSubdegree`, `name`, `active`) VALUES
@@ -384,7 +384,7 @@ INSERT INTO `subdegree` (`idSubdegree`, `name`, `active`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `subject`
+-- Table structure for table `subject`
 --
 
 CREATE TABLE `subject` (
@@ -395,7 +395,7 @@ CREATE TABLE `subject` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `subject`
+-- Dumping data for table `subject`
 --
 
 INSERT INTO `subject` (`idSubject`, `name`, `active`, `subjectCategory_idSubjectCategory`) VALUES
@@ -600,7 +600,7 @@ INSERT INTO `subject` (`idSubject`, `name`, `active`, `subjectCategory_idSubject
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `subjectcategory`
+-- Table structure for table `subjectcategory`
 --
 
 CREATE TABLE `subjectcategory` (
@@ -609,7 +609,7 @@ CREATE TABLE `subjectcategory` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `subjectcategory`
+-- Dumping data for table `subjectcategory`
 --
 
 INSERT INTO `subjectcategory` (`idSubjectCategory`, `name`) VALUES
@@ -629,7 +629,7 @@ INSERT INTO `subjectcategory` (`idSubjectCategory`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `tutor`
+-- Table structure for table `tutor`
 --
 
 CREATE TABLE `tutor` (
@@ -642,7 +642,7 @@ CREATE TABLE `tutor` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `tutor`
+-- Dumping data for table `tutor`
 --
 
 INSERT INTO `tutor` (`user_idUser`, `asesoryCost`, `meanRating`, `online`, `createdAt`, `active`) VALUES
@@ -661,7 +661,7 @@ INSERT INTO `tutor` (`user_idUser`, `asesoryCost`, `meanRating`, `online`, `crea
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `tutorsnotification`
+-- Table structure for table `tutorsnotification`
 --
 
 CREATE TABLE `tutorsnotification` (
@@ -674,7 +674,7 @@ CREATE TABLE `tutorsnotification` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `tutorsnotification`
+-- Dumping data for table `tutorsnotification`
 --
 
 INSERT INTO `tutorsnotification` (`idTutorNotification`, `tutor_user_idUser`, `student_user_idUser`, `description`, `seen`, `createdAt`) VALUES
@@ -691,7 +691,7 @@ INSERT INTO `tutorsnotification` (`idTutorNotification`, `tutor_user_idUser`, `s
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `tutor_subject`
+-- Table structure for table `tutor_subject`
 --
 
 CREATE TABLE `tutor_subject` (
@@ -703,7 +703,7 @@ CREATE TABLE `tutor_subject` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `user`
+-- Table structure for table `user`
 --
 
 CREATE TABLE `user` (
@@ -719,30 +719,30 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `user`
+-- Dumping data for table `user`
 --
 
 INSERT INTO `user` (`idUser`, `name`, `lastName`, `college_idCollege`, `idDegree_subdegree`, `term`, `email`, `password`, `profile_picture`) VALUES
-(7, 'Juan Carlos', 'Pérez Martínez', 1, 2, 3, 'a1234567890@utch.edu.mx', '5c587d49767fdced067af147fbd9329c:8625B5EC17B9EE8135EBF03F270757A3E06ECA343133D4362F6E37CCB9439D1F', NULL),
-(8, 'María Fernanda', 'Gómez Rodríguez', 1, 10, 5, 'a2345678901@utch.edu.mx', '579aece507f498769d30a41cf1353eb6:D762809E3134A64986BC40D79E57710EF90CF95AB919D364907A9CB7E4BBBDAC', NULL),
-(9, 'José Luis', 'Hernández Rivera', 1, 8, 2, 'a3456789012@utch.edu.mx', '8d23568009ceac66ed7a0100a5977626:46ED6B2533D4A5D9828DD2A403991D02B541F5749B79F4472BD51DA41D6F8BBB', NULL),
-(10, 'Ana Isabel', 'Sánchez Morales', 1, 1, 8, 'a4567890123@utch.edu.mx', '4beabfab649cf34395c34687a1f4272b:41363AD9D8FFBF4B73A2F0F47E15AE3917C55EB2DCA70CB6AA866B51A4EDB244', NULL),
-(11, 'Pedro Antonio', 'López García', 1, 3, 6, 'a5678901234@utch.edu.mx', '1c5c686abde1871555889e9c007770f9:AE3E55AD817C354B78D83C8CEF5DE566D38CBB0BB0A6A6D98711B5DF2D321176', NULL),
-(12, 'Laura Beatriz', 'Ramírez Torres', 1, 11, 7, 'a6789012345@utch.edu.mx', '949bff47fc53d70d8e031b46d4fc04e3:F69B208926BB12F09DA8EB41A728773B0241AADE9FF06C6E78BA42FC05B8F2F3', NULL),
-(13, 'Carlos Eduardo', 'Jiménez Vargas', 1, 5, 4, 'a7890123456@utch.edu.mx', '81b145225a9eda43aa7b58c00de6ecde:224B87D86C4C32F03A72F199B1D221FECDDAB9A0DC6276722238756C4BE3CBFB', NULL),
-(14, 'Sofía Valentina', 'Ortiz Castillo', 1, 1, 1, 'a8901234567@utch.edu.mx', '0143c90badb7110cd8148cc153a8056d:638F8F37C82B3D2D9D1CE5DE5A850069754EC8C5EB0AB0E852DC4F257E07179F', NULL),
-(15, 'Luis Fernando', 'Ramírez Gutiérrez', 1, 10, 9, 'a9012345678@utch.edu.mx', '7ddba72523cea445912fb02aa338e010:1EE572DE6D6BF4653BA710F08C31167AD273ABF3C0972682B870B61D45C703DA', NULL),
-(16, 'Gabriela Alejandra', 'Martínez Sánchez', 1, 2, 10, 'a9876543210@utch.edu.mx', 'd7db773456da60dae7e1e4311da4531a:41704C64DB5166E4680D2632399777A480481D25CE1CF2522CA9DB61109F78DE', NULL),
-(17, 'Luis Carlos', 'Domínguez Banda', 1, 10, 3, 'a6523150031@utch.edu.mx', 'a2db6a6db60c6bc83ca5568ae4e1a2ed:E478222B443A323A190A92719CD07E7E8321D21D6ED41D40AEEE6803E879F391', 'static/uploads/2693507.png'),
-(18, 'Josué Ricardo', 'Temoltzi Rivera', 1, 10, 3, 'a6523150089@utch.edu.mx', '664d643927102ac74c2641ff97ee5b77:D875476403BE2224BC1FDAAE66B435596D604BE5F01499511B3142B3C3AD5A4C', 'static/uploads/2693507.png'),
-(19, 'Joel Uriel', 'Rocha Rivero', 1, 10, 3, 'a8473628974@utch.edu.mx', 'c41aef7d5645e2b19207471a9c4324ed:E26A06B0E541234A2E6C756008656652AE445FCE3CF8C2CD6491A175514EC1D7', 'static/uploads/2693507.png'),
-(20, 'Emiliano ', 'Saez Carrillo', 1, 10, 3, 'a853948329@utch.edu.mx', 'a30868d26558bb694c767ea8ce7ea2a4:DD6E9D4ABDF57C70E5E66350D27F3E5D953B0DD5876C08B1BCF5D0B39FC28E2C', 'static/uploads/fortnite_20241125_183132.jpg'),
-(21, 'Rodrigo', 'Zapata Villa', 1, 10, 3, 'a6473859061@utch.edu.mx', '00e59acb58d74b8ba5d95a9ebdaf9c5d:43B4E8570DD087ABD9CEE580D5E27C1234B1A6957F787E32D80C010646EF6CAB', 'static/uploads/fortnite_20241125_183226.jpg'),
-(22, 'Alonso Manuel', 'Estrada Gutierrez', 1, 10, 3, 'a7385325983@utch.edu.mx', '8c4b1925040ee44c84407e93315f5b7d:E48B31DD67E6A1FE9D763383ABCC3912BEEB1A1A6CBCB1A47FD7B4FCE7B64C58', 'static/uploads/code_20241125_204535.jpeg'),
-(23, 'Homero ', 'Simpson', 1, 10, 3, 'homero@utch.edu.mx', 'a3f01d8e5c05101b0b008c13f31ade4e:85AAB689F6160C9A6DBC486D39EF36D1411C72FE7B0BBB9F60D1958CAC2DC43C', 'static/uploads/homero_20241126_195606.gif');
+(7, 'Juan Carlos', 'Pérez Martínez', 1, 2, 3, 'a1234567890@utch.edu.mx', 'e2e5220917541c2378bd66fd09c54907:0C8C7656E13139AFD639800A78817C823FAC84AF7AEA2A9DA38BA239961C8F96', 'static/uploads/vinicius-amnx-amano-r5tAYIR6IKI-unsplash_20241126_094455.jpg'),
+(8, 'María Fernanda', 'Gómez Rodríguez', 1, 10, 5, 'a2345678901@utch.edu.mx', 'e4175d5e85b478205ec0f2552e2cb6de:3BC5B84CE0F15FDFD87DF7457630FCEFF54D4F0A3462444681B8D986021AD470', 'static/uploads/rachel-mcdermott-0fN7Fxv1eWA-unsplash_20241126_083806.jpg'),
+(9, 'José Luis', 'Hernández Rivera', 1, 8, 2, 'a3456789012@utch.edu.mx', 'ef5e3dea260418672ebf4529a03a70c7:9978C490E0CF54F8B3BED8F6D45A5AAECD18118FD1E764462DC0B3CF4AE6C737', 'static/uploads/jorge-salvador-9QtBe11i2yk-unsplash_20241126_094455.jpg'),
+(10, 'Ana Isabel', 'Sánchez Morales', 1, 1, 8, 'a4567890123@utch.edu.mx', 'f9c1d866062c5fd2180a839462a63684:4A35CD6E55A2C78B304A0A88C768075BD67A57D82EC876622965C7DEC6127823', 'static/uploads/jota-lao-MphctUUI9vA-unsplash_20241126_083806.jpg'),
+(11, 'Pedro Antonio', 'López García', 1, 3, 6, 'a5678901234@utch.edu.mx', '5d656e5a27f621d542f4387d535be9d6:E6C7A035172A66496DDE093FA62276709AF3F22B8D6971950F186351A6E6D8C5', 'static/uploads/imansyah-muhamad-putera-n4KewLKFOZw-unsplash_20241126_083806.jpg'),
+(12, 'Laura Beatriz', 'Ramírez Torres', 1, 11, 7, 'a6789012345@utch.edu.mx', 'cb8e4f7574328880521de8643dfa85e7:5B0043F06DE8C11849714952A3BE535596A90B1B57EEFA99A9D34433E1511398', 'static/uploads/jimmy-fermin-bqe0J0b26RQ-unsplash_20241126_083806.jpg'),
+(13, 'Carlos Eduardo', 'Jiménez Vargas', 1, 5, 4, 'a7890123456@utch.edu.mx', 'dc943d050503c4fa429ac34ace9ef040:C76074AC5F9A36D16FBBC100A257F5D5A4A1A5BCB4CCF0A82D3AADB93B407027', 'static/uploads/erik-lucatero-d2MSDujJl2g-unsplash_20241126_083806.jpg'),
+(14, 'Sofía Valentina', 'Ortiz Castillo', 1, 1, 1, 'a8901234567@utch.edu.mx', '0325291323e8c297e175ad65f15d7d6f:6E64077F34466D32715A51BFE7737F4CE3C403D53E919882BFC6A9C85A6F135B', 'static/uploads/hassan-khan-EGVccebWodM-unsplash_20241126_083806.jpg'),
+(15, 'Luis Fernando', 'Ramírez Gutiérrez', 1, 10, 9, 'a9012345678@utch.edu.mx', 'edfa815c0173731e259d332f09edfc73:678EABDCD1809B7BF7C8BF4B5466F058902E31B6050DC99E9E4A3249E045BEED', 'static/uploads/tutor_Miguel_20241126_083806.jpg'),
+(16, 'Gabriela Alejandra', 'Martínez Sánchez', 1, 2, 10, 'a9876543210@utch.edu.mx', 'daa23489086bc0f9123d1c01ac2a1f97:395B38CAAB2C438920E24EB07A2DDF85A8D4238EE0AE803E83091841C8D18A24', 'static/uploads/stefan-stefancik-QXevDflbl8A-unsplash_20241127_203355.jpg'),
+(17, 'Luis Carlos', 'Domínguez Banda', 1, 10, 3, 'a6523150031@utch.edu.mx', 'c2d79ab1834d188b5d3f16ebefaf3f92:9866329C38D2582984808619839394669FF35DD65D54FFC8D90F71A36BA3A4A7', 'static/uploads/2693507.png'),
+(18, 'Josué Ricardo', 'Temoltzi Rivera', 1, 10, 3, 'a6523150089@utch.edu.mx', 'cd26f4fd6b95e47e0e88f8126613cfcc:A87BCE7F6DE54F2FA49EC7AB2C17D22E1998014E719BA9541AF373B4E4912A2A', 'static/uploads/2693507.png'),
+(19, 'Joel Uriel', 'Rocha Rivero', 1, 10, 3, 'a8473628974@utch.edu.mx', '5b972e85b5c26de4e09da6f9e36b8dc0:03958F97D0CC70771F1FB1D92775A4C4394274A32432152AB03F0BB92F37E20C', 'static/uploads/2693507.png'),
+(20, 'Emiliano ', 'Saez Carrillo', 1, 10, 3, 'a853948329@utch.edu.mx', 'b77f98fb6efb22de23cdbcd64016aa3a:7DDB1AFA795D40534E0EA6215A4D435CDD6EB6689B56D6D50048BF45FFBAEEEF', 'static/uploads/fortnite_20241125_183132.jpg'),
+(21, 'Rodrigo', 'Zapata Villa', 1, 10, 3, 'a6473859061@utch.edu.mx', '0a2080f3cc1649d2bd3c68ac6c9d0af8:B79433F35C8BA05F7B6D4CBC72ABBA070F84E08CBEABC67B646804C05623B4D1', 'static/uploads/fortnite_20241125_183226.jpg'),
+(22, 'Alonso Manuel', 'Estrada Gutierrez', 1, 10, 3, 'a7385325983@utch.edu.mx', '2ec5f1ead95e510ad1db38ba2dd4fba8:CA24E0B8A4B9EB0273B8E23EB565D1870BC08A436761C4E16B1DEF391AFF20FA', 'static/uploads/code_20241125_204535.jpeg'),
+(23, 'Homero ', 'Simpson', 1, 10, 3, 'homero@utch.edu.mx', '9d6889623a5d59fd19d65f9734e9a8d5:E6AA83FC132E59BE058A8A9312EF72EDFD47C1A492C55BFEDFA4B6DA76C09822', 'static/uploads/homero_20241126_195606.gif');
 
 --
--- Disparadores `user`
+-- Triggers `user`
 --
 DELIMITER $$
 CREATE TRIGGER `trg_EncryptedPasswordInsert` BEFORE INSERT ON `user` FOR EACH ROW BEGIN
@@ -776,11 +776,11 @@ $$
 DELIMITER ;
 
 --
--- Índices para tablas volcadas
+-- Indexes for dumped tables
 --
 
 --
--- Indices de la tabla `college`
+-- Indexes for table `college`
 --
 ALTER TABLE `college`
   ADD PRIMARY KEY (`idCollege`),
@@ -788,14 +788,14 @@ ALTER TABLE `college`
   ADD UNIQUE KEY `emailExtension` (`emailExtension`);
 
 --
--- Indices de la tabla `degree`
+-- Indexes for table `degree`
 --
 ALTER TABLE `degree`
   ADD PRIMARY KEY (`idDegree`),
   ADD UNIQUE KEY `Uq_degree_name` (`name`);
 
 --
--- Indices de la tabla `degree_subdegree`
+-- Indexes for table `degree_subdegree`
 --
 ALTER TABLE `degree_subdegree`
   ADD PRIMARY KEY (`idDegree_subdegree`),
@@ -803,14 +803,14 @@ ALTER TABLE `degree_subdegree`
   ADD KEY `fk_degree_subdegree_subdegree_idSubdegree` (`subdegree_idSubdegree`);
 
 --
--- Indices de la tabla `paymethod`
+-- Indexes for table `paymethod`
 --
 ALTER TABLE `paymethod`
   ADD PRIMARY KEY (`idPayMethod`),
   ADD UNIQUE KEY `name` (`name`);
 
 --
--- Indices de la tabla `petition`
+-- Indexes for table `petition`
 --
 ALTER TABLE `petition`
   ADD PRIMARY KEY (`idPetiton`),
@@ -820,7 +820,7 @@ ALTER TABLE `petition`
   ADD KEY `fk_petition_status_idStatus` (`status_idStatus`);
 
 --
--- Indices de la tabla `review`
+-- Indexes for table `review`
 --
 ALTER TABLE `review`
   ADD PRIMARY KEY (`idReview`),
@@ -828,7 +828,7 @@ ALTER TABLE `review`
   ADD KEY `fk_review_tutor_user_idUser` (`tutor_user_idUser`);
 
 --
--- Indices de la tabla `sale`
+-- Indexes for table `sale`
 --
 ALTER TABLE `sale`
   ADD PRIMARY KEY (`idSale`),
@@ -840,7 +840,7 @@ ALTER TABLE `sale`
   ADD KEY `fk_sale_status_idStatus` (`status_idStatus`);
 
 --
--- Indices de la tabla `savedtutor`
+-- Indexes for table `savedtutor`
 --
 ALTER TABLE `savedtutor`
   ADD PRIMARY KEY (`idSaveTutor`),
@@ -848,7 +848,7 @@ ALTER TABLE `savedtutor`
   ADD KEY `fk_savedTutor_student_user_idUser` (`student_user_idUser`);
 
 --
--- Indices de la tabla `schedule`
+-- Indexes for table `schedule`
 --
 ALTER TABLE `schedule`
   ADD PRIMARY KEY (`idSchedule`),
@@ -857,7 +857,7 @@ ALTER TABLE `schedule`
   ADD KEY `fk_schedule_slootTime_idSlootTime` (`slootTime_idSlootTime`);
 
 --
--- Indices de la tabla `slottime`
+-- Indexes for table `slottime`
 --
 ALTER TABLE `slottime`
   ADD PRIMARY KEY (`idSlotTime`) USING BTREE,
@@ -865,14 +865,14 @@ ALTER TABLE `slottime`
   ADD UNIQUE KEY `endTime` (`endTime`);
 
 --
--- Indices de la tabla `status`
+-- Indexes for table `status`
 --
 ALTER TABLE `status`
   ADD PRIMARY KEY (`idStatus`),
   ADD UNIQUE KEY `name` (`name`);
 
 --
--- Indices de la tabla `student`
+-- Indexes for table `student`
 --
 ALTER TABLE `student`
   ADD UNIQUE KEY `uni_user_idUser` (`user_idUser`),
@@ -880,21 +880,21 @@ ALTER TABLE `student`
   ADD KEY `fk_student_user_idUser` (`user_idUser`);
 
 --
--- Indices de la tabla `studentnotification`
+-- Indexes for table `studentnotification`
 --
 ALTER TABLE `studentnotification`
   ADD PRIMARY KEY (`idTutorNotification`),
   ADD KEY `fk_notification_student_user_idUser` (`student_user_idUser`);
 
 --
--- Indices de la tabla `subdegree`
+-- Indexes for table `subdegree`
 --
 ALTER TABLE `subdegree`
   ADD PRIMARY KEY (`idSubdegree`),
   ADD UNIQUE KEY `Uq_subdegree_name` (`name`);
 
 --
--- Indices de la tabla `subject`
+-- Indexes for table `subject`
 --
 ALTER TABLE `subject`
   ADD PRIMARY KEY (`idSubject`),
@@ -902,28 +902,28 @@ ALTER TABLE `subject`
   ADD KEY `fk_subject_subjectCategory_idSubject` (`subjectCategory_idSubjectCategory`);
 
 --
--- Indices de la tabla `subjectcategory`
+-- Indexes for table `subjectcategory`
 --
 ALTER TABLE `subjectcategory`
   ADD PRIMARY KEY (`idSubjectCategory`),
   ADD UNIQUE KEY `Uq_subjectCategory_name` (`name`);
 
 --
--- Indices de la tabla `tutor`
+-- Indexes for table `tutor`
 --
 ALTER TABLE `tutor`
   ADD UNIQUE KEY `uni_user_idUser` (`user_idUser`),
   ADD KEY `fk_tutor_user_idUser` (`user_idUser`);
 
 --
--- Indices de la tabla `tutorsnotification`
+-- Indexes for table `tutorsnotification`
 --
 ALTER TABLE `tutorsnotification`
   ADD PRIMARY KEY (`idTutorNotification`),
   ADD KEY `tutor_user_idUser` (`tutor_user_idUser`);
 
 --
--- Indices de la tabla `tutor_subject`
+-- Indexes for table `tutor_subject`
 --
 ALTER TABLE `tutor_subject`
   ADD PRIMARY KEY (`idTutor_subject`),
@@ -931,7 +931,7 @@ ALTER TABLE `tutor_subject`
   ADD KEY `fk_tutor_subject_idSubject` (`subject_idSubject`) USING BTREE;
 
 --
--- Indices de la tabla `user`
+-- Indexes for table `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`idUser`),
@@ -940,130 +940,130 @@ ALTER TABLE `user`
   ADD KEY `fk_user_college_idCollege` (`college_idCollege`);
 
 --
--- AUTO_INCREMENT de las tablas volcadas
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT de la tabla `college`
+-- AUTO_INCREMENT for table `college`
 --
 ALTER TABLE `college`
   MODIFY `idCollege` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT de la tabla `degree`
+-- AUTO_INCREMENT for table `degree`
 --
 ALTER TABLE `degree`
   MODIFY `idDegree` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT de la tabla `degree_subdegree`
+-- AUTO_INCREMENT for table `degree_subdegree`
 --
 ALTER TABLE `degree_subdegree`
   MODIFY `idDegree_subdegree` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
--- AUTO_INCREMENT de la tabla `paymethod`
+-- AUTO_INCREMENT for table `paymethod`
 --
 ALTER TABLE `paymethod`
   MODIFY `idPayMethod` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `petition`
+-- AUTO_INCREMENT for table `petition`
 --
 ALTER TABLE `petition`
   MODIFY `idPetiton` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `review`
+-- AUTO_INCREMENT for table `review`
 --
 ALTER TABLE `review`
   MODIFY `idReview` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 
 --
--- AUTO_INCREMENT de la tabla `sale`
+-- AUTO_INCREMENT for table `sale`
 --
 ALTER TABLE `sale`
   MODIFY `idSale` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `savedtutor`
+-- AUTO_INCREMENT for table `savedtutor`
 --
 ALTER TABLE `savedtutor`
   MODIFY `idSaveTutor` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `schedule`
+-- AUTO_INCREMENT for table `schedule`
 --
 ALTER TABLE `schedule`
   MODIFY `idSchedule` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
--- AUTO_INCREMENT de la tabla `slottime`
+-- AUTO_INCREMENT for table `slottime`
 --
 ALTER TABLE `slottime`
   MODIFY `idSlotTime` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
--- AUTO_INCREMENT de la tabla `status`
+-- AUTO_INCREMENT for table `status`
 --
 ALTER TABLE `status`
   MODIFY `idStatus` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `studentnotification`
+-- AUTO_INCREMENT for table `studentnotification`
 --
 ALTER TABLE `studentnotification`
   MODIFY `idTutorNotification` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `subdegree`
+-- AUTO_INCREMENT for table `subdegree`
 --
 ALTER TABLE `subdegree`
   MODIFY `idSubdegree` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
--- AUTO_INCREMENT de la tabla `subject`
+-- AUTO_INCREMENT for table `subject`
 --
 ALTER TABLE `subject`
   MODIFY `idSubject` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=198;
 
 --
--- AUTO_INCREMENT de la tabla `subjectcategory`
+-- AUTO_INCREMENT for table `subjectcategory`
 --
 ALTER TABLE `subjectcategory`
   MODIFY `idSubjectCategory` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
--- AUTO_INCREMENT de la tabla `tutorsnotification`
+-- AUTO_INCREMENT for table `tutorsnotification`
 --
 ALTER TABLE `tutorsnotification`
   MODIFY `idTutorNotification` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
--- AUTO_INCREMENT de la tabla `tutor_subject`
+-- AUTO_INCREMENT for table `tutor_subject`
 --
 ALTER TABLE `tutor_subject`
   MODIFY `idTutor_subject` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `user`
+-- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
   MODIFY `idUser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
--- Restricciones para tablas volcadas
+-- Constraints for dumped tables
 --
 
 --
--- Filtros para la tabla `degree_subdegree`
+-- Constraints for table `degree_subdegree`
 --
 ALTER TABLE `degree_subdegree`
   ADD CONSTRAINT `fk_degree_subdegree_degree_idDegree` FOREIGN KEY (`degree_idDegree`) REFERENCES `degree` (`idDegree`),
   ADD CONSTRAINT `fk_degree_subdegree_subdegree_idSubdegree` FOREIGN KEY (`subdegree_idSubdegree`) REFERENCES `subdegree` (`idSubdegree`);
 
 --
--- Filtros para la tabla `petition`
+-- Constraints for table `petition`
 --
 ALTER TABLE `petition`
   ADD CONSTRAINT `fk_petition_status_idStatus` FOREIGN KEY (`status_idStatus`) REFERENCES `status` (`idStatus`),
@@ -1072,14 +1072,14 @@ ALTER TABLE `petition`
   ADD CONSTRAINT `fk_petition_tutor_user_idUser` FOREIGN KEY (`tutor_user_idUser`) REFERENCES `tutor` (`user_idUser`) ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `review`
+-- Constraints for table `review`
 --
 ALTER TABLE `review`
   ADD CONSTRAINT `fk_review_student_user_idUser` FOREIGN KEY (`student_user_idUser`) REFERENCES `student` (`user_idUser`),
   ADD CONSTRAINT `fk_review_tutor_user_idUser` FOREIGN KEY (`tutor_user_idUser`) REFERENCES `tutor` (`user_idUser`);
 
 --
--- Filtros para la tabla `sale`
+-- Constraints for table `sale`
 --
 ALTER TABLE `sale`
   ADD CONSTRAINT `fk_sale_payMethod_idPayMethod` FOREIGN KEY (`payMethod_idPayMethod`) REFERENCES `paymethod` (`idPayMethod`),
@@ -1090,14 +1090,14 @@ ALTER TABLE `sale`
   ADD CONSTRAINT `fk_sale_tutor_user_idUser` FOREIGN KEY (`tutor_user_idUser`) REFERENCES `tutor` (`user_idUser`) ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `savedtutor`
+-- Constraints for table `savedtutor`
 --
 ALTER TABLE `savedtutor`
   ADD CONSTRAINT `fk_savedTutor_student_user_idUser` FOREIGN KEY (`student_user_idUser`) REFERENCES `student` (`user_idUser`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_savedTutor_tutor_user_idUser` FOREIGN KEY (`tutor_user_idUser`) REFERENCES `tutor` (`user_idUser`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `schedule`
+-- Constraints for table `schedule`
 --
 ALTER TABLE `schedule`
   ADD CONSTRAINT `fk_schedule_slootTime_idSlootTime` FOREIGN KEY (`slootTime_idSlootTime`) REFERENCES `slottime` (`idSlotTime`),
@@ -1105,44 +1105,44 @@ ALTER TABLE `schedule`
   ADD CONSTRAINT `fk_schedule_tutor_user_idUser` FOREIGN KEY (`tutor_user_idUser`) REFERENCES `tutor` (`user_idUser`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `student`
+-- Constraints for table `student`
 --
 ALTER TABLE `student`
   ADD CONSTRAINT `fk_student_user_idUser` FOREIGN KEY (`user_idUser`) REFERENCES `user` (`idUser`);
 
 --
--- Filtros para la tabla `studentnotification`
+-- Constraints for table `studentnotification`
 --
 ALTER TABLE `studentnotification`
   ADD CONSTRAINT `fk_notification_student_user_idUser` FOREIGN KEY (`student_user_idUser`) REFERENCES `tutor` (`user_idUser`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `subject`
+-- Constraints for table `subject`
 --
 ALTER TABLE `subject`
   ADD CONSTRAINT `fk_subject_subjectCategory_idSubject` FOREIGN KEY (`subjectCategory_idSubjectCategory`) REFERENCES `subjectcategory` (`idSubjectCategory`);
 
 --
--- Filtros para la tabla `tutor`
+-- Constraints for table `tutor`
 --
 ALTER TABLE `tutor`
   ADD CONSTRAINT `fk_tutor_user_idUser` FOREIGN KEY (`user_idUser`) REFERENCES `user` (`idUser`);
 
 --
--- Filtros para la tabla `tutorsnotification`
+-- Constraints for table `tutorsnotification`
 --
 ALTER TABLE `tutorsnotification`
   ADD CONSTRAINT `tutorsnotification_ibfk_1` FOREIGN KEY (`tutor_user_idUser`) REFERENCES `tutor` (`user_idUser`);
 
 --
--- Filtros para la tabla `tutor_subject`
+-- Constraints for table `tutor_subject`
 --
 ALTER TABLE `tutor_subject`
   ADD CONSTRAINT `fk_tutor_subject_idSubject` FOREIGN KEY (`subject_idSubject`) REFERENCES `subject` (`idSubject`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_tutor_subject_tutor_user_idUser` FOREIGN KEY (`tutor_user_idUser`) REFERENCES `tutor` (`user_idUser`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `user`
+-- Constraints for table `user`
 --
 ALTER TABLE `user`
   ADD CONSTRAINT `fk_user_college_idCollege` FOREIGN KEY (`college_idCollege`) REFERENCES `college` (`idCollege`),
