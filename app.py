@@ -61,6 +61,46 @@ from datetime import datetime
 def help():
     return render_template('help.html')
 
+@app.route('/mydates')
+def mydates():
+        # Verifica si el usuario está autenticado
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+
+    # Obtén el user_id de la sesión
+    user_id = session.get('user_id')  # Obtén el ID del usuario de la sesión de manera segura
+    if not user_id:
+        return redirect(url_for('login'))
+
+    conn = get_db_connection()
+    cur = conn.cursor(dictionary=True)
+
+    # Obtén los datos del usuario
+    cur.execute("SELECT * FROM user WHERE idUser = %s", (user_id,))
+    user = cur.fetchone()
+
+        # Verificar si el usuario es tutor
+    cur.execute("SELECT * FROM tutor WHERE user_idUser = %s", (user_id,))
+    tutor = cur.fetchone()
+
+    notis = []
+     # Si el usuario es tutor, obtener reseñas y notificaciones
+    if tutor:
+         cur.execute("""
+            SELECT tutorsNotification.tutor_user_idUser, tutorsNotification.student_user_idUser, tutorsNotification.description, tutorsNotification.seen, tutorsNotification.createdAt, user.name AS student_name, user.lastname AS student_lastname, user.profile_picture 
+            FROM tutorsNotification
+            JOIN user ON tutorsNotification.student_user_idUser = user.idUser
+            WHERE tutorsNotification.tutor_user_idUser = %s
+            ORDER BY tutorsNotification.createdAt DESC
+        """, (user_id,))
+    notis = cur.fetchall() or []
+    
+        # Cierra la conexión a la base de datos
+    cur.close()
+    conn.close()
+
+    return render_template('mydates.html', user=user, tutor=tutor, notis=notis)
+
 @app.route('/agendar', methods=['GET', 'POST'])
 def agendar():
     # Verificar si el usuario está autenticado
