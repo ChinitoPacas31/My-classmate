@@ -164,7 +164,7 @@
         
            <div class="form-group">
              <label for="term">Term</label>
-             <input type="text" class="form-control" id="term" name="term" placeholder="Term">
+             <input type="number" class="form-control" id="term" name="term" placeholder="Term" min="0" max="11" required>
            </div>
         
            <div class="form-group">
@@ -234,12 +234,9 @@
             </div>
           </div>
           
-          
-        
-           <button type="submit" class="btn btn-block" style="background-color: #314a46; border-color: #314a46; color: white;">Registrar</button>
+           <button type="submit" class="btn btn-block" style="background-color: #314a46; border-color: #314a46; color: white;">Register</button>
          </form>
-        
-        
+
          <script>
            // Mostrar/Ocultar campos relacionados al tutor
            const tutorYes = document.getElementById('tutor-yes');
@@ -262,6 +259,9 @@
            });
          </script>
          
+</div>
+<div class="card-footer text-center">
+  <small>Do you already have an account? <a href="{{ url_for('login') }}">Log in</a></small>
 </div>
 </body>
 </html>
