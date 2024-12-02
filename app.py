@@ -13,7 +13,7 @@ import time
 from datetime import datetime
 
 # Configuración para subir imágenes
-UPLOAD_FOLDER = 'static/uploads'  # Asegúrate de que esta carpeta ya exista
+UPLOAD_FOLDER = 'static/uploads'  
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -25,19 +25,19 @@ def allowed_file(filename):
 def get_db_connection():
     return mysql.connector.connect(user="root", password="", host="localhost", port="3306", database="myclassmate")
 
-# Configuración de Flask-Mail (asegúrate de reemplazar con tus credenciales)
+# Configuración de Flask-Mail
 app.config['MAIL_SERVER'] = 'smtp.googlemail.com'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = 'myclassmate8@gmail.com'  # Cambia esto
-app.config['MAIL_PASSWORD'] = 'zlcq jjta ripg yruz'        # Cambia esto
+app.config['MAIL_USERNAME'] = 'myclassmate8@gmail.com'  
+app.config['MAIL_PASSWORD'] = 'zlcq jjta ripg yruz'        
 mail = Mail(app)
 
 
 @app.route('/')
 def index():
-    # Obtén el user_id de la sesión
-    user_id = session.get('user_id')  # Este se usa solo si necesitas saber el usuario actual logueado
+    
+    user_id = session.get('user_id')  
 
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
@@ -55,7 +55,7 @@ def index():
 
     # Agrega las materias de cada tutor
     for tutor in top_tutors:
-        tutor_id = tutor['idUser']  # Usa el ID de cada tutor
+        tutor_id = tutor['idUser'] 
         cursor.execute("""
             SELECT s.name AS subject_name, sc.name AS category_name
             FROM tutor_subject ts
@@ -83,24 +83,24 @@ def mydates():
     if 'user_id' not in session:
         return redirect(url_for('login'))
 
-    # Obtén el user_id de la sesión
-    user_id = session.get('user_id')  # Obtén el ID del usuario de la sesión de manera segura
+    
+    user_id = session.get('user_id')  
     if not user_id:
         return redirect(url_for('login'))
 
     conn = get_db_connection()
     cur = conn.cursor(dictionary=True)
 
-    # Obtén los datos del usuario
+    
     cur.execute("SELECT * FROM user WHERE idUser = %s", (user_id,))
     user = cur.fetchone()
 
-        # Verificar si el usuario es tutor
+        
     cur.execute("SELECT * FROM tutor WHERE user_idUser = %s", (user_id,))
     tutor = cur.fetchone()
 
     notis = []
-     # Si el usuario es tutor, obtener reseñas y notificaciones
+    
     if tutor:
          cur.execute("""
             SELECT tutorsNotification.tutor_user_idUser, tutorsNotification.student_user_idUser, tutorsNotification.description, tutorsNotification.seen, tutorsNotification.createdAt, user.name AS student_name, user.lastname AS student_lastname, user.profile_picture 
@@ -111,7 +111,7 @@ def mydates():
         """, (user_id,))
     notis = cur.fetchall() or []
     
-        # Cierra la conexión a la base de datos
+    
     cur.close()
     conn.close()
 
@@ -119,12 +119,12 @@ def mydates():
 
 @app.route('/agendar', methods=['GET', 'POST'])
 def agendar():
-    # Verificar si el usuario está autenticado
+    
     if 'user_id' not in session:
         return redirect(url_for('login'))
 
     if request.method == 'POST':
-        # Obtener y validar los datos del formulario
+        
         tutor_id = request.form.get('tutor_user_idUser')
         student_id = session['user_id']
         fecha = request.form['scheduledDate']
@@ -151,7 +151,7 @@ def agendar():
         except ValueError:
             return "Formato de fecha inválido. Usa AAAA-MM-DD.", 400
 
-        # Guardar el registro en la tabla schedule y crear una notificación
+        
         conn = get_db_connection()
         cursor = conn.cursor()
         try:
@@ -172,7 +172,7 @@ def agendar():
                 (tutor_id, student_id, notification_description, 0, datetime.now())
             )
 
-            # Obtener el correo del tutor
+        
             cursor.execute("SELECT email FROM user WHERE idUser = %s", (tutor_id,))
             tutor_email = cursor.fetchone()
             if tutor_email:
@@ -187,7 +187,7 @@ def agendar():
             cursor.close()
             conn.close()
 
-        # Enviar correo al tutor
+
         if tutor_email:
             try:
                 msg = Message(
@@ -208,7 +208,7 @@ def agendar():
 
         return redirect(url_for('tutors'))
 
-    # Obtener horarios disponibles para el formulario
+    
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
     try:
@@ -230,7 +230,7 @@ def agendar():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
-        # Obtener datos del formulario
+        
         profile_picture = request.files['profile_picture']
         name = request.form['name']
         lastName = request.form['lastName']
@@ -239,11 +239,11 @@ def register():
         term = request.form['term']
         email = request.form['email']
         password = request.form['password']
-        is_tutor = request.form.get('is_tutor', 'no')  # Default 'no'
+        is_tutor = request.form.get('is_tutor', 'no')  
         cost = request.form['cost'] if is_tutor == 'yes' else None
         selected_subjects = request.form.getlist('subjects') if is_tutor == 'yes' else []
 
-        # Validar foto de perfil
+    
         profile_picture_path = None
         if profile_picture and allowed_file(profile_picture.filename):
             filename = secure_filename(profile_picture.filename)
@@ -252,20 +252,20 @@ def register():
             profile_picture_path = os.path.join(app.config['UPLOAD_FOLDER'], filename).replace("\\", "/")
             profile_picture.save(profile_picture_path)
 
-        # Validar el correo electrónico
+
         if not email.endswith('@utch.edu.mx'):
             return 'El correo debe tener la terminación @utch.edu.mx', 400
 
-        # Validar que el costo esté presente si el usuario es tutor
+
         if is_tutor == 'yes' and (not cost or not cost.isdigit() or int(cost) <= 0):
             return 'Debes ingresar un costo válido para ser tutor', 400
 
-        # Conexión a la base de datos
+
         conn = get_db_connection()
         cur = conn.cursor()
 
         try:
-            # Insertar en la tabla `user`
+            
             cur.execute(
                 '''
                 INSERT INTO user (name, lastName, college_idCollege, idDegree_subdegree, term, email, password, profile_picture) 
@@ -275,7 +275,7 @@ def register():
             )
             user_id = cur.lastrowid
 
-            # Verificar si el usuario ya está en la tabla `student`
+    
             cur.execute('SELECT COUNT(*) FROM student WHERE user_idUser = %s', (user_id,))
             if cur.fetchone()[0] == 0:
                 cur.execute(
@@ -286,7 +286,7 @@ def register():
                     (user_id, 0, datetime.now(), 1)
                 )
 
-            # Insertar en la tabla `tutor` si aplica
+
             if is_tutor == 'yes' and cost:
                 cur.execute(
                     '''
@@ -296,10 +296,10 @@ def register():
                     (user_id, cost, 0, 0, datetime.now(), 1)
                 )
 
-                # Validar y registrar materias seleccionadas
+                
                 for subject_id in selected_subjects:
                     cur.execute('SELECT COUNT(*) FROM subject WHERE idSubject = %s', (subject_id,))
-                    if cur.fetchone()[0] == 1:  # La materia existe
+                    if cur.fetchone()[0] == 1:  
                         cur.execute(
                             '''
                             INSERT INTO tutor_subject (tutor_user_idUser, subject_idSubject) 
@@ -310,7 +310,7 @@ def register():
 
             conn.commit()
         except Exception as e:
-            conn.rollback()  # Revertir cambios en caso de error
+            conn.rollback()  
             return f'Ocurrió un error: {str(e)}', 500
         finally:
             cur.close()
@@ -318,20 +318,20 @@ def register():
 
         return redirect(url_for('index'))
 
-    # Si es un método GET, cargar datos para los dropdowns
+    
     conn = get_db_connection()
     cur = conn.cursor(dictionary=True)
 
     try:
-        # Obtener universidades
+    
         cur.execute("SELECT idCollege, name FROM college")
         colleges = cur.fetchall()
 
-        # Obtener especialidades
+    
         cur.execute("SELECT idSubdegree, name FROM subdegree")
         subdegrees = cur.fetchall()
 
-        # Obtener categorías y materias
+        
         cur.execute("SELECT idSubjectCategory, name FROM subjectcategory")
         categories = cur.fetchall()
 
@@ -368,15 +368,15 @@ def login():
 
         conn.close()
 
-        if user:  # Compara directamente la contraseña almacenada
-            # Recuperar el valor almacenado en password y separar salt y hash
+        if user:  
+            
             salted_password = user['password']
             salt, stored_hash = salted_password.split(':')
 
-            # Generar el hash de la contraseña ingresada con el salt
+            
             attempt_hash = hashlib.sha256((salt + password).encode('utf-8')).hexdigest().upper()
 
-        # Verificar si el hash generado coincide con el almacenado
+        
         if attempt_hash == stored_hash:
             session['user_id'] = user['idUser']
             session['user_name'] = user['name']
@@ -396,19 +396,19 @@ def logout():
 
 @app.route('/perfil')
 def perfil():
-    # Verifica si el usuario está autenticado
+    
     if 'user_id' not in session:
         return redirect(url_for('login'))
 
-    # Obtén el user_id de la sesión
-    user_id = session.get('user_id')  # Obtén el ID del usuario de la sesión de manera segura
+
+    user_id = session.get('user_id')  
     if not user_id:
         return redirect(url_for('login'))
 
     conn = get_db_connection()
     cur = conn.cursor(dictionary=True)
 
-    # Obtén la información del usuario y sus relaciones necesarias
+    
     cur.execute("""
         SELECT 
             user.name, 
@@ -431,18 +431,18 @@ def perfil():
     """, (user_id,))
     user = cur.fetchone()
 
-    # Verificar si el usuario es tutor
+    
     cur.execute("SELECT * FROM tutor WHERE user_idUser = %s", (user_id,))
     tutor = cur.fetchone()
 
-    # Inicializa listas vacías para reseñas, notificaciones y materias
+    
     reviews = []
     notis = []
     subjects = []
 
-    # Si el usuario es tutor, obtener reseñas, notificaciones y materias
+    
     if tutor:
-        # Reseñas del tutor
+        
         cur.execute("""
             SELECT review.rating, review.description, user.name AS student_name, user.lastName AS student_lastname, user.profile_picture AS student_profile_picture
             FROM review
@@ -452,7 +452,7 @@ def perfil():
         """, (user_id,))
         reviews = cur.fetchall() or []
 
-        # Notificaciones para el tutor
+        
         cur.execute("""
             SELECT tutorsNotification.tutor_user_idUser, tutorsNotification.student_user_idUser, tutorsNotification.description, tutorsNotification.seen, tutorsNotification.createdAt, user.name AS student_name, user.lastname AS student_lastname, user.profile_picture 
             FROM tutorsNotification
@@ -462,7 +462,7 @@ def perfil():
         """, (user_id,))
         notis = cur.fetchall() or []
 
-        # Materias que imparte el tutor
+        
         cur.execute("""
             SELECT s.name AS subject_name, sc.name AS category_name
             FROM tutor_subject ts
@@ -472,21 +472,21 @@ def perfil():
         """, (user_id,))
         subjects = cur.fetchall() or []
 
-    # Cierra la conexión a la base de datos
+    
     cur.close()
     conn.close()
 
-    # Pasa los datos del usuario y materias a la plantilla
+
     return render_template('perfil.html', user=user, tutor=tutor, reviews=reviews, notis=notis, subjects=subjects)
 
 
 @app.route('/edit_profile', methods=['GET', 'POST'])
 def edit_profile():
     if request.method == 'POST':
-        # Aquí manejas la lógica de actualización de perfil (por ejemplo, actualizar nombre, email, etc.)
+       
         pass
 
-    # Renderiza el formulario de edición de perfil
+   
     return render_template('edit_profile.html')
 
 
@@ -496,7 +496,7 @@ def tutors():
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
 
-    # Recupera datos de todos los tutores
+    
     cursor.execute("""
         SELECT tutor.user_idUser, user.name, user.lastName, user.profile_picture, 
                tutor.asesoryCost, tutor.meanRating, tutor.online, user.term
@@ -505,13 +505,13 @@ def tutors():
     """)
     tutors = cursor.fetchall()
 
-    # Diccionario para almacenar tutores y sus materias
+   
     tutors_with_subjects = []
     
     for tutor in tutors:
         tutor_id = tutor['user_idUser']
         
-        # Recupera las materias del tutor
+    
         cursor.execute("""
             SELECT s.name AS subject_name, sc.name AS category_name
             FROM tutor_subject ts
@@ -521,7 +521,7 @@ def tutors():
         """, (tutor_id,))
         subjects = cursor.fetchall()
         
-        # Agrega las materias al tutor
+        
         tutor['subjects'] = subjects
         tutors_with_subjects.append(tutor)
 
@@ -532,7 +532,7 @@ def tutors():
 
 @app.route('/calificar', methods=['GET', 'POST'])
 def calificar():
-    # Verificar si el usuario está autenticado
+    
     if 'user_id' not in session:
         return redirect(url_for('login'))
 
@@ -545,18 +545,18 @@ def calificar():
         rating = request.form.get('rating')
         description = request.form.get('description', '')
 
-        # Validar inputs
+        
         if not tutor_id or not rating:
             return "Por favor selecciona un tutor y una calificación", 400
 
-        # Insertar nueva reseña en la tabla review
+    
         cursor.execute("""
             INSERT INTO review (tutor_user_idUser, student_user_idUser, rating, description)
             VALUES (%s, %s, %s, %s)
         """, (tutor_id, student_id, rating, description))
         conn.commit()
 
-        # Actualizar la calificación promedio del tutor
+        
         cursor.execute("""
             UPDATE tutor
             SET meanRating = (
@@ -572,7 +572,7 @@ def calificar():
         conn.close()
         return redirect(url_for('tutors'))
 
-    # Obtener la lista de tutores
+    
     cursor.execute("SELECT idUser, name, lastName FROM user INNER JOIN tutor ON user.idUser = tutor.user_idUser")
     tutors = cursor.fetchall()
 
@@ -583,7 +583,7 @@ def calificar():
 
 @app.route('/delete_account', methods=['POST'])
 def delete_account():
-    # Verifica si el usuario está autenticado
+    
     if 'user_id' not in session:
         return redirect(url_for('login'))
 
@@ -592,7 +592,7 @@ def delete_account():
     cursor = conn.cursor()
 
     try:
-        # Elimina primero cualquier dato relacionado con el usuario (dependiendo de tu base de datos, puedes tener relaciones que también debas borrar)
+
         cursor.execute('DELETE FROM review WHERE tutor_user_idUser = %s OR student_user_idUser = %s', (user_id, user_id))
         cursor.execute('DELETE FROM tutor WHERE user_idUser = %s', (user_id,))
         cursor.execute('DELETE FROM student WHERE user_idUser = %s', (user_id,))
@@ -600,7 +600,7 @@ def delete_account():
 
         conn.commit()
 
-        # Cierra la sesión del usuario
+        
         session.pop('user_id', None)
         session.pop('user_name', None)
         session.pop('user_email', None)
@@ -614,7 +614,7 @@ def delete_account():
         cursor.close()
         conn.close()
 
-    return redirect(url_for('index'))  # Redirige al inicio después de eliminar la cuenta
+    return redirect(url_for('index'))  
 
 
 
